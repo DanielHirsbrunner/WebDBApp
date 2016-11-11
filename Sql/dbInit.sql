@@ -18,6 +18,7 @@ CREATE TABLE user (
   surname varchar(50),
   email varchar(50),
   qualification varchar(255),
+  isAdmin bit NOT NULL DEFAULT 0,
   PRIMARY KEY (userId),
   KEY password (password)
 );

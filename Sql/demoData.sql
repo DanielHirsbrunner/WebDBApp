@@ -1,8 +1,8 @@
 
-Insert into user (userName, password, surname, name, qualification) 
+Insert into user (userName, password, surname, name, qualification, isAdmin) 
 	values
-		('admin', 'admin', 'admin', 'Administrator', 'Superuser'),
-		('LimEngLye', 'secret', 'Lim Eng', 'Lye', 'Bachelor of Science (Computer Science), Master of Computer Science');
+		('admin', 'admin', 'admin', 'Administrator', 'Superuser', 1),
+		('LimEngLye', 'secret', 'Lim Eng', 'Lye', 'Bachelor of Science (Computer Science), Master of Computer Science', 0);
 
 Insert into module (code, name, purpose, credits, editBy) 
 	values 
