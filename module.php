@@ -1,0 +1,34 @@
+<?php
+
+namespace App;
+
+// PEAR IT
+require_once("HTML/Template/IT.php");
+
+// prepare templates
+$template = new \HTML_Template_IT("template/");
+$template->loadTemplateFile("module.tpl", true, true);
+
+	$template->setCurrentBlock("MODULE_LIST");
+
+	$template->setVariable("MODULE_ID", "1");
+	$template->setVariable("MODULE_NUMBER", "ITS12345");
+	$template->setVariable("MODULE_ABBR", "DAD");
+	$template->setVariable("SELECTED", "selected");
+
+	$template->parseCurrentBlock("MODULE_LIST");
+
+	////////////////////////
+
+	$template->setCurrentBlock("MODULE_LIST");
+
+	$template->setVariable("MODULE_ID", "2");
+	$template->setVariable("MODULE_NUMBER", "ITS12346");
+	$template->setVariable("MODULE_ABBR", "WDA");
+	$template->setVariable("SELECTED", "");
+
+	$template->parseCurrentBlock("MODULE_LIST");
+
+$template->show();
+
+?>
