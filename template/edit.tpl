@@ -2,9 +2,10 @@
 
 <body>
 
+<!-- INCLUDE include/header.html -->
+
 <div class="container">
 	edit form comes here
-	{VERSION}
 </div>
 
 </body>
