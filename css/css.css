@@ -4,17 +4,28 @@ body {
 div.header {
   margin-top: 12px;
 }
-div.header a.logout {
-  display: block;
+div.header > a.logout,
+div.header > .user {
   height: 50px;
-  width: 50px;
-  font-size: 22px;
   background: white;
   margin-right: 15px;
   text-align: center;
   padding-top: 12px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
+}
+div.header > a.logout {
+  display: block;
+  width: 50px;
+  font-size: 22px;
+}
+div.header > .user {
+  font-size: 15px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+div.header > .user span {
+  margin-right: 6px;
 }
 div.content {
   background-color: white;
