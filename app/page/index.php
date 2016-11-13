@@ -21,6 +21,3 @@ $template->setVariable("MODULE_ABBR", "WDA");
 $template->setVariable("SELECTED", "");
 
 $template->parseCurrentBlock("MODULE_LIST");
-
-
-?>

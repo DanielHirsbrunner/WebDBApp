@@ -1,6 +1,5 @@
 <?php
 
-
 $template->loadTemplateFile("module.tpl", true, true);
 
 $template->setCurrentBlock("MODULE_LIST");
@@ -22,6 +21,3 @@ $template->setVariable("MODULE_ABBR", "WDA");
 $template->setVariable("SELECTED", "");
 
 $template->parseCurrentBlock("MODULE_LIST");
-
-
-?>
