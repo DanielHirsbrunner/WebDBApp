@@ -1,0 +1,73 @@
+body {
+	background-color: #E5E5E5;
+}
+
+div.header {
+	margin-top: 12px;
+	a.logout {
+		display: block;
+		height: 50px;
+		width: 50px;
+		font-size: 22px;
+		background: white;
+		margin-right: 15px;
+		text-align: center;
+		padding-top: 12px;
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
+	}
+}
+
+div.content {
+	background-color: white;
+	padding: 20px 10px;
+	box-shadow: 0 0 60px 10px #a8a8a8;
+	border-radius: 5px;
+	margin-bottom: 20px;
+	&.login-page {
+		margin-top: 20px;
+	}
+}
+
+// modules left menu
+div.modules {
+	border-right: 1px solid #BBBBBB;
+	margin-right: -1px;
+}
+ul.modules {
+	padding-left: 6px;
+	margin: 0;
+	list-style-type: none;
+	& > li {
+		padding-left: 17px;
+		&:before {
+			content: "-";
+			display: inline-block;
+			width: 17px;
+			margin-left: -17px;
+		}
+		&.selected > a {
+			font-weight: 600;
+			color: #111111;
+		}
+	}
+}
+
+// table of syllabuses of selected module
+div.syllabuses {
+	border-left: 1px solid #BBBBBB;
+	& > table {
+		width: 100%;
+		tr:not(.table-heading):hover {
+			background-color: #EEEEEE;
+		}
+		td, th {
+			border: 1px solid #CCCCCC;
+			padding: 4px 6px;
+		}
+		span.glyphicon {
+			font-size: 18px;
+			margin-right: 10px;
+		}
+	}
+}

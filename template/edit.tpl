@@ -2,10 +2,12 @@
 
 <body>
 
-<!-- INCLUDE include/header.html -->
-
 <div class="container">
-	edit form comes here
+	<!-- INCLUDE include/header.tpl -->
+
+	<div class="content">
+		edit form comes here
+	</div>
 </div>
 
 </body>

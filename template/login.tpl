@@ -2,7 +2,7 @@
 
 <body>
 
-<div class="container">
+<div class="container content login-page">
 	<form action="" method="post" class="form-horizontal">
 		<div class="row form-group required {ERROR_CLASS}">
 			<div class="col-xs-offset-2 col-xs-2 control-label"><label for="username">Uživatelské jméno</label></div>

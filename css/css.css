@@ -1,46 +1,68 @@
-div.container {
-	background-color: #F5F5F5;
-	padding: 20px 10px;
+body {
+  background-color: #e5e5e5;
+}
+div.header {
+  margin-top: 12px;
+}
+div.header a.logout {
+  display: block;
+  height: 50px;
+  width: 50px;
+  font-size: 22px;
+  background: white;
+  margin-right: 15px;
+  text-align: center;
+  padding-top: 12px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+div.content {
+  background-color: white;
+  padding: 20px 10px;
+  box-shadow: 0 0 60px 10px #a8a8a8;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+div.content.login-page {
+  margin-top: 20px;
 }
 div.modules {
-	border-right: 1px solid #BBBBBB;
-	margin-right: -1px;
-}
-div.syllabuses {
-	border-left: 1px solid #BBBBBB;
+  border-right: 1px solid #bbbbbb;
+  margin-right: -1px;
 }
 ul.modules {
-	padding-left: 6px;
-	margin: 0;
-	list-style-type: none;
+  padding-left: 6px;
+  margin: 0;
+  list-style-type: none;
 }
 ul.modules > li {
-	padding-left: 17px;
+  padding-left: 17px;
 }
 ul.modules > li:before {
-	content: "-";
-	display: inline-block;
-	width: 17px;
-	margin-left: -17px;
+  content: "-";
+  display: inline-block;
+  width: 17px;
+  margin-left: -17px;
 }
-ul.modules > li.selected  > a {
-	font-weight: 600;
-	color: #111111;
+ul.modules > li.selected > a {
+  font-weight: 600;
+  color: #111111;
 }
-
+div.syllabuses {
+  border-left: 1px solid #bbbbbb;
+}
 div.syllabuses > table {
-	width: 100%;
+  width: 100%;
 }
 div.syllabuses > table tr:not(.table-heading):hover {
-	background-color: #EEEEEE;
+  background-color: #eeeeee;
 }
 div.syllabuses > table td,
 div.syllabuses > table th {
-	border: 1px solid #CCCCCC;
-	padding: 4px 6px;
+  border: 1px solid #cccccc;
+  padding: 4px 6px;
 }
-
 div.syllabuses > table span.glyphicon {
-	font-size: 18px;
-	margin-right: 10px;
+  font-size: 18px;
+  margin-right: 10px;
 }

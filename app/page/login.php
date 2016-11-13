@@ -9,6 +9,7 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
 	if ($username == "a" && $password == "b") {
 		$_SESSION["user"] = [];
 		$_SESSION["user"]["id"] = 1;
+		$_SESSION["user"]["name"] = "John Someone";
 		$_SESSION["user"]["username"] = $username;
 		$_SESSION["user"]["admin"] = true;
 
