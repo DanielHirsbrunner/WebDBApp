@@ -50,5 +50,3 @@ if ($page != "login" && isset($_SESSION["user"])) {
 
 // show and finish
 $template->show();
-
-?>

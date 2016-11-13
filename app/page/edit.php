@@ -1,6 +1,4 @@
 <?php
 
 // prepare templates
-$template->loadTemplateFile("edit.tpl", true, false);
-
-?>
+$template->loadTemplateFile("edit.tpl", true, true);
