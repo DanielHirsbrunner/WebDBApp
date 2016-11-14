@@ -44,7 +44,7 @@ if ($page != "") {
 // parse header
 if ($page != "login" && isset($_SESSION["user"])) {
 	$template->setCurrentBlock("HEADER");
-	$template->setVariable("USER_NAME", $_SESSION["user"]["name"]);
+	$template->setVariable("USER_NAME", $_SESSION["user"]["fullName"]);
 	$template->parseCurrentBlock("HEADER");
 }
 
