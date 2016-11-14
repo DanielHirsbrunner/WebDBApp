@@ -62,18 +62,18 @@ ul.modules > li.selected > a {
 div.syllabuses {
   border-left: 1px solid #bbbbbb;
 }
-div.syllabuses > table {
+table {
   width: 100%;
 }
-div.syllabuses > table tr:not(.table-heading):hover {
+table tr:not(.table-heading):hover {
   background-color: #eeeeee;
 }
-div.syllabuses > table td,
-div.syllabuses > table th {
+table td,
+table th {
   border: 1px solid #cccccc;
   padding: 4px 6px;
 }
-div.syllabuses > table span.glyphicon {
+table span.glyphicon {
   font-size: 18px;
   margin-right: 10px;
 }
