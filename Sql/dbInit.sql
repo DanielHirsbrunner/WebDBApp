@@ -13,7 +13,7 @@ USE moduleinfo;
 CREATE TABLE user (
   userId int(5) NOT NULL AUTO_INCREMENT,
   userName varchar(50) NOT NULL UNIQUE,
-  password varchar(50) NOT NULL,
+  password varchar(60) NOT NULL,
   name varchar(50),
   surname varchar(50),
   email varchar(50),
