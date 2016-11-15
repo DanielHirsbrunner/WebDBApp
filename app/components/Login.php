@@ -6,7 +6,7 @@ namespace App\Components;
  * Class for performing login
  */
 class Login {
-
+	include("../lib/IT.php");
 	private $db;
 
 	public function __construct($db) {

@@ -5,6 +5,7 @@ namespace App;
 session_start();
 
 // DB
+require_once("lib/DB.php");
 require_once("app/dbConnect.php");
 // PEAR IT
 require_once("lib/Sigma.php");
