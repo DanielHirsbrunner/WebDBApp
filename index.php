@@ -20,7 +20,7 @@ $page = isset($_GET["page"]) ? $_GET["page"] : "";
 // is not logged in
 if ($page != "login" && !isset($_SESSION["user"])) {
 	$continue = $_SERVER['REQUEST_URI'];
-	App\Utils::redirect("/login?continue=".$continue);
+	Utils::redirect("/login?continue=".$continue);
 }
 
 // is logged in and trying to go to login page -> redirect to index

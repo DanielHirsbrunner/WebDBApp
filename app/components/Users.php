@@ -155,8 +155,6 @@ class Users {
 	public function renderDelete() {
 		$this->template->loadTemplateFile("/users/delete.tpl", true, true);
 
-
-
 		$result = $this->getUserById();
 		if ($result) {
 			// submitting
