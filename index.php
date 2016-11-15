@@ -41,7 +41,7 @@ if ($page == "login" && isset($_SESSION["user"])) {
 $_404 = false;
 // load correct page
 if ($page != "") {
-	$whitelist = ["module", "edit", "delete", "login", "logout", "users"];
+	$whitelist = ["module", "syllabusWizard", "login", "logout", "users"];
 	if (in_array($page, $whitelist)) {
 		include "app/page/".$page.".php";
 	} else {

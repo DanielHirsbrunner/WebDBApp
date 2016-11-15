@@ -1,6 +1,6 @@
 <?php
 
-$template->loadTemplateFile("module.tpl", true, true);
+$template->loadTemplateFile("module/list.tpl", true, true);
 
 $template->setCurrentBlock("MODULE_LIST");
 
