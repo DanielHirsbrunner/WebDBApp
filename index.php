@@ -11,7 +11,7 @@ require_once("lib/Sigma.php");
 // Utils functions
 include_once("app/Utils.php");
 
-//echo $_SERVER["DOCUMENT_ROOT"];
+// echo $_SERVER["DOCUMENT_ROOT"];
 // get base path
 // $basePath = ""; //if not is present
 $basePath = "/".preg_split("@/@", $_SERVER['REQUEST_URI'])[1]; // if one folder is present
