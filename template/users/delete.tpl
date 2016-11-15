@@ -6,7 +6,7 @@
 	<!-- INCLUDE include/header.tpl -->
 
 	<div class="content">
-		<p><a href="/users">Manage users</a> <a href="/modules">Manage modules</a></p>
+		<p><a href="{BASE_PATH}/users">Manage users</a> <a href="{BASE_PATH}/modules">Manage modules</a></p>
 
 		<!-- BEGIN USER_NOT_FOUND -->
 		<p>User was not found.</p>

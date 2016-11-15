@@ -8,7 +8,7 @@ namespace App;
 class Utils {
 
 	public static function redirect($url, $replace = true, $respose = 303) {
-		header("Location: ".$url, $replace, $respose);
+		header("Location: ".$_SESSION["basePath"].$url, $replace, $respose);
 		die();
 	}
 
