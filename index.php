@@ -7,28 +7,32 @@ session_start();
 // DB
 require_once("app/dbConnect.php");
 // PEAR IT
-require_once("HTML/Template/IT.php");
+require_once("lib/Sigma.php");
 // Utils functions
 include_once("app/Utils.php");
 
+// get base path
+$basePath = "/".preg_split("@/@", $_SERVER['REQUEST_URI'])[1];
+$_SESSION["basePath"] = $basePath;
+
 // prepare templates
-$template = new \HTML_Template_IT("template/");
+$template = new \HTML_Template_Sigma("template/");
 
 // get page
 $page = isset($_GET["page"]) ? $_GET["page"] : "";
 
 // is not logged in
 if ($page != "login" && !isset($_SESSION["user"])) {
-	$continue = $_SERVER['REQUEST_URI'];
+	$continue = preg_split("@".$basePath."@", $_SERVER['REQUEST_URI'])[1];
 	Utils::redirect("/login?continue=".$continue);
 }
 
 // is logged in and trying to go to login page -> redirect to index
 if ($page == "login" && isset($_SESSION["user"])) {
 	if ($_SESSION["user"]["isAdmin"]) {
-		App\Utils::redirect("/users");
+		Utils::redirect("/users");
 	} else {
-		App\Utils::redirect("/");
+		Utils::redirect("/");
 	}
 }
 
@@ -51,6 +55,9 @@ if ($page != "login" && isset($_SESSION["user"])) {
 	$template->setVariable("USER_NAME", $_SESSION["user"]["fullName"]);
 	$template->parseCurrentBlock("HEADER");
 }
+
+// apply base path
+$template->setGlobalVariable("BASE_PATH", $basePath);
 
 // show and finish
 $template->show();
