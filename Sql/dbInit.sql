@@ -237,6 +237,67 @@ BEGIN
 		s.syllabusId = id;
 END //
 
+CREATE PROCEDURE copySyllabus(IN id int(5), IN newVersionNr int(5), IN userId int(5))
+BEGIN
+	DECLARE copyId INT;
+	
+	Insert into  
+		syllabus (moduleId, versionNr, revisionNr, academicStaff, semester, creditHours, learningOutcomes, 
+		transferableSkills, synopsis, assessmentCode, mainReferences, addReferences, addInformation, editBy)
+	SELECT moduleId, newVersionNr, 0, academicStaff, semester, creditHours, learningOutcomes, 
+		transferableSkills, synopsis, assessmentCode, mainReferences, addReferences, addInformation, userId
+	FROM 
+		syllabus s
+	WHERE 
+		s.syllabusId = id;
+		
+	SET copyId = LAST_INSERT_ID();
+	
+	Insert into  
+		syllabusassessmenttype (syllabusId, assessmentTypeId, guidedLearning, indepLearning) 
+	SELECT copyId, assessmentTypeId, guidedLearning, indepLearning FROM syllabusassessmenttype WHERE syllabusId = id;
+	
+	Insert into  
+		syllabusmodeofdelivery (syllabusId, modeOfDeliveryId) 
+	SELECT copyId, modeOfDeliveryId FROM syllabusmodeofdelivery WHERE syllabusId = id;
+	
+	Insert into  
+		syllabusmqfskill (syllabusId, mqfSkillId) 
+	SELECT copyId, mqfSkillId FROM syllabusmqfskill WHERE syllabusId = id;
+	
+	Insert into  
+		syllabusprogaim (syllabusId, clo, peo) 
+	SELECT copyId, clo, peo FROM syllabusprogaim WHERE syllabusId = id;
+	
+	Insert into  
+		syllabusproglearnoutcome (syllabusId, mlo, plo) 
+	SELECT copyId, mlo, plo FROM syllabusproglearnoutcome WHERE syllabusId = id;
+	
+	Insert into  
+		syllabusteachlearnactivity (syllabusId, teachLearnActivityId) 
+	SELECT copyId, teachLearnActivityId FROM syllabusteachlearnactivity WHERE syllabusId = id;
+	
+	Insert into  
+		syllabustopic (syllabusId, topicNr, description, guidedLearnLecture, guidedLearnTutorial, guidedLearnPractical, 
+			guidedLearnOther, indepLearnLecture, indepLearnTutorial, indepLearnPractical, indepLearnOther) 
+	SELECT copyId, topicNr, description, guidedLearnLecture, guidedLearnTutorial, guidedLearnPractical, 
+		guidedLearnOther, indepLearnLecture, indepLearnTutorial, indepLearnPractical, indepLearnOther 
+	FROM syllabustopic WHERE syllabusId = id;
+	
+END //
+
+CREATE PROCEDURE deleteSyllabus(IN id int(5))
+BEGIN	
+	DELETE FROM syllabusassessmenttype WHERE syllabusId = id;
+	DELETE FROM syllabusmodeofdelivery WHERE syllabusId = id;
+	DELETE FROM syllabusmqfskill WHERE syllabusId = id;
+	DELETE FROM syllabusprogaim WHERE syllabusId = id;
+	DELETE FROM syllabusproglearnoutcome WHERE syllabusId = id;
+	DELETE FROM syllabusteachlearnactivity WHERE syllabusId = id;
+	DELETE FROM syllabustopic WHERE syllabusId = id;
+	DELETE FROM syllabus	WHERE syllabusId = id;
+	
+END //
 
 CREATE TRIGGER trgSyllabusTopicInserted AFTER INSERT ON syllabusTopic
 FOR EACH ROW
