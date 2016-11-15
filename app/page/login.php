@@ -5,30 +5,31 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
 	$username = $_POST["username"];
 	$password = $_POST["password"];
 
-	// login successful
-	if ($username == "a" && $password == "b") {
-		$_SESSION["user"] = [];
-		$_SESSION["user"]["id"] = 1;
-		$_SESSION["user"]["name"] = "John Someone";
-		$_SESSION["user"]["username"] = $username;
-		$_SESSION["user"]["admin"] = true;
+	require "/../components/Login.php";
+	$login = new App\Components\Login($db);
+	$result = $login->run($_POST["username"], $_POST["password"]);
 
-		$continue = "/";
+	if ($result) {
+
 		if (isset($_GET["continue"])) {
-			$continue = $_GET["continue"];
+			App\Utils::redirect($_GET["continue"]);
+		} else if ($_SESSION["user"]["isAdmin"]) {
+			App\Utils::redirect("/users");
+		} else {
+			App\Utils::redirect("/");
 		}
 
-		header("Location: ".$continue, true, 303);
-		die();
-
-	// wrong login
 	} else {
-		$usernameValue = htmlspecialchars($username);
 		$template->loadTemplateFile("login.tpl", true, true);
+
 		$template->touchBlock("BAD_CREDENTIALS");
+
+		$usernameValue = htmlspecialchars($username);
 		$template->setVariable("USERNAME_VALUE", $usernameValue);
+
 		$template->setVariable("ERROR_CLASS", " has-error");
 	}
+
 // not an attempt to login
 } else {
 	$template->loadTemplateFile("login.tpl", true, true);

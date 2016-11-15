@@ -1,7 +1,13 @@
 RewriteEngine on
 
-# translate:  /module/1 -> /index.php?page=module&id=1
-RewriteRule  ^(module|edit|delete)/([a-zA-Z0-9-]+){1}$   /index.php?page=$1&id=$2 [L,QSA,NC]
-
 # translate:  /login -> /index.php?page=login
-RewriteRule  ^(login|logout)$   /index.php?page=$1 [L,QSA,NC]
+RewriteRule  ^(login|logout|users)$   /index.php?page=$1 [L,QSA,NC]
+
+# translate:  /module/1 -> /index.php?page=module&id=1
+RewriteRule  ^(module|edit|delete)/([0-9]+){1}$   /index.php?page=$1&id=$2 [L,QSA,NC]
+
+# translate:  /users/add -> /index.php?page=module&action=add
+RewriteRule  ^(users)/(add)$   /index.php?page=$1&action=$2 [L,QSA,NC]
+
+# translate:  /users/edit/5 -> /index.php?page=users&action=edit&id=5
+RewriteRule  ^(users)/(add|edit|delete|modules)/([0-9]+){1}$   /index.php?page=$1&action=$2&id=$3 [L,QSA,NC]
