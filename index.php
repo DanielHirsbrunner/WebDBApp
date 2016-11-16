@@ -6,17 +6,22 @@ session_start();
 
 // DB
 require_once("lib/DB.php");
-require_once("app/dbConnect.php");
+include_once("app/conHelper.inc");
 // PEAR IT
 require_once("lib/Sigma.php");
 // Utils functions
 include_once("app/Utils.php");
+require_once("app/queryHelper.inc");
+include_once('app/formGenerator.inc');
 
 // echo $_SERVER["DOCUMENT_ROOT"];
 // get base path
 // $basePath = ""; //if not is present
 $basePath = "/".preg_split("@/@", $_SERVER['REQUEST_URI'])[1]; // if one folder is present
 $_SESSION["basePath"] = $basePath;
+
+// Init connection
+$db = conHelper::Instance();
 
 // prepare templates
 $template = new \HTML_Template_Sigma("template/");
@@ -42,7 +47,7 @@ if ($page == "login" && isset($_SESSION["user"])) {
 $_404 = false;
 // load correct page
 if ($page != "") {
-	$whitelist = ["module", "syllabusWizard", "login", "logout", "users"];
+	$whitelist = ["module", "syllabusWizard", "syllabusDelete", "syllabusPrint", "syllabusTopic","syllabusTopicDelete", "login", "logout", "users"];
 	if (in_array($page, $whitelist)) {
 		include "app/page/".$page.".php";
 	} else {

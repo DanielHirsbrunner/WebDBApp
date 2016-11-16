@@ -17,15 +17,13 @@
 					<!-- BEGIN SYLLABUS_LIST -->
 					<tr>
 						<td>{SYLLABUS_VERSION}</td><td>{SYLLABUS_EDITTS}</td><td>{SYLLABUS_EDITBY}</td>
-						<td><a href="{BASE_PATH}/syllabusWizard/{SYLLABUS_ID}"><span class="glyphicon glyphicon-pencil"></a>
-							<a href="{BASE_PATH}/syllabusDelete/{SYLLABUS_ID}"><span class="glyphicon glyphicon-remove"></a>
-							<a href="{BASE_PATH}/syllabusPrint/{SYLLABUS_ID}"><span class="glyphicon glyphicon-print"></a>
+						<td><a href="{BASE_PATH}/edit/{SYLLABUS_ID}"><span class="glyphicon glyphicon-pencil"></a>
+							<a href="{BASE_PATH}/delete/{SYLLABUS_ID}"><span class="glyphicon glyphicon-remove"></a>
+							<a href="{BASE_PATH}/print/{SYLLABUS_ID}"><span class="glyphicon glyphicon-print"></a>
 						</td>
 					</tr>
 					<!-- END SYLLABUS_LIST -->
 				</table>
-				<br/><br/>
-				<a href ="{BASE_PATH}/syllabusWizard/0" class="btn btn-default">+ new empty syllabus</a>
 			</div>
 		</div>
 	</div>

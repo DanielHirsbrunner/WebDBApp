@@ -6,7 +6,7 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
 	$password = $_POST["password"];
 
 	require "/../components/Login.php";
-	$login = new App\Components\Login($db);
+	$login = new App\Components\Login($db->GetConnection());
 	$result = $login->run($_POST["username"], $_POST["password"]);
 
 	if ($result) {

@@ -18,7 +18,7 @@ if (isset($_GET["action"])) {
 }
 
 require "/../components/Users.php";
-$users = new App\Components\Users($db, $template);
+$users = new App\Components\Users($db->GetConnection(), $template);
 
 switch ($action) {
 	case "list":

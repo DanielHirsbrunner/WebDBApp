@@ -8,6 +8,10 @@ Insert into module (code, name, purpose, credits, editBy)
 		('ITS62304', 'WEB DATABASE APPLICATIONS', 'The purpose of the module is to introduce the use of PHP to generate web pages and to introduce the concepts and skills to develop a database backed, dynamic and feature rich website.', 4, (SELECT userId from user where userName like 'admin' LIMIT 1)),
 		('ITS61104', 'Web Systems and Technologies', 'This module introduces the student to the basics of web technology concepts, the principles and tools that can be used to develop web applications. Topics would include internet protocols, HTML and XML files, client processing with Javascript and server side processing with PHP.', 4, (SELECT userId from user where userName like 'admin' LIMIT 1));
 
+Insert into moduleRight (userId, moduleId, canread, canwrite, canapprove) 
+SELECT u.userId, m.moduleId, 1, 1, 1
+FROM user u cross join module m;
+
 insert into syllabus(moduleId, versionNr, revisionNr, creditHours, academicStaff, semester, editBy, learningOutcomes, transferableSkills, synopsis)
 	values
 		((SELECT moduleId from module where code like 'ITS62304' LIMIT 1), 1, 2, 4, (SELECT userId from user where userName like 'admin' LIMIT 1), 'elective', (SELECT userId from user where userName like 'LimEngLye' LIMIT 1),

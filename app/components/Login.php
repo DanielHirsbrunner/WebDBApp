@@ -1,12 +1,12 @@
 <?php
 
 namespace App\Components;
+//include("../../lib/IT.php");
 
 /**
  * Class for performing login
  */
 class Login {
-	include("../lib/IT.php");
 	private $db;
 
 	public function __construct($db) {
