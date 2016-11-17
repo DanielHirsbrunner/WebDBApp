@@ -67,7 +67,7 @@ class formGenerator
 	
 	public function getModuleInfo($print) {
 		$divName = 'divModul';
-		$inputLabel = 'Modul:';
+		$inputLabel = 'Module:';
 		$syllabusId = 0;
 		if (isset($_SESSION['syllabusId'])) {
 			$syllabusId = $_SESSION['syllabusId'];
@@ -225,7 +225,7 @@ class formGenerator
 			$sylId = $_SESSION['syllabusId'];
 		}
 		
-		$table  = '<table><tr><th>CLO</th><th>PEO1</th><th>PEO2</th><th>PEO3</th><th>PEO4</th></tr>';
+		$table  = '<table><tr class="table-heading"><th>CLO</th><th>PEO1</th><th>PEO2</th><th>PEO3</th><th>PEO4</th></tr>';
 		
 		$prevCloNr = 0;
 		$peoStmt  = getModuleAimStmt($sylId);
@@ -257,7 +257,7 @@ class formGenerator
 			$sylId = $_SESSION['syllabusId'];
 		}
 	
-		$table  = '<table><tr><th>MLO</th><th>PLO1</th><th>PLO2</th><th>PLO3</th><th>PLO4</th><th>PLO5</th><th>PLO6</th><th>PLO7</th><th>PLO8</th></tr>';
+		$table  = '<table><tr class="table-heading"><th>MLO</th><th>PLO1</th><th>PLO2</th><th>PLO3</th><th>PLO4</th><th>PLO5</th><th>PLO6</th><th>PLO7</th><th>PLO8</th></tr>';
 		$prevMloNr = 0;
 		$ploStmt  = getLearningOutcomeStmt($sylId);
 		if ($result = $this->db->ExecuteSelectStmt($ploStmt)) {
@@ -289,7 +289,7 @@ class formGenerator
 		}
 		
 		$modeOfDeliveryStmt = getModeOfDeliveryStmt($sylId);
-		$list = '<div>';
+		$list = '';
 		if ($result = $this->db->ExecuteSelectStmt($modeOfDeliveryStmt)) {
 			while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 				$modeOfDeliveryId = $row['modeOfDeliveryId'];
@@ -297,12 +297,11 @@ class formGenerator
 				if ($print && $row['syllabusModeOfDeliveryId'] > 0) {
 					$list .= $description . ' ';
 				} else if (!$print) {
-					$list .= '<input  type="checkbox" name="chkmodeOfDelivery'. $modeOfDeliveryId . '" ' . ($row['syllabusModeOfDeliveryId'] > 0 ? 'checked ' : '') . 'value = "' . $description . '" />' . $description . '&nbsp;&nbsp;&nbsp;';
+					$list .= '<label class="checkbox-inline"><input type="checkbox" name="chkmodeOfDelivery'. $modeOfDeliveryId . '" ' . ($row['syllabusModeOfDeliveryId'] > 0 ? 'checked ' : '') . 'value = "' . $description . '">' . $description . '</label>';
 				}
 			}
-			$list .= '</div>';			
 		}
-		return $this->getDiv($divName, $inputLabel, $list);
+		return $this->getDiv($divName, $inputLabel, $list, "");
 	}
 		
 	
@@ -317,42 +316,41 @@ class formGenerator
 		// MQF Skills
 		$mqfSkillStmt  = getMqfSkillsStmt($sylId);
 		
-		$syllabusMqfSkillPart = '<ul style="list-style-type:none; -webkit-padding-start: 3px; -webkit-margin-before: 0px; -webkit-margin-after: 0px;">';
+		$syllabusMqfSkillPart = '';
 		if ($result = $this->db->ExecuteSelectStmt($mqfSkillStmt)) {
 			while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 				$mqfSkillId = $row['mqfSkillId'];
 				$description = $row['description'];
-				$syllabusMqfSkillPart .= '<li><input  type="checkbox" name="chkmqfSkill'. $mqfSkillId . '" ' . ($row['syllabusMqfSkillId'] > 0 ? 'checked ' : '') . 'value = "' . $description . '" />' . $description . '</li>';
+				$syllabusMqfSkillPart .= '<div class="checkbox"><label><input type="checkbox" name="chkmqfSkill'. $mqfSkillId . '" ' . ($row['syllabusMqfSkillId'] > 0 ? 'checked ' : '') . 'value = "' . $description . '">' . $description . '</label></div>';
 			}
-			$syllabusMqfSkillPart .= '</ul>';
 		}
 		
 		// teach and learn acitvities
 		$teachlearnactivityStmt  = getTeachLearnActivityStmt($sylId);
 	
-		$teachlearnactivityPart = '<ul style="list-style-type:none; -webkit-padding-start: 3px; -webkit-margin-before: 0px; -webkit-margin-after: 0px;">';
+		$teachlearnactivityPart = '';
 		if ($result = $this->db->ExecuteSelectStmt($teachlearnactivityStmt)) {
 			while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 				$teachLearnActivityId = $row['teachLearnActivityId'];
 				$description = $row['description'];
-				$teachlearnactivityPart .= '<li><input  type="checkbox" name="chkteachlearnactivity'. $teachLearnActivityId . '" ' . ($row['syllabusTeachLearnActivityId'] > 0 ? 'checked ' : '') . 'value = "' . $description . '" />' . $description . '</li>';
+				$teachlearnactivityPart .= '<div class="checkbox"><label><input type="checkbox" name="chkteachlearnactivity'. $teachLearnActivityId . '" ' . ($row['syllabusTeachLearnActivityId'] > 0 ? 'checked ' : '') . 'value = "' . $description . '">' . $description . '</label></div>';
 			}
 			$teachlearnactivityPart .= '</ul>';
 		}
 			
 		// Assesment Types
 		$assessmentTypeStmt  = getAssessmentTypeStmt($sylId);	
-		$assessmentTypePart = '<ul style="list-style-type:none; -webkit-padding-start: 3px; -webkit-margin-before: 0px; -webkit-margin-after: 0px;">';
+		$assessmentTypePart = '';
 		if ($result = $this->db->ExecuteSelectStmt($assessmentTypeStmt)) {
 			while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 				$assessmentTypeId = $row['assessmentTypeId'];
 				$description = $row['description'];
-				$assessmentTypePart .= '<li><input  type="checkbox" name="chkassessmentType'. $assessmentTypeId . '" ' . ($row['syllabusassessmenttypeId'] > 0 ? 'checked ' : '') . ' value = "' . $description . '" />' . $description . '</li>';
+				$assessmentTypePart .= '<div class="checkbox"><label><input  type="checkbox" name="chkassessmentType'. $assessmentTypeId . '" ' . ($row['syllabusassessmenttypeId'] > 0 ? 'checked ' : '') . ' value = "' . $description . '" />' . $description . '</label></div>';
 			}
 			$assessmentTypePart .= '</ul>';
 		}
 		
-		$table  = '<table><tr><th>MQF Skills</th><th>Teaching and Learning activities</th><th>Type of Assessment</th></tr>';
+		$table  = '<table><tr class="table-heading"><th>MQF Skills</th><th>Teaching and Learning activities</th><th>Type of Assessment</th></tr>';
 		$table  .= '<tr><td>' . $syllabusMqfSkillPart . '</td><td>' . $teachlearnactivityPart . '</td><td>' . $assessmentTypePart . '</td></tr>';
 		$table .= '</table>';
 		if ($print) {
@@ -372,8 +370,8 @@ class formGenerator
 			$syllabusId = $_SESSION['syllabusId'];
 		}
 		
-		$table = '<table><tr><th>Nr</th><th>Topic</th><th colspan="4">Face to Face / Guided Learning</th><th colspan="4">Independent Learning</th><th>Total</th>'. ($print? '' : '<th></th>') . '</tr> ';
-		$table .= '<tr><th/><th/><th class="tdNumber">L</th><th class="tdNumber">T</th><th class="tdNumber">P</th><th class="tdNumber">O</th><th class="tdNumber">L</th><th class="tdNumber">T</th><th class="tdNumber">P</th><th class="tdNumber">O</th><th/>'. ($print? '' : '<th/>') . '</tr>';
+		$table = '<table><tr class="table-heading"><th>Nr</th><th>Topic</th><th colspan="4">Face to Face / Guided Learning</th><th colspan="4">Independent Learning</th><th>Total</th>'. ($print? '' : '<th></th>') . '</tr> ';
+		$table .= '<tr class="table-heading"><th/><th/><th class="tdNumber">L</th><th class="tdNumber">T</th><th class="tdNumber">P</th><th class="tdNumber">O</th><th class="tdNumber">L</th><th class="tdNumber">T</th><th class="tdNumber">P</th><th class="tdNumber">O</th><th/>'. ($print? '' : '<th/>') . '</tr>';
 		
 		// Table with Topics
 		$topicStmt  = getTopicStmt($syllabusId);

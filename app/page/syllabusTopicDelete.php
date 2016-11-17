@@ -18,12 +18,12 @@
 		$stmt = 'DELETE FROM syllabusTopic WHERE syllabusTopicId =' . $syllabusTopicId . '';
 		$db->ExecuteSelectStmt($stmt);
 	}
-	if(isset($_POST['chancel']) || isset($_POST['delete'])) {
+	if(isset($_POST['cancel']) || isset($_POST['delete'])) {
 		app\Utils::redirect('/syllabusWizard/'.$syllabusId);
 		die();
 	}
 	
-	$content .= '<H3>Delete Topic</H3>';
+	$content .= '<h3>Delete Topic</h3>';
 	$content .= '<p>Are you sure you want to delete the following Topic?</p>';
 	$topicStmt  = getSingleTopicStmt($syllabusTopicId);
 	if ($result = $db->ExecuteSelectStmt($topicStmt)) {
@@ -32,8 +32,8 @@
 		}
 	}
 	$content .= '<div id="divSubmitButtons">';
-	$content .= '<input type="submit" name="chancel" value="Chancel"  class="btnBack" />';
-	$content .= '<input type="submit" name="delete" value="Delete"  class="btnSave"/>';
+	$content .= '<input type="submit" name="cancel" value="Cancel" class="btnBack btn btn-default" />';
+	$content .= '<input type="submit" name="delete" value="Delete" class="btnSave btn btn-primary"/>';
 	$content .= '</div></form>';
 	
 	$template->setVariable("SYLLABUS_CONTENT", $content);

@@ -14,7 +14,7 @@ class Utils {
 
 	public static function hashPassword($plainText, $cost = 11) {
 		$options = ["cost" => $cost];
-		$hashed = password_hash($password, PASSWORD_BCRYPT, $options);
+		$hashed = password_hash($plainText, PASSWORD_BCRYPT, $options);
 		return $hashed;
 	}
 

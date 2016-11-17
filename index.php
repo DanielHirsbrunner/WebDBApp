@@ -6,13 +6,14 @@ session_start();
 
 // DB
 require_once("lib/DB.php");
-include_once("app/conHelper.inc");
+require_once("app/conHelper.inc");
 // PEAR IT
 require_once("lib/Sigma.php");
 // Utils functions
-include_once("app/Utils.php");
+require_once("lib/password.php");
+require_once("app/Utils.php");
 require_once("app/queryHelper.inc");
-include_once('app/formGenerator.inc');
+require_once('app/formGenerator.inc');
 
 // echo $_SERVER["DOCUMENT_ROOT"];
 // get base path

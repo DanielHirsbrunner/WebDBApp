@@ -39,7 +39,7 @@
 		}
 	}
 	
-	if(isset($_POST['chancel']) || isset($_POST['save'])) {
+	if(isset($_POST['cancel']) || isset($_POST['save'])) {
 		app\Utils::redirect('/syllabusWizard/'.$syllabusId);
 		die();
 	}
@@ -97,7 +97,7 @@
 	$content .= $table;
 			
 	$content .= '<div id="divSubmitButtons">';
-	$content .= '<input type="submit" name="chancel" value="Chancel"  class="btnBack"/>';
+	$content .= '<input type="submit" name="cancel" value="Cancel"  class="btnBack"/>';
 	$content .= '<input type="submit" name="save" value="Save"  class="btnSave"/>';
 	$content .= '</div>';
 	$content .= '</form>';

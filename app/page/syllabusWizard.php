@@ -31,7 +31,7 @@
 	$wizStep = $_SESSION['wizStep'];
 	
 	if ($wizStep == 1) {
-		$content .= '<H3>Step 1 of 4 - Insert generell Modul Informations</H3>';
+		$content .= '<h3>Step 1 of 4 - Insert general Module Information</h3>';
 		$content .= $fg->getModuleInfo(false);
 		$content .= $fg->getAcademicStaff(false);
 		$content .= $fg->getAssessmentCode(false);
@@ -48,34 +48,34 @@
 		}
 		$nextVersionNr = getNextVersionByModul($moduleId);
 		$content .= '<div id="divSubmitButtons">';
-		$content .= '<input type="submit" name="goBack" value="Go back to overview" class ="btnBack"/>';
+		$content .= '<input type="submit" name="goBack" value="Go back to overview" class ="btnBack btn btn-default"/>';
 		if ($versionNr == 0) {
-			$content .= '<input type="submit" name="saveVersion" value="Save as Version '. $nextVersionNr . '.0 and continue" class="btnSave"/>';
+			$content .= '<input type="submit" name="saveVersion" value="Save as Version '. $nextVersionNr . '.0 and continue" class="btnSave btn btn-primary"/>';
 		} else {                                           
-			$content .= '<input type="submit" name="save" value="Save as current version ' . $versionNr . '.' . $revision . '" class="btnSave"/>';
-			$content .= '<input type="submit" name="saveRevision" value="Save as new revision ' . $versionNr . '.' . ($revision + 1) . '" class="btnSave"/>';
-			$content .= '<input type="submit" name="saveVersion" value="Save as new version ' . $nextVersionNr . '.0" class="btnSave"/>';
+			$content .= '<input type="submit" name="save" value="Save as current version ' . $versionNr . '.' . $revision . '" class="btnSave btn btn-default"/>';
+			$content .= '<input type="submit" name="saveRevision" value="Save as new revision ' . $versionNr . '.' . ($revision + 1) . '" class="btnSave btn btn-default"/>';
+			$content .= '<input type="submit" name="saveVersion" value="Save as new version ' . $nextVersionNr . '.0" class="btnSave btn btn-default"/>';
 		}
 		$content .= '</div>';
 		
 	} else if ($wizStep == 2) {
-		$content .= '<H3>Step 2 of 4 - Asign related properties</H3>';
+		$content .= '<H3>Step 2 of 4 - Assign related properties</H3>';
 		$content .= $fg->getTeachLearnAssesStrategies(false);
 		$content .= $fg->getModulAimsMapping(false);
 		$content .= $fg->getLearningOutcomeMapping(false);
 		$content .= $fg->getModeOfDelivery(false);
 		
 		$content .= '<div id="divSubmitButtons">';
-		$content .= '<input type="submit" name="goBack" value="Go back to Step 1" class ="btnBack" />';
-		$content .= '<input type="submit" name="save" value="Save and continue" class="btnSave" />';
+		$content .= '<input type="submit" name="goBack" value="Go back to Step 1" class ="btnBack btn btn-default" />';
+		$content .= '<input type="submit" name="save" value="Save and continue" class="btnSave btn btn-primary" />';
 		$content .= '</div>';
 		
 	} else if ($wizStep == 3) {
 		$content .= '<H3>Step 3 of 4 - Add the topics to the module</H3>';
 		$content .= $fg->getTopics(false);
 		$content .= '<div id="divSubmitButtons">';
-		$content .= '<input type="submit" name="goBack" value="Go back to Step 2" class ="btnBack" />';
-		$content .= '<input type="submit" name="save" value="Save and continue" class="btnSave" />';
+		$content .= '<input type="submit" name="goBack" value="Go back to Step 2" class ="btnBack btn btn-default" />';
+		$content .= '<input type="submit" name="save" value="Save and continue" class="btnSave btn btn-primary" />';
 		$content .= '</div>';
 		
 	} else if ($wizStep == 4) {
@@ -85,8 +85,8 @@
 		$content .= $fg->getOtherAddInformation(false);
 		
 		$content .= '<div id="divSubmitButtons">';
-		$content .= '<input type="submit" name="goBack" value="Go back to Step 3" class ="btnBack" />';
-		$content .= '<input type="submit" name="save" value="Save and finish" class="btnSave"/>';
+		$content .= '<input type="submit" name="goBack" value="Go back to Step 3" class ="btnBack btn btn-default" />';
+		$content .= '<input type="submit" name="save" value="Save and finish" class="btnSave btn btn-primary"/>';
 		$content .= '</div>';
 	}
 	$content .= '</form>';
