@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Components;
-//include("../../lib/IT.php");
 
 /**
  * Class for performing login
