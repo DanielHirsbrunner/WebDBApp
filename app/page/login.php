@@ -12,11 +12,11 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
 	if ($result) {
 
 		if (isset($_GET["continue"])) {
-			App\Utils::redirect($_GET["continue"]);
+			App\Utils\OtherUtils::redirect($_GET["continue"]);
 		} else if ($_SESSION["user"]["isAdmin"]) {
-			App\Utils::redirect("/users");
+			App\Utils\OtherUtils::redirect("/users");
 		} else {
-			App\Utils::redirect("/");
+			App\Utils\OtherUtils::redirect("/");
 		}
 
 	} else {

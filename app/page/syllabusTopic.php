@@ -40,8 +40,7 @@
 	}
 	
 	if(isset($_POST['cancel']) || isset($_POST['save'])) {
-		app\Utils::redirect('/syllabusWizard/'.$syllabusId);
-		die();
+		App\Utils\OtherUtils::redirect('/syllabusWizard/'.$syllabusId);
 	}
 	
 	$topicNr = 0;

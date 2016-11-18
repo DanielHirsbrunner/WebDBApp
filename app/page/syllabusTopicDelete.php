@@ -19,8 +19,7 @@
 		$db->ExecuteSelectStmt($stmt);
 	}
 	if(isset($_POST['cancel']) || isset($_POST['delete'])) {
-		app\Utils::redirect('/syllabusWizard/'.$syllabusId);
-		die();
+		App\Utils\OtherUtils::redirect('/syllabusWizard/'.$syllabusId);
 	}
 	
 	$content .= '<h3>Delete Topic</h3>';

@@ -22,8 +22,7 @@
 	}
 	if(isset($_POST['cancel']) || isset($_POST['delete'])) {
 		echo 'redirect to module page';
-		app\Utils::redirect('/module/'.$moduleId);
-		die();
+		App\Utils\OtherUtils::redirect('/module/'.$moduleId);
 	}
 	
 	$content = '<h3>Delete Syllabus</h3>';

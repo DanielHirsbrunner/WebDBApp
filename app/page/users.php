@@ -1,7 +1,7 @@
 <?php
 
 if ($_SESSION["user"]["isAdmin"] != 1) {
-	App\Utils::redirect("/");
+	App\Utils\OtherUtils::redirect("/");
 }
 
 $action = "";

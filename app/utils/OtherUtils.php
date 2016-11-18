@@ -1,11 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Utils;
 
 /**
  * Class with set of utils methods
  */
-class Utils {
+class OtherUtils {
 
 	public static function redirect($url, $replace = true, $respose = 303) {
 		header("Location: ".$_SESSION["basePath"].$url, $replace, $respose);

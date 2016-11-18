@@ -2,6 +2,8 @@
 
 namespace App\Components;
 
+use \App\Utils\OtherUtils;
+
 /**
  * Class for managing of CRUD operations on user
  */
@@ -146,7 +148,7 @@ class Users {
 						$this->insertUser($username, $password, $name, $surname, $email, $qualification, $admin);
 					}
 
-					\App\Utils::redirect("/users");
+					OtherUtils::redirect("/users");
 				}
 
 				$this->template->parseCurrentBlock("USERS_EDIT");
@@ -171,7 +173,7 @@ class Users {
 			// submitting
 			if (isset($_POST["delete"])) {
 				$this->deleteUser($id);
-				\App\Utils::redirect("/users");
+				OtherUtils::redirect("/users");
 			} else {
 				$this->template->loadTemplateFile("/users/delete.tpl", true, true);
 				$this->template->setVariable("DELETE_USER_NAME", $result["name"]." ".$result["surname"]);
@@ -185,7 +187,7 @@ class Users {
 
 	private function insertUser($username, $password, $name, $surname, $email, $qualification, $admin) {
 		$table_name = "user";
-		$hashed = \App\Utils::hashPassword($password);
+		$hashed = OtherUtils::hashPassword($password);
 
 		$fieldsValues = array(
 			"userName"		=> $username,
@@ -211,7 +213,7 @@ class Users {
 		);
 		// change also password
 		if (strlen($password) > 0) {
-			$fieldsValues['password'] = \App\Utils::hashPassword($password);
+			$fieldsValues['password'] = OtherUtils::hashPassword($password);
 		}
 
 		$table_name = "user";

@@ -7,11 +7,13 @@ session_start();
 // DB
 require_once("lib/DB.php");
 require_once("app/conHelper.inc");
+
 // PEAR IT
 require_once("lib/Sigma.php");
+
 // Utils functions
 require_once("lib/password.php");
-require_once("app/Utils.php");
+require_once("app/utils/OtherUtils.php");
 require_once("app/queryHelper.inc");
 require_once('app/formGenerator.inc');
 
@@ -36,15 +38,15 @@ $page = isset($_GET["page"]) ? $_GET["page"] : "";
 // is not logged in
 if ($page != "login" && !isset($_SESSION["user"])) {
 	$continue = preg_split("@".$basePath."@", $_SERVER['REQUEST_URI'])[1];
-	Utils::redirect("/login?continue=".$continue);
+	Utils\OtherUtils::redirect("/login?continue=".$continue);
 }
 
 // is logged in and trying to go to login page -> redirect to index
 if ($page == "login" && isset($_SESSION["user"])) {
 	if ($_SESSION["user"]["isAdmin"]) {
-		Utils::redirect("/users");
+		Utils\OtherUtils::redirect("/users");
 	} else {
-		Utils::redirect("/");
+		Utils\OtherUtils::redirect("/");
 	}
 }
 

@@ -1,5 +1,4 @@
-<?php	
-//include_once("Utils.php");
+<?php
 
 	if (empty($_POST)) {
 		// before the first search, show the welcome Text
@@ -277,8 +276,7 @@
 	
 	function redirectToOverview($moduleId) {
 		// redirect to module page
-		app\Utils::redirect('/module/'.$moduleId);
-		die();
+		App\Utils\OtherUtils::redirect('/module/'.$moduleId);
 	}
 	
 	function executeSqlStmt($stmt) {
