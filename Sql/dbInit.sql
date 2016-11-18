@@ -25,19 +25,20 @@ CREATE TABLE `user` (
   KEY `password` (`password`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-CREATE TABLE module (
-  moduleId int(5) NOT NULL AUTO_INCREMENT,
-  name varchar(50) NOT NULL,
-  code varchar(50) NOT NULL,
-  credits int(2),
-  moduleOwner int(5),
-  purpose text NOT NULL,
-  editBy int(5) NOT NULL,
-  editTS timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  CONSTRAINT fk_module_editBy FOREIGN KEY (editBy) REFERENCES user(userId),
-  CONSTRAINT fk_module_owner FOREIGN KEY (moduleOwner) REFERENCES user(userId),
-  PRIMARY KEY (moduleId)
-);
+DROP TABLE IF EXISTS `module`;
+CREATE TABLE `module` (
+  `moduleId` int(5) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `code` varchar(20) NOT NULL,
+  `credits` tinyint(4) DEFAULT NULL,
+  `moduleOwner` int(5) DEFAULT NULL,
+  `purpose` text NOT NULL,
+  `editBy` int(5) NOT NULL,
+  `editTS` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`moduleId`),
+  KEY `fk_module_editBy` (`editBy`),
+  KEY `fk_module_owner` (`moduleOwner`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE modulePrerequisite (
   modulePrerequisiteId int(5) NOT NULL AUTO_INCREMENT,
