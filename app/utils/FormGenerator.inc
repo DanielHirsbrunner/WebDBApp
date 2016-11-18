@@ -1,8 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Utils;
 
-class formGenerator
+class FormGenerator
 {
 	static $instance = '';
 	private $db = '';
@@ -10,10 +10,10 @@ class formGenerator
 	// Singelton Instance
 	public static function Instance() {
 		// check if thers already an instance object
-		if (formGenerator::$instance == '') {
-			formGenerator::$instance = new formGenerator();
+		if (FormGenerator::$instance == '') {
+			FormGenerator::$instance = new FormGenerator();
 		}
-		return formGenerator::$instance;
+		return FormGenerator::$instance;
 	}
 	
 	private function __construct() {

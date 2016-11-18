@@ -3,19 +3,19 @@
 <head> 
     <title>Print Syllabus</title>
 	<?php
-		echo '<link rel="stylesheet" type="text/css" href="' . $_SESSION["basePath"] . '/css/syllabus.css">'; 
-		echo '<link rel="stylesheet" type="text/css" href="' . $_SESSION["basePath"] . '/css/bootstrap.min.css">'; 
-		echo '<link rel="stylesheet" type="text/css" href="' . $_SESSION["basePath"] . '/css/syllabusPrint.css">'; 
+		echo '<link rel="stylesheet" type="text/css" href="' . $_SESSION["basePath"] . '/css/syllabus.css">';
+		echo '<link rel="stylesheet" type="text/css" href="' . $_SESSION["basePath"] . '/css/bootstrap.min.css">';
+		echo '<link rel="stylesheet" type="text/css" href="' . $_SESSION["basePath"] . '/css/syllabusPrint.css">';
 	?>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-	
+
 </head>
 <body>
 <div id="syllabusPrint">
 <?php
 	// Initial Part
-	include_once('/../formGenerator.inc');
-	$fg = App\formGenerator::Instance();
+	include_once('/../utils/FormGenerator.inc');
+	$fg = App\Utils\FormGenerator::Instance();
 	$syllabusId = 0;
 	if (isset($_GET["id"])) {
 		$syllabusId = $_GET["id"];

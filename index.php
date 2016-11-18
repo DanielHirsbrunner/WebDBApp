@@ -8,6 +8,7 @@ session_start();
 require_once("lib/DB.php");
 require_once("app/db/connection.inc");
 require_once("app/db/ConnHelper.inc");
+require_once("app/db/queryHelper.inc");
 
 // PEAR IT
 require_once("lib/Sigma.php");
@@ -15,8 +16,7 @@ require_once("lib/Sigma.php");
 // Utils functions
 require_once("lib/password.php");
 require_once("app/utils/OtherUtils.php");
-require_once("app/queryHelper.inc");
-require_once("app/formGenerator.inc");
+require_once("app/utils/FormGenerator.inc");
 
 //error_reporting(-1);
 //error_reporting(E_ALL);

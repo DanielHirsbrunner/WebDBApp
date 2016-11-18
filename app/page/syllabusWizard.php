@@ -13,7 +13,7 @@
 	
 	
 	// Initial Part
-	$fg = App\formGenerator::Instance();
+	$fg = App\Utils\formGenerator::Instance();
 	$syllabusId = 0;
 	if (isset($_GET["id"])) {
 		$syllabusId = $_GET["id"];
