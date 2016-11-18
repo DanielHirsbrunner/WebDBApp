@@ -1,7 +1,7 @@
 
 INSERT INTO `user` (`userId`, `userName`, `password`, `name`, `surname`, `email`, `qualification`, `isAdmin`) VALUES
-(1,	'admin',	'$2a$11$PrBfxnvJRlQ63Uif2EenGeek1E2BzNEf7WGw3ESL5RBOUSOjaNvRK',	'Administrator',	'admin',	NULL,	'Superuser',	CONV('1', 2, 10) + 0),
-(2,	'LimEngLye',	'$2a$11$zLP04oaXKmNB/yfEmYf0k.SVZinGwDoS3aiAMF7Kyx3l1PscXpxdO',	'Lye',	'Lim Eng',	NULL,	'Bachelor of Science (Computer Science), Master of Computer Science',	CONV('0', 2, 10) + 0);
+(1,	'admin',	'$2a$11$PrBfxnvJRlQ63Uif2EenGeek1E2BzNEf7WGw3ESL5RBOUSOjaNvRK',	'Administrator',	'admin',	'admin@example.com',	'Superuser',	1),
+(2,	'LimEngLye',	'$2a$11$zLP04oaXKmNB/yfEmYf0k.SVZinGwDoS3aiAMF7Kyx3l1PscXpxdO',	'Lye',	'Lim Eng',	NULL,	'Bachelor of Science (Computer Science), Master of Computer Science',	0);
 
 Insert into module (code, name, purpose, credits, editBy) 
 	values 

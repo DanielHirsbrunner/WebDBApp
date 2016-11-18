@@ -10,18 +10,20 @@ CREATE DATABASE moduleinfo;
 
 USE moduleinfo;
 
-CREATE TABLE user (
-  userId int(5) NOT NULL AUTO_INCREMENT,
-  userName varchar(50) NOT NULL UNIQUE,
-  password varchar(60) NOT NULL,
-  name varchar(50),
-  surname varchar(50),
-  email varchar(50),
-  qualification varchar(255),
-  isAdmin bit NOT NULL DEFAULT 0,
-  PRIMARY KEY (userId),
-  KEY password (password)
-);
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `userId` int(5) NOT NULL AUTO_INCREMENT,
+  `userName` varchar(50) NOT NULL,
+  `password` varchar(60) NOT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `surname` varchar(50) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `qualification` varchar(255) DEFAULT NULL,
+  `isAdmin` tinyint(4) NOT NULL,
+  PRIMARY KEY (`userId`),
+  UNIQUE KEY `userName` (`userName`),
+  KEY `password` (`password`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE module (
   moduleId int(5) NOT NULL AUTO_INCREMENT,
