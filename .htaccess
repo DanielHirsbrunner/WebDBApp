@@ -1,5 +1,8 @@
 RewriteEngine on
 
+# TODO
+# ErrorDocument 404   /404.html
+
 # for production
 # RewriteBase /~0329100/
 

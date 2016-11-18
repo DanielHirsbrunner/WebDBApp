@@ -97,7 +97,7 @@ class UserModules {
 		$result = $this->db->execute($statement, $params);
 
 		if (\DB::isError($result)) {
-			echo $result->getUserinfo();
+			FlashMessage::add(FlashMessage::TYPE_DEBUGGING, $result->getUserinfo());
 			return false;
 		}
 

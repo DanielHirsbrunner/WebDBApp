@@ -4,6 +4,8 @@ namespace App;
 
 session_start();
 
+define("DEBUGGING", true);
+
 // DB
 require_once("lib/DB.php");
 require_once("app/db/connection.inc");
@@ -19,8 +21,10 @@ require_once("app/utils/OtherUtils.php");
 require_once("app/utils/FormGenerator.inc");
 require_once("app/utils/FlashMessage.php");
 
-//error_reporting(-1);
-//error_reporting(E_ALL);
+if (DEBUGGING) {
+	error_reporting(-1);
+	error_reporting(E_ALL);
+}
 
 // get base path
 $_SESSION["basePath"] = str_replace("/index.php", "", $_SERVER["PHP_SELF"]);
@@ -62,6 +66,7 @@ if ($page != "") {
 		include "app/page/".$page.".php";
 	} else {
 		$_404 = true;
+		// TODO 404
 	}
 } else {
 	include "app/page/index.php";

@@ -72,7 +72,11 @@ class Users {
 					$this->template->setVariable("ERROR_USERNAME", "has-error");
 					$this->template->touchBlock("ERROR_USERNAME_LONG");
 				}
-				// TODO check duplicity
+				if ($this->isUsernameDuplicate($username)) {
+					$isError = true;
+					$this->template->setVariable("ERROR_USERNAME", "has-error");
+					$this->template->touchBlock("ERROR_USERNAME_DUPLICATE");
+				}
 				// check password
 				$password = $_POST["password"];
 				if (strlen($password) > 100) {
@@ -222,25 +226,26 @@ class Users {
 		$this->template->setCurrentBlock("USERS_EDIT");
 
 		$this->template->setVariable("VALUE_USERNAME", htmlspecialchars($username));
-		$this->template->setVariable("VALUE_NAME", htmlspecialchars( $user["name"] ));
-		$this->template->setVariable("VALUE_SURNAME", htmlspecialchars( $user["surname"] ));
-		$this->template->setVariable("VALUE_EMAIL", htmlspecialchars( $user["email"] ));
-		$this->template->setVariable("VALUE_QUALIFICATION", htmlspecialchars( $user["qualification"] ));
-		$this->template->setVariable("VALUE_ADMIN", $user["isAdmin"] ? "checked" : "");
+		$this->template->setVariable("VALUE_NAME", htmlspecialchars($name));
+		$this->template->setVariable("VALUE_SURNAME", htmlspecialchars($surname));
+		$this->template->setVariable("VALUE_EMAIL", htmlspecialchars($email));
+		$this->template->setVariable("VALUE_QUALIFICATION", htmlspecialchars($qualification));
+		$this->template->setVariable("VALUE_ADMIN", $isAdmin);
 
 		$button = $editing ? "Update user" : "Create user";
 		$this->template->setVariable("VALUE_BUTTON", $button);
 		$this->template->parseCurrentBlock("USERS_EDIT");
 	}
 
-	public function getUserById($id) {
+	public function getUserById($userId) {
 		$query = "SELECT * FROM user WHERE userId = ?";
 
 		$statement = $this->db->prepare($query);
-		$params = [$id];
+		$params = [$userId];
 
 		$result = $this->db->execute($statement, $params);
 		if (\DB::isError($result)) {
+			FlashMessage::add(FlashMessage::TYPE_DEBUGGING, $result->getUserinfo());
 			return false;
 		}
 
@@ -250,10 +255,32 @@ class Users {
 			return false;
 		} else {
 			$row = $result->fetchRow(DB_FETCHMODE_ASSOC);
-
 			$row["password"] = "";
 
 			return $row;
+		}
+	}
+
+	private function isUsernameDuplicate($username) {
+		$query = "SELECT * FROM user WHERE userId <> ? AND userName = ?";
+
+		$statement = $this->db->prepare($query);
+
+		$userId = isset($_GET["id"]) ? $_GET["id"] : "0";
+		$params = [$userId, $username];
+
+		$result = $this->db->execute($statement, $params);
+		if (\DB::isError($result)) {
+			FlashMessage::add(FlashMessage::TYPE_DEBUGGING, $result->getUserinfo());
+			return false;
+		}
+
+		$numRows = $result->numRows();
+
+		if ($numRows == 0) {
+			return false;
+		} else {
+			return true;
 		}
 	}
 

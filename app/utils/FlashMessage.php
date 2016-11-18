@@ -10,6 +10,7 @@ class FlashMessage {
 	const TYPE_SUCCESS = "success";
 	const TYPE_ERROR = "error";
 	const TYPE_AUTH = "auth";
+	const TYPE_DEBUGGING = "debugging";
 
 	public static function add($type, $message) {
 		if (!isset($_SESSION["messages"])) {
@@ -25,6 +26,9 @@ class FlashMessage {
 		if (isset($_SESSION["messages"])) {
 
 			foreach ($_SESSION["messages"] as $type => $value) {
+				if ($type == FlashMessage::TYPE_DEBUGGING && !DEBUGGING) {
+					continue;
+				}
 				for ($i = 0; $i < sizeof($value); $i++) { 
 					$template->setCurrentBlock("FLASH_MESSAGE");
 					$template->setVariable("MSG_TYPE", $type);

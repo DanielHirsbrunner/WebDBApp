@@ -20,6 +20,11 @@
 				<div class="col-sm-offset-3 help-block">Username is too long. Maximum is 50 characters.</div>
 			</div>
 			<!-- END ERROR_USERNAME_LONG -->
+			<!-- BEGIN ERROR_USERNAME_DUPLICATE -->
+			<div class="row form-group has-error">
+				<div class="col-sm-offset-3 help-block">Username is duplicate. Choose a different one.</div>
+			</div>
+			<!-- END ERROR_USERNAME_DUPLICATE -->
 
 			<div class="row form-group {PASSWORD_REQUIRED} {ERROR_PASSWORD}">
 				<div class="col-sm-offset-1 col-sm-2 control-label"><label for="password">Password</label></div>

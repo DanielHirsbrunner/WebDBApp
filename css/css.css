@@ -92,6 +92,10 @@ table span.glyphicon {
   border-color: red;
   background-color: pink;
 }
+.flash.debugging {
+  border-color: red;
+  color: red;
+}
 .flash.success {
   border-color: green;
   background-color: palegreen;

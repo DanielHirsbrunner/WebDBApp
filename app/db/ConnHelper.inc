@@ -25,7 +25,8 @@ class ConnHelper
 	public function ExecuteSelectStmt($query) {
 		$result = $this->conn->query($query);
 		if (\DB::isError($result)) {
-			echo '<p>There was an error in the database query: </p><p>'.$result->getMessage().'</p>';
+			\App\Utils\FlashMessage::add(\App\Utils\FlashMessage::TYPE_DEBUGGING, $result->getUserinfo());
+			//echo '<p>There was an error in the database query: </p><p>'.$result->getMessage().'</p>';
 			return 0;
 		}
 		return $result;
