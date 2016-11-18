@@ -9,11 +9,6 @@
 		<!-- INCLUDE include/flash_message.tpl -->
 		<p><a href="{BASE_PATH}/users">Manage users</a> <a href="{BASE_PATH}/modules">Manage modules</a></p>
 
-		<!-- BEGIN USER_NOT_FOUND -->
-		<p><b>User was not found.</b></p>
-		<a href="{BASE_PATH}/users" class="btn btn-info">Go back to list</a>
-		<!-- END USER_NOT_FOUND -->
-
 		<!-- BEGIN USERS_EDIT -->
 		<form action="" method="post" class="form-horizontal">
 			<div class="row form-group required {ERROR_USERNAME}">

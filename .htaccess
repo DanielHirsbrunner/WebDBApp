@@ -4,13 +4,13 @@ RewriteEngine on
 # RewriteBase /~0329100/
 
 # translate:  /login -> /index.php?page=login
-RewriteRule  ^(login|logout|users|syllabusWizard)$   index.php?page=$1 [L,QSA,NC]
+RewriteRule  ^(login|logout|users|modules|syllabusWizard)$   index.php?page=$1 [L,QSA,NC]
 
 # translate:  /module/1 -> /index.php?page=module&id=1
-RewriteRule  ^(module|edit|delete|syllabusWizard|syllabusDelete|syllabusPrint|syllabusTopic|syllabusTopicDelete)/([0-9]+){1}$   index.php?page=$1&id=$2 [L,QSA,NC]
+RewriteRule  ^(module|syllabusWizard|syllabusDelete|syllabusPrint|syllabusTopic|syllabusTopicDelete)/([0-9]+){1}$   index.php?page=$1&id=$2 [L,QSA,NC]
 
 # translate:  /users/add -> /index.php?page=module&action=add
-RewriteRule  ^(users)/(add)$   index.php?page=$1&action=$2 [L,QSA,NC]
+RewriteRule  ^(users|modules)/(add)$   index.php?page=$1&action=$2 [L,QSA,NC]
 
 # translate:  /users/edit/5 -> /index.php?page=users&action=edit&id=5
-RewriteRule  ^(users)/(add|edit|delete|modules)/([0-9]+){1}$   index.php?page=$1&action=$2&id=$3 [L,QSA,NC]
+RewriteRule  ^(users|modules)/(add|edit|delete|modules)/([0-9]+){1}$   index.php?page=$1&action=$2&id=$3 [L,QSA,NC]

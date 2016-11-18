@@ -28,7 +28,7 @@ class Users {
 		$this->template->setCurrentBlock("RESULTS_TABLE");
 
 		while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-			$this->template->setCurrentBlock("USERS_LIST");
+			$this->template->setCurrentBlock("USERS_ROW");
 
 			$this->template->setVariable("USERNAME", $row["userName"]);
 			$this->template->setVariable("FULLNAME", $row["name"]." ".$row["surname"]);
@@ -36,7 +36,7 @@ class Users {
 			$this->template->setVariable("ADMIN", $row["isAdmin"] ? "Yes" : "No");
 			$this->template->setVariable("USER_ID", $row["userId"]);
 
-			$this->template->parseCurrentBlock("USERS_LIST");
+			$this->template->parseCurrentBlock("USERS_ROW");
 		}
 		$this->template->parseCurrentBlock("RESULTS_TABLE");
 	}
@@ -120,23 +120,9 @@ class Users {
 				$admin = isset($_POST["admin"]);
 				// if and error occurred, fill inputs
 				if ($isError) {
-					$usernameVal = htmlspecialchars($username);
-					$this->template->setVariable("VALUE_USERNAME", $usernameVal);
-					$nameVal = htmlspecialchars($name);
-					$this->template->setVariable("VALUE_NAME", $nameVal);
-					$surnameVal = htmlspecialchars($surname);
-					$this->template->setVariable("VALUE_SURNAME", $surnameVal);
-					$emailVal = htmlspecialchars($email);
-					$this->template->setVariable("VALUE_EMAIL", $emailVal);
-					$qualificationVal = htmlspecialchars($qualification);
-					$this->template->setVariable("VALUE_QUALIFICATION", $qualificationVal);
-					$this->template->setVariable("VALUE_ADMIN", $admin ? "checked" : "");
+					$this->fillForm($username, $name, $surname, $email, $qualification, $admin, $editing);
 
-					if ($editing) {
-						$this->template->setVariable("VALUE_BUTTON", "Update user");
-					} else {
-						$this->template->setVariable("VALUE_BUTTON", "Create user");
-					}
+					$this->template->parseCurrentBlock("USERS_EDIT");
 
 				// else save
 				} else {
@@ -154,11 +140,10 @@ class Users {
 					FlashMessage::add(FlashMessage::TYPE_SUCCESS, "User was successfuly $msg.");
 					OtherUtils::redirect("/users");
 				}
-
-				$this->template->parseCurrentBlock("USERS_EDIT");
 			} else {
 				if ($editing) {
-					$this->fillForm($user);
+					$this->fillForm($user["userName"], $user["name"], $user["surname"],
+									$user["email"], $user["qualification"], $user["isAdmin"], true);
 				} else {
 					$this->template->setCurrentBlock("USERS_EDIT");
 					$this->template->setVariable("PASSWORD_REQUIRED", "required");
@@ -182,16 +167,15 @@ class Users {
 			} else {
 				$this->template->loadTemplateFile("/users/delete.tpl", true, true);
 				$this->template->setVariable("DELETE_USER_NAME", $result["name"]." ".$result["surname"]);
-				$this->template->touchBlock("USER_DELETE");
 			}
 		} else {
-			$this->template->loadTemplateFile("/users/delete.tpl", false, true);
-			$this->template->touchBlock("USER_NOT_FOUND");
+			FlashMessage::add(FlashMessage::TYPE_ERROR, "User was not found.");
+			OtherUtils::redirect("/users", true, 303);
 		}
 	}
 
 	private function insertUser($username, $password, $name, $surname, $email, $qualification, $admin) {
-		$table_name = "user";
+		$tableName = "user";
 		$hashed = OtherUtils::hashPassword($password);
 
 		$fieldsValues = array(
@@ -204,7 +188,7 @@ class Users {
 			"isAdmin"		=> $admin
 		);
 
-		$this->db->autoExecute($table_name, $fieldsValues, DB_AUTOQUERY_INSERT);
+		$this->db->autoExecute($tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
 	}
 
 	private function updateUser($username, $password, $name, $surname, $email, $qualification, $admin) {
@@ -221,10 +205,10 @@ class Users {
 			$fieldsValues['password'] = OtherUtils::hashPassword($password);
 		}
 
-		$table_name = "user";
+		$tableName = "user";
 		$id = $_GET["id"];
 
-		$this->db->autoExecute($table_name, $fieldsValues, DB_AUTOQUERY_UPDATE, "userId = '$id'");
+		$this->db->autoExecute($tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "userId = '$id'");
 	}
 
 	private function deleteUser($id) {
@@ -236,17 +220,18 @@ class Users {
 		$result = $this->db->execute($statement, $params);
 	}
 
-	private function fillForm($user) {
+	private function fillForm($username, $name, $surname, $email, $qualification, $isAdmin, $editing) {
 		$this->template->setCurrentBlock("USERS_EDIT");
 
-		$this->template->setVariable("VALUE_USERNAME", htmlspecialchars( $user["userName"] ));
+		$this->template->setVariable("VALUE_USERNAME", htmlspecialchars($username));
 		$this->template->setVariable("VALUE_NAME", htmlspecialchars( $user["name"] ));
 		$this->template->setVariable("VALUE_SURNAME", htmlspecialchars( $user["surname"] ));
 		$this->template->setVariable("VALUE_EMAIL", htmlspecialchars( $user["email"] ));
 		$this->template->setVariable("VALUE_QUALIFICATION", htmlspecialchars( $user["qualification"] ));
 		$this->template->setVariable("VALUE_ADMIN", $user["isAdmin"] ? "checked" : "");
 
-		$this->template->setVariable("VALUE_BUTTON", "Update user");
+		$button = $editing ? "Update user" : "Create user";
+		$this->template->setVariable("VALUE_BUTTON", $button);
 		$this->template->parseCurrentBlock("USERS_EDIT");
 	}
 
