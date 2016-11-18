@@ -25,7 +25,6 @@ class Users {
 		$result = $this->db->execute($statement);
 
 		$this->template->loadTemplateFile("/users/list.tpl", true, true);
-		$this->template->setCurrentBlock("RESULTS_TABLE");
 
 		while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 			$this->template->setCurrentBlock("USERS_ROW");
@@ -38,7 +37,6 @@ class Users {
 
 			$this->template->parseCurrentBlock("USERS_ROW");
 		}
-		$this->template->parseCurrentBlock("RESULTS_TABLE");
 	}
 	
 	public function renderAdd() {
@@ -235,7 +233,7 @@ class Users {
 		$this->template->parseCurrentBlock("USERS_EDIT");
 	}
 
-	private function getUserById($id) {
+	public function getUserById($id) {
 		$query = "SELECT * FROM user WHERE userId = ?";
 
 		$statement = $this->db->prepare($query);

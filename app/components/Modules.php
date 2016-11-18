@@ -207,7 +207,7 @@ class Modules {
 		$this->template->parseCurrentBlock("MODULES_EDIT");
 	}
 
-	private function getModuleById($id) {
+	public function getModuleById($id) {
 		$query = "SELECT * FROM module WHERE moduleId = ?";
 
 		$statement = $this->db->prepare($query);

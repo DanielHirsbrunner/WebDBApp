@@ -14,3 +14,8 @@ RewriteRule  ^(users|modules)/(add)$   index.php?page=$1&action=$2 [L,QSA,NC]
 
 # translate:  /users/edit/5 -> /index.php?page=users&action=edit&id=5
 RewriteRule  ^(users|modules)/(add|edit|delete|modules)/([0-9]+){1}$   index.php?page=$1&action=$2&id=$3 [L,QSA,NC]
+
+# translate:  /users/modules/5/add -> /index.php?page=users&action=modules&id=5&action2=add
+RewriteRule  ^(users)/(modules)/([0-9]+){1}/(add)$   index.php?page=$1&action=$2&id=$3&action2=$4 [L,QSA,NC]
+# translate:  /users/modules/5/remove/7 -> /index.php?page=users&action=modules&id=5&action2=add&id2=7
+RewriteRule  ^(users)/(modules)/([0-9]+){1}/(remove)/([0-9]+){1}$   index.php?page=$1&action=$2&id=$3&action2=$4&id2=$5 [L,QSA,NC]
