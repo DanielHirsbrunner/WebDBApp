@@ -1,6 +1,6 @@
 <?php	
 	function getIdByModulVersion($moduleId, $versionNr) {
-		$db = App\conHelper::Instance();
+		$db = App\DB\ConnHelper::Instance();
 		$stmt = 'SELECT syllabusId from syllabus WHERE moduleId = ' . $moduleId . ' and versionNr = ' . $versionNr;
 		if ($result = $db->ExecuteSelectStmt($stmt)) {
 			if ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -10,7 +10,7 @@
 	}
 	
 	function getNextVersionByModul($moduleId) {
-		$db = App\conHelper::Instance();
+		$db = App\DB\ConnHelper::Instance();
 		$stmt = 'SELECT MAX(versionNr) as versionNr from syllabus WHERE moduleId = ' . $moduleId ;
 		if ($result = $db->ExecuteSelectStmt($stmt)) {
 			if ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -20,7 +20,7 @@
 	}
 	
 	function getNextTopicBySyllabus($syllabusId) {
-		$db = App\conHelper::Instance();
+		$db = App\DB\ConnHelper::Instance();
 		$stmt = 'SELECT MAX(topicNr) as topicNr from syllabusTopic WHERE syllabusId = ' . $syllabusId ;
 		if ($result = $db->ExecuteSelectStmt($stmt)) {
 			if ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -137,6 +137,3 @@
 		$moduleStmt .= 'ORDER BY versionNr, revisionNr';
 		return $moduleStmt;
 	}
-	
-	
-?>

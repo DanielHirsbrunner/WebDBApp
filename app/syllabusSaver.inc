@@ -87,7 +87,7 @@
 		} else {
 			$_SESSION['wizStep'] = 3;
 		}
-		$db = App\conHelper::Instance();
+		$db = App\DB\ConnHelper::Instance();
 		
 		// Save the Learning outcomes
 		$ploStmt  = getLearningOutcomeStmt($syllabusId);
@@ -223,7 +223,7 @@
 			$_SESSION['wizStep'] = 4;
 		}
 		// Assessments
-		$db = App\conHelper::Instance();
+		$db = App\DB\ConnHelper::Instance();
 		$totAssessmentsGuided = 0;
 		$totAssessmentsIndependant = 0;
 		$assessmentStmt = getSyllabusAssessmentTypeStmt($syllabusId);
@@ -280,7 +280,7 @@
 	}
 	
 	function executeSqlStmt($stmt) {
-		$db = App\conHelper::Instance();
+		$db = App\DB\ConnHelper::Instance();
 		return $db->ExecuteSelectStmt($stmt);
 	}
 ?>

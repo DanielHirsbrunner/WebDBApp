@@ -1,7 +1,6 @@
 <?php
+
 namespace App;
-include_once('app/conHelper.inc');
-include_once('app/queryHelper.inc');
 
 class formGenerator
 {
@@ -18,7 +17,7 @@ class formGenerator
 	}
 	
 	private function __construct() {
-		$this->db = conHelper::Instance();
+		$this->db = \App\DB\ConnHelper::Instance();
 	} 
 	
 	// Gets the Data from the syllabus into session variables

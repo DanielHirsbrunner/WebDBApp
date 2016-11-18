@@ -1,8 +1,9 @@
 <?php
-namespace App;
-include_once('app/connection.inc');
-// DB Class changed to conHelper to adapt to pear DB 
-class conHelper
+
+namespace App\DB;
+
+// DB Class changed to ConnHelper to adapt to pear DB 
+class ConnHelper
 {
 	static $instance = '';
 	private $conn = '';
@@ -10,11 +11,11 @@ class conHelper
 	// Singelton Instance
 	public static function Instance() {
 		// check if thers already an instance object
-		if (conHelper::$instance == '') {
-			conHelper::$instance = new conHelper();
-			conHelper::$instance->InitConnection();
+		if (ConnHelper::$instance == '') {
+			ConnHelper::$instance = new ConnHelper();
+			ConnHelper::$instance->InitConnection();
 		}
-		return conHelper::$instance;
+		return ConnHelper::$instance;
 	}
 	
 	public function GetConnection() {
@@ -24,7 +25,7 @@ class conHelper
 	public function ExecuteSelectStmt($query) {
 		$result = $this->conn->query($query);
 		if (\DB::isError($result)) {
-			echo '<p>There was en error in the Database query: </p><p>'.$result->getMessage().'</p></body></html>';
+			echo '<p>There was an error in the database query: </p><p>'.$result->getMessage().'</p>';
 			return 0;
 		}
 		return $result;

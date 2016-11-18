@@ -6,7 +6,8 @@ session_start();
 
 // DB
 require_once("lib/DB.php");
-require_once("app/conHelper.inc");
+require_once("app/db/connection.inc");
+require_once("app/db/ConnHelper.inc");
 
 // PEAR IT
 require_once("lib/Sigma.php");
@@ -15,7 +16,7 @@ require_once("lib/Sigma.php");
 require_once("lib/password.php");
 require_once("app/utils/OtherUtils.php");
 require_once("app/queryHelper.inc");
-require_once('app/formGenerator.inc');
+require_once("app/formGenerator.inc");
 
 //error_reporting(-1);
 //error_reporting(E_ALL);
@@ -27,7 +28,7 @@ $basePath = "/".preg_split("@/@", $_SERVER['REQUEST_URI'])[1]; // if one folder 
 $_SESSION["basePath"] = $basePath;
 
 // Init connection
-$db = conHelper::Instance();
+$db = DB\ConnHelper::Instance();
 
 // prepare templates
 $template = new \HTML_Template_Sigma("template/");
