@@ -17,7 +17,7 @@ if (isset($_GET["action"])) {
 	$action = "list";
 }
 
-require "/../components/Users.php";
+require "app/components/Users.php";
 $users = new App\Components\Users($db->GetConnection(), $template);
 
 switch ($action) {

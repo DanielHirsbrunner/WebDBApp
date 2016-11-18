@@ -7,7 +7,7 @@
 
 	<div class="content">
 		<p><a href="{BASE_PATH}/users">Manage users</a> <a href="{BASE_PATH}/modules">Manage modules</a></p>
-		<p><a href="{BASE_PATH}/users/add">Create new user</a></p>
+		<p><a href="{BASE_PATH}/users/add" class="btn btn-default"> + Create new user</a></p>
 		<!-- BEGIN RESULTS_TABLE -->
 		<table>
 			<tr class="table-heading"><th>Username</th><th>Full name</th><th>Email</th><th>Admin</th><th>Modules</th><th>&nbsp;&nbsp;</th></tr>

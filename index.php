@@ -15,6 +15,9 @@ require_once("app/Utils.php");
 require_once("app/queryHelper.inc");
 require_once('app/formGenerator.inc');
 
+//error_reporting(-1);
+//error_reporting(E_ALL);
+
 // echo $_SERVER["DOCUMENT_ROOT"];
 // get base path
 // $basePath = ""; //if not is present

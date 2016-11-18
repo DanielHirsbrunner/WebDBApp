@@ -9,7 +9,8 @@
 		<p><a href="{BASE_PATH}/users">Manage users</a> <a href="{BASE_PATH}/modules">Manage modules</a></p>
 
 		<!-- BEGIN USER_NOT_FOUND -->
-		<p>User was not found.</p>
+		<p><b>User was not found.</b></p>
+		<a href="{BASE_PATH}/users" class="btn btn-info">Go back to list</a>
 		<!-- END USER_NOT_FOUND -->
 
 		<!-- BEGIN USERS_EDIT -->

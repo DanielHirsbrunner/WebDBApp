@@ -26,7 +26,6 @@ class Login {
 		}
 
 		$numRows = $result->numRows();
-
 		if ($numRows == 0) {
 			return false;
 		} else {
@@ -38,7 +37,7 @@ class Login {
 				$_SESSION["user"]["id"] = $row["userId"];
 				$_SESSION["user"]["fullName"] = $row["name"]." ".$row["surname"];
 				$_SESSION["user"]["username"] = $username;
-				$_SESSION["user"]["isAdmin"] = $row["isAdmin"];
+				$_SESSION["user"]["isAdmin"] = $row["isAdmin"] == "1" ? true : false;
 
 				return true;
 
