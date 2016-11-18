@@ -21,11 +21,8 @@ require_once("app/utils/FormGenerator.inc");
 //error_reporting(-1);
 //error_reporting(E_ALL);
 
-// echo $_SERVER["DOCUMENT_ROOT"];
 // get base path
-// $basePath = ""; //if not is present
-$basePath = "/".preg_split("@/@", $_SERVER['REQUEST_URI'])[1]; // if one folder is present
-$_SESSION["basePath"] = $basePath;
+$_SESSION["basePath"] = str_replace("/index.php", "", $_SERVER["PHP_SELF"]);
 
 // Init connection
 $db = DB\ConnHelper::Instance();
@@ -38,7 +35,10 @@ $page = isset($_GET["page"]) ? $_GET["page"] : "";
 
 // is not logged in
 if ($page != "login" && !isset($_SESSION["user"])) {
-	$continue = preg_split("@".$basePath."@", $_SERVER['REQUEST_URI'])[1];
+	$continue = $_SERVER['REQUEST_URI'];
+	if ($_SESSION["basePath"] != "") {
+		$continue = preg_split("@".$_SESSION["basePath"]."@", $continue)[1];
+	}
 	Utils\OtherUtils::redirect("/login?continue=".$continue);
 }
 
@@ -72,7 +72,7 @@ if ($page != "login" && isset($_SESSION["user"])) {
 }
 
 // apply base path
-$template->setGlobalVariable("BASE_PATH", $basePath);
+$template->setGlobalVariable("BASE_PATH", $_SESSION["basePath"]);
 
 // show and finish
 $template->show();
