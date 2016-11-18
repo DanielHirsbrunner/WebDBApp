@@ -141,13 +141,17 @@ class Users {
 				// else save
 				} else {
 					// update
+					$msg = "";
 					if ($editing) {
 						$this->updateUser($username, $password, $name, $surname, $email, $qualification, $admin);
+						$msg = "updated";
 					// insert
 					} else {
 						$this->insertUser($username, $password, $name, $surname, $email, $qualification, $admin);
+						$msg = "created";
 					}
 
+					FlashMessage::add(FlashMessage::TYPE_SUCCESS, "User was successfuly $msg.");
 					OtherUtils::redirect("/users");
 				}
 
@@ -173,6 +177,7 @@ class Users {
 			// submitting
 			if (isset($_POST["delete"])) {
 				$this->deleteUser($id);
+				FlashMessage::add(FlashMessage::TYPE_SUCCESS, "User was successfuly deleted.");
 				OtherUtils::redirect("/users");
 			} else {
 				$this->template->loadTemplateFile("/users/delete.tpl", true, true);

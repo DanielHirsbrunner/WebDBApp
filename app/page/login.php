@@ -11,6 +11,7 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
 
 	if ($result) {
 
+		App\Utils\FlashMessage::add(App\Utils\FlashMessage::TYPE_SUCCESS, "Login was successful.");
 		if (isset($_GET["continue"])) {
 			App\Utils\OtherUtils::redirect($_GET["continue"]);
 		} else if ($_SESSION["user"]["isAdmin"]) {

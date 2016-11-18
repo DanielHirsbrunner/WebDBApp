@@ -20,6 +20,7 @@ class OtherUtils {
 
 	public static function checkAdmin() {
 		if ($_SESSION["user"]["isAdmin"] != 1) {
+			FlashMessage::add(FlashMessage::TYPE_AUTH, "You don't have permission to access this page. Redirected to default page.");
 			OtherUtils::redirect("/");
 		}
 	}

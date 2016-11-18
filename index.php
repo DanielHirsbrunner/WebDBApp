@@ -40,6 +40,7 @@ if ($page != "login" && !isset($_SESSION["user"])) {
 	if ($_SESSION["basePath"] != "") {
 		$continue = preg_split("@".$_SESSION["basePath"]."@", $continue)[1];
 	}
+	Utils\FlashMessage::add(Utils\FlashMessage::TYPE_AUTH, "You have to log in to access this page.");
 	Utils\OtherUtils::redirect("/login?continue=".$continue);
 }
 
