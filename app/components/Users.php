@@ -2,7 +2,7 @@
 
 namespace App\Components;
 
-use \App\Utils\OtherUtils;
+use \App\Utils\OtherUtils, \App\Utils\FlashMessage;
 
 /**
  * Class for managing of CRUD operations on user
@@ -19,8 +19,7 @@ class Users {
 
 	public function renderList() {
 
-		$query = "SELECT userId, userName, password, name, surname, email, qualification, isAdmin
-					FROM user";
+		$query = "SELECT userId, userName, password, name, surname, email, qualification, isAdmin FROM user";
 
 		$statement = $this->db->prepare($query);
 		$result = $this->db->execute($statement);
@@ -56,7 +55,8 @@ class Users {
 
 		// is editing and not found by id
 		if ($editing && !$user) {
-			$this->template->touchBlock("USER_NOT_FOUND");
+			FlashMessage::add(FlashMessage::TYPE_ERROR, "User was not found.");
+			OtherUtils::redirect("/users", true, 303);
 		} else {
 
 			// submitting

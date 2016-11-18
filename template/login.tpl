@@ -1,4 +1,4 @@
-<!-- INCLUDE include/head.html -->
+<!-- INCLUDE include/head.tpl -->
 
 <body>
 
@@ -28,6 +28,6 @@
 	<p>admin / admin</p>
 	<p>LimEngLye / secret</p>
 </div>
-
+<!-- INCLUDE include/scripts.tpl -->
 </body>
 </html>

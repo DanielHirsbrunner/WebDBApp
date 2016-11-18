@@ -1,4 +1,4 @@
-<!-- INCLUDE include/head.html -->
+<!-- INCLUDE include/head.tpl -->
 
 <body>
 
@@ -6,6 +6,7 @@
 	<!-- INCLUDE include/header.tpl -->
 
 	<div class="content">
+		<!-- INCLUDE include/flash_message.tpl -->
 		<p><a href="{BASE_PATH}/users">Manage users</a> <a href="{BASE_PATH}/modules">Manage modules</a></p>
 		<p><a href="{BASE_PATH}/users/add" class="btn btn-default"> + Create new user</a></p>
 		<!-- BEGIN RESULTS_TABLE -->
@@ -24,6 +25,6 @@
 		<!-- END RESULTS_TABLE -->
 	</div>
 </div>
-
+<!-- INCLUDE include/scripts.tpl -->
 </body>
 </html>

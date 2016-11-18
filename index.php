@@ -17,6 +17,7 @@ require_once("lib/Sigma.php");
 require_once("lib/password.php");
 require_once("app/utils/OtherUtils.php");
 require_once("app/utils/FormGenerator.inc");
+require_once("app/utils/FlashMessage.php");
 
 //error_reporting(-1);
 //error_reporting(E_ALL);
@@ -54,7 +55,8 @@ if ($page == "login" && isset($_SESSION["user"])) {
 $_404 = false;
 // load correct page
 if ($page != "") {
-	$whitelist = ["module", "syllabusWizard", "syllabusDelete", "syllabusPrint", "syllabusTopic","syllabusTopicDelete", "login", "logout", "users"];
+	$whitelist = ["module", "syllabusWizard", "syllabusDelete", "syllabusPrint", "syllabusTopic","syllabusTopicDelete",
+				  "login", "logout", "users", "modules"];
 	if (in_array($page, $whitelist)) {
 		include "app/page/".$page.".php";
 	} else {
@@ -70,6 +72,9 @@ if ($page != "login" && isset($_SESSION["user"])) {
 	$template->setVariable("USER_NAME", $_SESSION["user"]["fullName"]);
 	$template->parseCurrentBlock("HEADER");
 }
+
+//show flash messages
+Utils\FlashMessage::show($template);
 
 // apply base path
 $template->setGlobalVariable("BASE_PATH", $_SESSION["basePath"]);

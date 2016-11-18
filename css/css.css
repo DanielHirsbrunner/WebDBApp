@@ -77,3 +77,25 @@ table span.glyphicon {
   font-size: 18px;
   margin-right: 10px;
 }
+.flash {
+  color: black;
+  background-color: white;
+  border: 1px solid #333333;
+  padding: 16px;
+  margin: 0 10px 15px 10px;
+  position: relative;
+  font-weight: bold;
+  border-radius: 0;
+}
+.flash.error,
+.flash.auth {
+  border-color: red;
+  background-color: pink;
+}
+.flash.success {
+  border-color: green;
+  background-color: palegreen;
+}
+.flash span.text {
+  padding-left: 10px;
+}

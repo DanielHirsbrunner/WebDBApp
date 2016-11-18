@@ -1,4 +1,4 @@
-<!-- INCLUDE include/head.html -->
+<!-- INCLUDE include/head.tpl -->
 
 <body>
 
@@ -6,6 +6,7 @@
 	<!-- INCLUDE include/header.tpl -->
 
 	<div class="content">
+		<!-- INCLUDE include/flash_message.tpl -->
 		<div class="row">
 			<div class="col-sm-3 modules">
 				<!-- INCLUDE include/modules.tpl -->
@@ -28,6 +29,6 @@
 		</div>
 	</div>
 </div>
-
+<!-- INCLUDE include/scripts.tpl -->
 </body>
 </html>
