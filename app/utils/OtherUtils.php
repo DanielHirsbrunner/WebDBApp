@@ -18,4 +18,23 @@ class OtherUtils {
 		return $hashed;
 	}
 
+	public static function checkAdmin() {
+		if ($_SESSION["user"]["isAdmin"] != 1) {
+			OtherUtils::redirect("/");
+		}
+	}
+
+	public static function getAdminPageAction(array $whitelist, $default = "list") {
+		$action = "";
+		if (isset($_GET["action"])) {
+			$tempAction = $_GET["action"];
+			if (in_array($tempAction, $whitelist)) { // already done in .htaccess, so once it is here, it should be always true
+				$action = $tempAction;
+			}
+		} else {
+			$action = $default;
+		}
+		return $action;
+	}
+
 }

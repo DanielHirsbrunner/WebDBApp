@@ -1,21 +1,8 @@
 <?php
 
-if ($_SESSION["user"]["isAdmin"] != 1) {
-	App\Utils\OtherUtils::redirect("/");
-}
+App\Utils\OtherUtils::checkAdmin();
 
-$action = "";
-if (isset($_GET["action"])) {
-	$tempAction = $_GET["action"];
-	$whitelist = ["add", "edit", "delete", "modules"];
-	if (in_array($tempAction, $whitelist)) {
-		$action = $tempAction;
-	} else {
-		// TODO uknown action, redirect to list
-	}
-} else {
-	$action = "list";
-}
+$action = App\Utils\OtherUtils::getAdminPageAction(["add", "edit", "delete", "modules"]);
 
 require "app/components/Users.php";
 $users = new App\Components\Users($db->GetConnection(), $template);
@@ -34,4 +21,3 @@ switch ($action) {
 		$users->renderDelete();
 		break;
 }
-
