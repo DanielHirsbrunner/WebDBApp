@@ -7,13 +7,13 @@
 
 	<div class="content">
 		<!-- INCLUDE include/flash_message.tpl -->
-		<p><a href="{BASE_PATH}/users">Manage users</a> <a href="{BASE_PATH}/modules">Manage modules</a></p>
+		<p><a href="{BASE_PATH}/users">Manage users</a> <a href="{BASE_PATH}/modules">Manage modules</a> <a href="{BASE_PATH}/assessments">Manage assessment types</a></p>
 		<p><a href="{BASE_PATH}/modules/add" class="btn btn-default"> + Create new module</a></p>
 		<table>
 			<tr class="table-heading"><th>#</th><th>Name</th><th>Code</th><th>Credits</th><th>&nbsp;</th></tr>
 			<!-- BEGIN MODULES_ROW -->
 			<tr>
-				<td>{MODULE_ID}</td><td>{NAME}</td><td>{CODE}</td><td>{CREDITS}</td>
+				<td>{MODULE_ID}</td><td>{MODULE_NAME}</td><td>{MODULE_CODE}</td><td>{MODULE_CREDITS}</td>
 				<td><a href="{BASE_PATH}/modules/edit/{MODULE_ID}"><span class="glyphicon glyphicon-pencil"></a>
 					<a href="{BASE_PATH}/modules/delete/{MODULE_ID}"><span class="glyphicon glyphicon-remove"></a>
 				</td>

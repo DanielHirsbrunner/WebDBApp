@@ -7,7 +7,7 @@
 
 	<div class="content">
 		<!-- INCLUDE include/flash_message.tpl -->
-		<p><a href="{BASE_PATH}/users">Manage users</a> <a href="{BASE_PATH}/modules">Manage modules</a></p>
+		<p><a href="{BASE_PATH}/users">Manage users</a> <a href="{BASE_PATH}/modules">Manage modules</a> <a href="{BASE_PATH}/assessments">Manage assessment types</a></p>
 		<p><a href="{BASE_PATH}/users/add" class="btn btn-default"> + Create new user</a></p>
 		<!-- BEGIN RESULTS_TABLE -->
 		<table>

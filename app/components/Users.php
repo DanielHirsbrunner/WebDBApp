@@ -164,7 +164,8 @@ class Users {
 			// submitting
 			if (isset($_POST["delete"])) {
 				$this->deleteUser($id);
-				FlashMessage::add(FlashMessage::TYPE_SUCCESS, "User was successfuly deleted.");
+				$fullName = $result["name"]." ".$result["surname"];
+				FlashMessage::add(FlashMessage::TYPE_SUCCESS, "User <i>$fullName</i> was successfuly deleted.");
 				OtherUtils::redirect("/users");
 			} else {
 				$this->template->loadTemplateFile("/users/delete.tpl", true, true);

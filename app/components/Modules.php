@@ -25,19 +25,17 @@ class Modules {
 		$result = $this->db->execute($statement);
 
 		$this->template->loadTemplateFile("/modules/list.tpl", true, true);
-		$this->template->setCurrentBlock("RESULTS_TABLE");
 
 		while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 			$this->template->setCurrentBlock("MODULES_ROW");
 
-			$this->template->setVariable("NAME", $row["name"]);
-			$this->template->setVariable("CODE", $row["code"]);
-			$this->template->setVariable("CREDITS", $row["credits"]);
+			$this->template->setVariable("MODULE_NAME", $row["name"]);
+			$this->template->setVariable("MODULE_CODE", $row["code"]);
+			$this->template->setVariable("MODULE_CREDITS", $row["credits"]);
 			$this->template->setVariable("MODULE_ID", $row["moduleId"]);
 
 			$this->template->parseCurrentBlock("MODULES_ROW");
 		}
-		$this->template->parseCurrentBlock("RESULTS_TABLE");
 	}
 	
 	public function renderAdd() {
@@ -142,7 +140,8 @@ class Modules {
 			// submitting
 			if (isset($_POST["delete"])) {
 				$this->deleteModule($id);
-				FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Module was successfuly deleted.");
+				$name = $result["name"];
+				FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Module <i>$name</i> was successfuly deleted.");
 				OtherUtils::redirect("/modules");
 			} else {
 				$this->template->loadTemplateFile("/modules/delete.tpl", true, true);
@@ -165,7 +164,7 @@ class Modules {
 			"editBy"	=> $_SESSION["user"]["id"]
 		);
 
-		var_dump($this->db->autoExecute($tableName, $fieldsValues, DB_AUTOQUERY_INSERT));
+		$this->db->autoExecute($tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
 	}
 
 	private function updateModule($name, $code, $credits, $purpose) {
