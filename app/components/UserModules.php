@@ -119,7 +119,8 @@ class UserModules {
 					FlashMessage::add(FlashMessage::TYPE_ERROR, "Module was not found.");
 				} else {
 					$this->insertModuleRight($id, $_POST["module"]);
-					FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Module was assigned.");
+					$name = $module["name"];
+					FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Module <i>$name</i> was assigned.");
 				}
 			} else {
 				FlashMessage::add(FlashMessage::TYPE_ERROR, "Wrong request. Try again.");
@@ -158,7 +159,8 @@ class UserModules {
 				FlashMessage::add(FlashMessage::TYPE_ERROR, "Module was not found.");
 			} else {
 				$this->removeModuleRight($id, $moduleId);
-				FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Module was unassigned.");
+				$name = $module["name"];
+				FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Module <i>$name</i> was unassigned.");
 			}
 		}
 
