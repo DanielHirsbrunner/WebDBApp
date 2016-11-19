@@ -22,4 +22,6 @@ switch ($action) {
 		break;
 }
 
+$template->setCurrentBlock("ADMIN_MENU");
 $template->setVariable("MENU_ASSESSMENTS", "active");
+$template->parseCurrentBlock("ADMIN_MENU");

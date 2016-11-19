@@ -7,6 +7,7 @@
 
 	<div class="content">
 		<!-- INCLUDE include/flash_message.tpl -->
+		<!-- INCLUDE include/admin_menu.tpl -->
 		<div class="row">
 			<div class="col-md-3">
 				<!-- INCLUDE include/modules.tpl -->

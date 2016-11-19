@@ -22,4 +22,6 @@ switch ($action) {
 		break;
 }
 
-$template->setVariable("MENU_DELIVERIES", "active");
+$template->setCurrentBlock("ADMIN_MENU");
+$template->setVariable("MENU_DELIVERY", "active");
+$template->parseCurrentBlock("ADMIN_MENU");

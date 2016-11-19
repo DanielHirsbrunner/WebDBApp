@@ -27,7 +27,7 @@ if (isset($_GET["id"])) {
 		}
 	}
 } else {
-	echo 'Plaease Select one modul on the side';
+	echo 'Please select one modul on the side';
 }
 
 include 'app/moduleBar.inc';

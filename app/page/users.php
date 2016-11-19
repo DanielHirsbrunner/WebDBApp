@@ -40,4 +40,6 @@ switch ($action) {
 		break;
 }
 
+$template->setCurrentBlock("ADMIN_MENU");
 $template->setVariable("MENU_USERS", "active");
+$template->parseCurrentBlock("ADMIN_MENU");

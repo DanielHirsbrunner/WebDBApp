@@ -16,3 +16,9 @@ if ($result = $db->ExecuteSelectStmt($moduleStmt)) {
 		$template->parseCurrentBlock("MODULE_LIST");
 	}
 }
+
+if ($_SESSION["user"]["isAdmin"]) {
+	$template->setCurrentBlock("ADMIN_MENU");
+	$template->setVariable("MENU_SYLLABUSES", "active");
+	$template->parseCurrentBlock("ADMIN_MENU");
+}
