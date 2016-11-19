@@ -51,7 +51,7 @@ class Assessments {
 		// is editing and not found by id
 		if ($editing && !$assessment) {
 			FlashMessage::add(FlashMessage::TYPE_ERROR, "Assessment type was not found.");
-			OtherUtils::redirect("/assessment", true, 303);
+			OtherUtils::redirect("/assessments", true, 303);
 		} else {
 
 			// submitting

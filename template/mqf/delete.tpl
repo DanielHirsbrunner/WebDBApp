@@ -12,7 +12,7 @@
 		<form action="" method="post" class="form-horizontal">
 			<h4>Do you really want to delete MQF <i>{DELETE_MQF_DESC}</i>?</h4>
 
-			<a href="{BASE_PATH}/modules" class="btn btn-info">Cancel</a>
+			<a href="{BASE_PATH}/mqf" class="btn btn-info">Cancel</a>
 			<input type="submit" name="delete" class="btn btn-danger" value="Delete">
 		</form>
 	</div>
