@@ -236,7 +236,7 @@ class Users {
 		$this->template->setVariable("VALUE_SURNAME", htmlspecialchars($surname));
 		$this->template->setVariable("VALUE_EMAIL", htmlspecialchars($email));
 		$this->template->setVariable("VALUE_QUALIFICATION", htmlspecialchars($qualification));
-		$this->template->setVariable("VALUE_ADMIN", $isAdmin);
+		$this->template->setVariable("VALUE_ADMIN", $isAdmin ? "checked" : "");
 
 		$button = $editing ? "Update user" : "Create user";
 		$this->template->setVariable("VALUE_BUTTON", $button);
