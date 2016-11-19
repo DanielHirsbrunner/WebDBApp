@@ -59,7 +59,7 @@ div.content {
   border-radius: 5px;
   margin-bottom: 20px;
 }
-div.content.login-page {
+div.content.unlogged-page {
   margin-top: 20px;
 }
 div.modules {

@@ -1,10 +1,14 @@
 RewriteEngine on
 
-# TODO
-# ErrorDocument 404   /404.html
-
 # for production
-# RewriteBase /~0329100/
+#RewriteBase /project2/
+
+
+RewriteCond %{REQUEST_URI} ^/([^/]+)/
+RewriteRule ^ - [E=SUBDIR:%1]
+
+ErrorDocument 404  /%{reqenv:SUBDIR}/404.php
+
 
 # translate:  /login -> /index.php?page=login
 RewriteRule  ^(login|logout|users|modules|assessments|mqf|activities|deliveries|syllabusWizard)$   index.php?page=$1 [L,QSA,NC]

@@ -2,7 +2,7 @@
 
 <body>
 
-<div class="container content login-page">
+<div class="container content unlogged-page">
 	<!-- INCLUDE include/flash_message.tpl -->
 	<form action="" method="post" class="form-horizontal">
 		<div class="row form-group required {ERROR_CLASS}">
