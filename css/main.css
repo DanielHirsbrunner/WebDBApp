@@ -64,6 +64,7 @@ div.syllabuses {
 }
 table {
   width: 100%;
+  margin-bottom: 10px;
 }
 table tr:not(.table-heading):hover {
   background-color: #eeeeee;
@@ -76,6 +77,12 @@ table th {
 table span.glyphicon {
   font-size: 18px;
   margin-right: 10px;
+}
+table td.td-checkbox {
+  padding: 0;
+}
+table td.td-checkbox input {
+  margin: 0;
 }
 .flash {
   color: black;
@@ -102,4 +109,22 @@ table span.glyphicon {
 }
 .flash span.text {
   padding-left: 10px;
+}
+.numberInput {
+  float: right;
+  text-align: right;
+  width: 55px;
+}
+.tdNumber {
+  text-align: right;
+}
+.first-save {
+  margin-right: 5px;
+}
+td._25 {
+  width: 25%;
+}
+td._25 label {
+  display: inline;
+  font-weight: normal;
 }

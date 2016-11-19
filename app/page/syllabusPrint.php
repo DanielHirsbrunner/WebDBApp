@@ -3,7 +3,6 @@
 <head> 
     <title>Print Syllabus</title>
 	<?php
-		echo '<link rel="stylesheet" type="text/css" href="' . $_SESSION["basePath"] . '/css/syllabus.css">';
 		echo '<link rel="stylesheet" type="text/css" href="' . $_SESSION["basePath"] . '/css/bootstrap.min.css">';
 		echo '<link rel="stylesheet" type="text/css" href="' . $_SESSION["basePath"] . '/css/syllabusPrint.css">';
 	?>
