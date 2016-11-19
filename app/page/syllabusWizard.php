@@ -31,7 +31,7 @@
 	$wizStep = $_SESSION['wizStep'];
 	
 	if ($wizStep == 1) {
-		$content .= '<h3>Step 1 of 4 - Insert general Module Information</h3>';
+		$content .= '<h3>Step 1 of 4 - Insert General Module Information</h3>';
 		$content .= $fg->getModuleInfo(false);
 		$content .= $fg->getAcademicStaff(false);
 		$content .= $fg->getAssessmentCode(false);
@@ -47,15 +47,19 @@
 			$revision = $_SESSION['syllabus']['revisionNr'];
 		}
 		$nextVersionNr = getNextVersionByModul($moduleId);
-		$content .= '<div id="divSubmitButtons">';
-		$content .= '<input type="submit" name="goBack" value="Go back to overview" class ="btnBack btn btn-default"/>';
+		$content .= '<div>';
+		$content .= '<input type="submit" name="goBack" value="Go back to overview" class ="pull-left btn btn-default"/>';
 		if ($versionNr == 0) {
-			$content .= '<input type="submit" name="saveVersion" value="Save as Version '. $nextVersionNr . '.0 and continue" class="btnSave btn btn-primary"/>';
-		} else {                                           
-			$content .= '<input type="submit" name="save" value="Save as current version ' . $versionNr . '.' . $revision . '" class="btnSave btn btn-default"/>';
-			$content .= '<input type="submit" name="saveRevision" value="Save as new revision ' . $versionNr . '.' . ($revision + 1) . '" class="btnSave btn btn-default"/>';
-			$content .= '<input type="submit" name="saveVersion" value="Save as new version ' . $nextVersionNr . '.0" class="btnSave btn btn-default"/>';
+			$content .= '<input type="submit" name="saveVersion" value="Save as Version '. $nextVersionNr . '.0 and continue" class="pull-right btn btn-primary"/>';
+		} else {
+			$content .= '<div class="pull-right">';
+			$content .= '<input type="submit" name="saveVersion" value="Save as new version ' . $nextVersionNr . '.0" class="btn btn-primary"/> ';
+			$content .= '<input type="submit" name="saveRevision" value="Save as new revision ' . $versionNr . '.' . ($revision + 1) . '" class="btn btn-primary"/> ';
+			$content .= '<input type="submit" name="save" value="Save as current version ' . $versionNr . '.' . $revision . '" class="btn btn-primary"/>';
+			$content .= '</div>';
 		}
+
+		$content .= '<div class="clearfix"></div>';
 		$content .= '</div>';
 		
 	} else if ($wizStep == 2) {
@@ -65,17 +69,19 @@
 		$content .= $fg->getLearningOutcomeMapping(false);
 		$content .= $fg->getModeOfDelivery(false);
 		
-		$content .= '<div id="divSubmitButtons">';
-		$content .= '<input type="submit" name="goBack" value="Go back to Step 1" class ="btnBack btn btn-default" />';
-		$content .= '<input type="submit" name="save" value="Save and continue" class="btnSave btn btn-primary" />';
+		$content .= '<div>';
+		$content .= '<input type="submit" name="goBack" value="Go back to Step 1" class ="pull-left btn btn-default" />';
+		$content .= '<input type="submit" name="save" value="Save and continue" class="pull-right btn btn-primary" />';
+		$content .= '<div class="clearfix"></div>';
 		$content .= '</div>';
 		
 	} else if ($wizStep == 3) {
 		$content .= '<H3>Step 3 of 4 - Add the topics to the module</H3>';
 		$content .= $fg->getTopics(false);
-		$content .= '<div id="divSubmitButtons">';
-		$content .= '<input type="submit" name="goBack" value="Go back to Step 2" class ="btnBack btn btn-default" />';
-		$content .= '<input type="submit" name="save" value="Save and continue" class="btnSave btn btn-primary" />';
+		$content .= '<div>';
+		$content .= '<input type="submit" name="goBack" value="Go back to Step 2" class ="pull-left btn btn-default" />';
+		$content .= '<input type="submit" name="save" value="Save and continue" class="pull-right btn btn-primary" />';
+		$content .= '<div class="clearfix"></div>';
 		$content .= '</div>';
 		
 	} else if ($wizStep == 4) {
@@ -84,13 +90,13 @@
 		$content .= $fg->getAddReferences(false);
 		$content .= $fg->getOtherAddInformation(false);
 		
-		$content .= '<div id="divSubmitButtons">';
-		$content .= '<input type="submit" name="goBack" value="Go back to Step 3" class ="btnBack btn btn-default" />';
-		$content .= '<input type="submit" name="save" value="Save and finish" class="btnSave btn btn-primary"/>';
+		$content .= '<div>';
+		$content .= '<input type="submit" name="goBack" value="Go back to Step 3" class ="pull-left btn btn-default" />';
+		$content .= '<input type="submit" name="save" value="Save and finish" class="pull-right btn btn-primary" />';
+		$content .= '<div class="clearfix"></div>';
 		$content .= '</div>';
 	}
 	$content .= '</form>';
 	$template->setVariable("SYLLABUS_CONTENT", $content);
 	
 	include 'app/moduleBar.inc';
-?>

@@ -30,12 +30,11 @@
 			$content .= '<p><b>Nr: ' . $row['topicNr'] . ' - ' . $row['description'] . '</b></p>';
 		}
 	}
-	$content .= '<div id="divSubmitButtons">';
-	$content .= '<input type="submit" name="cancel" value="Cancel" class="btnBack btn btn-default" />';
-	$content .= '<input type="submit" name="delete" value="Delete" class="btnSave btn btn-primary"/>';
+	$content .= '<div>';
+	$content .= '<input type="submit" name="cancel" value="Cancel" class=" btn btn-info" /> ';
+	$content .= '<input type="submit" name="delete" value="Delete" class=" btn btn-danger"/>';
 	$content .= '</div></form>';
 	
 	$template->setVariable("SYLLABUS_CONTENT", $content);
 	
 	include 'app/moduleBar.inc';
-?>

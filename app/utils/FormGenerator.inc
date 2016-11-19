@@ -66,7 +66,7 @@ class FormGenerator
 	
 	public function getModuleInfo($print) {
 		$divName = 'divModul';
-		$inputLabel = 'Module:';
+		$inputLabel = 'Module';
 		$syllabusId = 0;
 		if (isset($_SESSION['syllabusId'])) {
 			$syllabusId = $_SESSION['syllabusId'];
@@ -78,12 +78,13 @@ class FormGenerator
 			$currModule = $_SESSION['moduleId'];
 		}
 		if ($print) {
-			$retval = $this->getDiv($divName, $inputLabel, $this->getTextLabel('<b>' . $currModuleName . '</b>'));
-			$retval .= $this->getDiv('divModuleCode', 'Module Code:', $this->getTextLabel($currModuleCode));
+			$retval = $this->getDivPrint($divName, $inputLabel, $this->getTextLabel('<b>' . $currModuleName . '</b>'));
+			$retval .= $this->getDivPrint('divModuleCode', 'Module Code:', $this->getTextLabel($currModuleCode));
 			return $retval;
 			
 		} else {
-			$inputPart = '<select name="selModul">';
+			$nameProperty = 'selModul';
+			$inputPart = '<div class="col-sm-9"><select id="'.$nameProperty.'" name="'.$nameProperty.'" class="selectpicker" data-live-search="true">';
 			
 			if ($result = $this->db->ExecuteSelectStmt('SELECT moduleId, code, name from module order by code')) {
 				while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
@@ -94,8 +95,8 @@ class FormGenerator
 					$inputPart .= "<option$selected value=\"$modId\">$modCode - $modName</option>";
 				}
 			}
-			$inputPart .= '</select>';
-			return $this->getDiv($divName, $inputLabel, $inputPart);
+			$inputPart .= '</select></div>';
+			return $this->getDiv($divName, $inputLabel, $inputPart, $nameProperty);
 		}
 	}
 	
@@ -105,10 +106,11 @@ class FormGenerator
 		$currModulePurpose = $this->getSyllabusVarText('modulePurpose');
 		
 		if ($print) {
-			return $this->getDiv($divName, $inputLabel, $this->getTextLabel($currModulePurpose));
+			return $this->getDivPrint($divName, $inputLabel, $this->getTextLabel($currModulePurpose));
 		} else {
-			$inputPart = $this->getTextInput('txtModulePurpose', $currModulePurpose);
-			return $this->getDiv($divName, $inputLabel, $inputPart);
+			$nameProperty = 'txtModulePurpose';
+			$inputPart = $this->getTextInput($nameProperty, $currModulePurpose);
+			return $this->getDiv($divName, $inputLabel, $inputPart, $nameProperty);
 		}
 	}
 	
@@ -118,26 +120,28 @@ class FormGenerator
 		$currModuleCredits = $this->getSyllabusVarNr('credits');
 		
 		if ($print) {
-			return $this->getDiv($divName, $inputLabel, $this->getTextLabel($currModuleCredits));
+			return $this->getDivPrint($divName, $inputLabel, $this->getTextLabel($currModuleCredits));
 		} else {
-			$inputPart = $this->getTextInput('txtModuleCredits', $currModuleCredits);
-			return $this->getDiv($divName, $inputLabel, $inputPart);
+			$nameProperty = 'txtModuleCredits';
+			$inputPart = $this->getTextInput($nameProperty, $currModuleCredits);
+			return $this->getDiv($divName, $inputLabel, $inputPart, $nameProperty);
 		}
 	}
 	
 	public function getAcademicStaff($print) {
 		$divName = 'divStaff';
-		$inputLabel = 'Names of academic staff' . ($print ? ' (Qualification)':'') . ':';
+		$inputLabel = 'Names of academic staff' . ($print ? ' (Qualification)':'') . '';
 		$currStaff = $this->getSyllabusVarNr('academicStaff');
 		
 		if ($print) {
 			$currStaffName = $this->getSyllabusVarText('academicStaffName');
 			$currStaffQualification= $this->getSyllabusVarText('academicStaffQualification');
 			$value = $this->getTextLabel($currStaffName. '<br/>' . $currStaffQualification);
-			return $this->getDiv($divName, $inputLabel, $value);
+			return $this->getDivPrint($divName, $inputLabel, $value);
 			
 		} else {
-			$inputPart = '<select name="selAcademicStaff">';
+			$nameProperty = 'selAcademicStaff';
+			$inputPart = '<div class="col-sm-9"><select id="'.$nameProperty.'" name="'.$nameProperty.'" class="selectpicker" data-live-search="true">';
 			
 			$moduleStmt = 'SELECT userId, name, surname from user order by name, surname';
 			if ($result = $this->db->ExecuteSelectStmt($moduleStmt)) {
@@ -149,76 +153,78 @@ class FormGenerator
 					$inputPart .= "<option$selected value=\"$userId\">$userName - $userSurname</option>";
 				}
 			}
-			$inputPart .= '</select>';
-			return $this->getDiv($divName, $inputLabel, $inputPart);
+			$inputPart .= '</select></div>';
+			return $this->getDiv($divName, $inputLabel, $inputPart, $nameProperty);
 		}
 	}
 	
 	public function getSemester($print) {
 		$divName = 'divSemester';
-		$inputLabel = 'Semester and Year offered:';
+		$inputLabel = 'Semester and Year offered';
 		$currSemester = $this->getSyllabusVarText('semester');
 		
 		if ($print) {
-			return $this->getDiv($divName, $inputLabel, $this->getTextLabel($currSemester));
+			return $this->getDivPrint($divName, $inputLabel, $this->getTextLabel($currSemester));
 		} else {
-			$inputPart = $this->getTextInput('txtsemester', $currSemester);
-			return $this->getDiv($divName, $inputLabel, $inputPart);
+			$nameProperty = 'txtsemester';
+			$inputPart = $this->getTextInput($nameProperty, $currSemester);
+			return $this->getDiv($divName, $inputLabel, $inputPart, $nameProperty);
 		}
 	}
 	
 	public function getAssessmentCode($print) {
 		$divName = 'divAssessmentCode';
-		$inputLabel = 'Assessment Code:';
+		$inputLabel = 'Assessment Code';
 		$currValue = $this->getSyllabusVarText('assessmentCode');
 		
 		if ($print) {
-			return $this->getDiv($divName, $inputLabel, $this->getTextLabel($currValue));
+			return $this->getDivPrint($divName, $inputLabel, $this->getTextLabel($currValue));
 		} else {
-			$inputPart = $this->getTextInput('txtassessmentCode', $currValue);
-			return $this->getDiv($divName, $inputLabel, $inputPart);
+			$nameProperty = 'txtassessmentCode';
+			$inputPart = $this->getTextInput($nameProperty, $currValue);
+			return $this->getDiv($divName, $inputLabel, $inputPart, $nameProperty);
 		}
 	}
 	
 	public function getLearningOutcome($print) {
 		$fieldName = 'learningOutcomes';
-		$inputLabel = 'Learning Outcomes:';
+		$inputLabel = 'Learning Outcomes';
 		return $this->getTextAreaDiv($print, $fieldName, $inputLabel);
 	}
 	
 	public function getTransferableSkills($print) {
 		$fieldName = 'transferableSkills';
-		$inputLabel = 'Transferable Skills:';
+		$inputLabel = 'Transferable Skills';
 		return $this->getTextAreaDiv($print, $fieldName, $inputLabel);
 	}
 	
 	public function getSynopsis($print) {
 		$fieldName = 'synopsis';
-		$inputLabel = 'Synopsis:';
+		$inputLabel = 'Synopsis';
 		return $this->getTextAreaDiv($print, $fieldName, $inputLabel);
 	}
 	
 	public function getMainReferences($print) {
 		$fieldName = 'mainReferences';
-		$inputLabel = 'Main references supporting the Module:';
+		$inputLabel = 'Main references supporting the Module';
 		return $this->getTextAreaDiv($print, $fieldName, $inputLabel);
 	}
 	
 	public function getAddReferences($print) {
 		$fieldName = 'addReferences';
-		$inputLabel = 'Additional references supporting the Module:';
+		$inputLabel = 'Additional references supporting the Module';
 		return $this->getTextAreaDiv($print, $fieldName, $inputLabel);
 	}
 	
 	public function getOtherAddInformation($print) {
 		$fieldName = 'addInformation';
-		$inputLabel = 'Other additional information:';
+		$inputLabel = 'Other additional information';
 		return $this->getTextAreaDiv($print, $fieldName, $inputLabel);
 	}
 	
 	public function getModulAimsMapping($print) {
 		$divName = 'divModulAimsMapping';
-		$inputLabel = 'Mapping of the Module to the Programme Aims:';
+		$inputLabel = 'Mapping of the Module to the Programme Aims';
 		$sylId = 0;
 		if (isset($_SESSION['syllabusId'])) {
 			$sylId = $_SESSION['syllabusId'];
@@ -236,21 +242,22 @@ class FormGenerator
 					$table .= ($prevCloNr > 0 ? '</tr> ' : '') . "<tr><td>CLO$cloNr</td>";
 					$prevCloNr = $cloNr;
 				}
-				$table .= '<td><input  type="checkbox" name="chkClo'.$cloNr.'Peo'. $peoNr. '" ' . ($row['syllabusProgAimId'] > 0 ? 'checked ' : '') . 'class="textInput"></td>';
+				$table .= '<td class="td-checkbox"><input type="checkbox" name="chkClo'.$cloNr.'Peo'. $peoNr. '" ' . ($row['syllabusProgAimId'] > 0 ? 'checked ' : '') . 'class="form-control checkbox"></td>';
 			}
 			$table .= '</tr>';
 		}
 		$table .= '</table>';
 		if ($print) {
-			return $this->getDiv($divName, $inputLabel, $table);
+			return $this->getDivPrint($divName, $inputLabel, $table);
 		} else {
-			return $this->getDiv($divName, $inputLabel, $table, '');
+			return "<p><strong>$inputLabel</strong></p>".$table;
+			//return $this->getDiv($divName, $inputLabel, $table, '');
 		}
 	}
 	
 	public function getLearningOutcomeMapping($print) {
 		$divName = 'divLearningOutcomeMapping';
-		$inputLabel = 'Mapping of the Module to the Programme Learning Outcomes:';
+		$inputLabel = 'Mapping of the Module to the Programme Learning Outcomes';
 		$sylId = 0;
 		if (isset($_SESSION['syllabusId'])) {
 			$sylId = $_SESSION['syllabusId'];
@@ -267,21 +274,22 @@ class FormGenerator
 					$table .= ($prevMloNr > 0 ? '</tr> ' : '') . "<tr><td>MLO$mloNr</td>";
 					$prevMloNr = $mloNr;
 				}
-				$table .= '<td><input  type="checkbox" name="chkMlo'.$mloNr.'Plo'. $ploNr. '" ' . ($row['syllabusProgLearnOutcomeId'] > 0 ? 'checked ' : '') . 'class="textInput"></td>';
+				$table .= '<td class="td-checkbox"><input type="checkbox" name="chkMlo'.$mloNr.'Plo'. $ploNr. '" ' . ($row['syllabusProgLearnOutcomeId'] > 0 ? 'checked ' : '') . 'class="form-control checkbox"></td>';
 			}
 			$table .= '</tr>';
 		}
 		$table .= '</table>';
 		if ($print) {
-			return $this->getDiv($divName, $inputLabel, $table);
+			return $this->getDivPrint($divName, $inputLabel, $table);
 		} else {
-			return $this->getDiv($divName, $inputLabel, $table, '');
+			return "<p><strong>$inputLabel</strong></p>".$table;
+			//return $this->getDiv($divName, $inputLabel, $table, '');
 		}
 	}
 	
 	public function getModeOfDelivery($print) {
 		$divName = 'divModeOfDelivery';
-		$inputLabel = 'Mode of Delivery:';
+		$inputLabel = 'Mode of Delivery';
 		$sylId = 0;
 		if (isset($_SESSION['syllabusId'])) {
 			$sylId = $_SESSION['syllabusId'];
@@ -306,7 +314,7 @@ class FormGenerator
 	
 	public function getTeachLearnAssesStrategies($print) {
 		$divName = 'divTeachLearnAssesStrategies';
-		$inputLabel = 'Teaching-Learning and Assessment strategies:';
+		$inputLabel = 'Teaching-Learning and Assessment strategies';
 		$sylId = 0;
 		if (isset($_SESSION['syllabusId'])) {
 			$sylId = $_SESSION['syllabusId'];
@@ -350,12 +358,13 @@ class FormGenerator
 		}
 		
 		$table  = '<table><tr class="table-heading"><th>MQF Skills</th><th>Teaching and Learning activities</th><th>Type of Assessment</th></tr>';
-		$table  .= '<tr><td>' . $syllabusMqfSkillPart . '</td><td>' . $teachlearnactivityPart . '</td><td>' . $assessmentTypePart . '</td></tr>';
+		$table .= '<tr><td>' . $syllabusMqfSkillPart . '</td><td>' . $teachlearnactivityPart . '</td><td>' . $assessmentTypePart . '</td></tr>';
 		$table .= '</table>';
 		if ($print) {
-			return $this->getDiv($divName, $inputLabel, $table);
+			return $this->getDivPrint($divName, $inputLabel, $table);
 		} else {
-			return $this->getDiv($divName, $inputLabel, $table, '');
+			return "<p><strong>$inputLabel</strong></p>".$table;
+			//return $this->getDiv($divName, $inputLabel, $table, '');
 		}
 	}
 	
@@ -363,7 +372,7 @@ class FormGenerator
 	// - Javascript to recal total?
 	public function getTopics($print) {
 		$divName = "divTopics";
-		$inputLabel = "Content Outline of the Module and the SLT per Topic:";
+		$inputLabel = "Content Outline of the Module and the SLT per Topic";
 		$syllabusId = 0;
 		if (isset($_SESSION['syllabusId'])) {
 			$syllabusId = $_SESSION['syllabusId'];
@@ -525,9 +534,9 @@ class FormGenerator
 		$table .= '<tr><td/>';
 		$table .= '<td>Credit Hours</td>';
 		if ($print) {
-			$table .= '<td colspan="8" class="tdNumber"><p>'. $creditHours . '</p></td>';
+			$table .= '<td colspan="8" class="tdNumber"><p>' . $creditHours . '</p></td>';
 		} else {
-			$table .= '<td colspan="8" class="tdNumber"><input name="txtcreditHours" type="text" Value="' . $creditHours . '" class="numberInput"></td>';
+			$table .= '<td colspan="8" class="tdNumber"><input name="txtcreditHours" type="text" value="' . $creditHours . '" class="numberInput form-control"></td>';
 		}
 		$table .= '<td colspan="2"/></tr>';
 		$table .= '</table>';
@@ -536,33 +545,42 @@ class FormGenerator
 			return '<div id = "' . $divName . '" class="inputDiv">' . $table . '</div>';
 		} else {
 		
-			return '<a href ="' . $_SESSION["basePath"] . '/syllabusTopic/0" class="btn btn-default">+ add new topic</a><br/><br/>' . $table;
+			return '<p><a href ="' . $_SESSION["basePath"] . '/syllabusTopic/0" class="btn btn-default">+ add new topic</a></p>' . $table;
 		}
 	}
-		
-	
+
+
 	private function getTextAreaDiv($print, $fieldName, $inputLabel) {
 		$divName = 'div' . $fieldName;
 		$currValue = $this->getSyllabusVarText($fieldName);
 		
 		if ($print) {
-			return $this->getDiv($divName, $inputLabel, $this->getTextLabel($currValue));
+			return $this->getDivPrint($divName, $inputLabel, $this->getTextLabel($currValue));
 		} else {
-			$inputPart = $this->getTextArea('txt' . $fieldName, $currValue);
-			return $this->getDiv($divName, $inputLabel, $inputPart);
+			$nameProperty = 'txt' . $fieldName;
+			$inputPart = $this->getTextArea($nameProperty, $currValue);
+			return $this->getDiv($divName, $inputLabel, $inputPart, $nameProperty);
 		}
 	}
 	
-	private function getDiv($divName, $labelText, $InputPart, $InputPartClass='inputLabel') {
+	private function getDiv($divName, $labelText, $inputPart, $nameProperty) {
+		$div  = '<div id="' . $divName . '" class="row form-group">';
+		$div .= '<div class="col-sm-3 control-label"><label for="' . $nameProperty . '">' . $labelText . '</label></div>';
+		$div .= $inputPart;
+		$div .= '</div>';
+		return $div;
+	}
+
+	private function getDivPrint($divName, $labelText, $InputPart, $InputPartClass='inputLabel') {
 		$div  = '<div id = "' . $divName . '" class="inputDiv">';
 		$div .= '<p class="' . $InputPartClass . '">' . $labelText . '</p>';
 		$div .= $InputPart;
 		$div .= '</div>';
 		return $div;
 	}
-	
+
 	private function getTextInput($name, $value) {
-		return  '<input name="' . $name . '" type="text" value = "' . $value . '" class="textInput">';
+		return  '<div class="col-sm-9"><input id="' . $name . '" name="' . $name . '" type="text" value = "' . $value . '" class="form-control"></div>';
 	}
 	
 	private function getTextLabel($value) {
@@ -571,7 +589,7 @@ class FormGenerator
 	}
 	
 	private function getTextArea($name, $value) {
-		return  '<textArea name="' . $name . '" rows="4" class="textArea">' . $value . '</textArea>';
+		return  '<div class="col-sm-9"><textarea id="' . $name . '" name="' . $name . '" rows="4" class="form-control">' . $value . '</textarea></div>';
 	}
 	
 	// Display all hours with 1 decimal point for half hours as 0.5
@@ -594,4 +612,3 @@ class FormGenerator
 		}
 	}
 }
-?>

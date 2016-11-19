@@ -75,38 +75,38 @@
 	}
 	
 	
-	$table = '<table style="width:100%;">';//<tr><th style="width:200px;"/><th style="width:400px;" />';
-	$table .= '<tr><td style="width:200px;">Topic number</td><td><input name="txttopicNr" type="text" Value="' . $topicNr . '" style="width:40px;text-align:right;"></td></tr>';
-	$table .= '<tr><td style="width:200px;">Topic description</td><td><textArea name="txtdescription" rows="4" class="textArea" style="width:100%;">' . $description . '</textArea></td></tr>';
+	$table = '<table>';//<tr><th style="width:200px;"/><th style="width:400px;" />';
+	$table .= '<tr><td class="_25"><label for="txttopicNr">Topic number</label></td><td><input id="txttopicNr" name="txttopicNr" type="text" value="' . $topicNr . '" class="numberInput form-control pull-left"></td></tr>';
+	$table .= '<tr><td class="_25"><label for="txtdescription">Topic description</label></td><td><textarea id="txtdescription" name="txtdescription" rows="4" class="textarea form-control">' . $description . '</textarea></td></tr>';
 	$table .= '</table><br/>';
 	$content .= $table;
 	
 	$table = '<table style="width:100%;"><tr><th>Learning</th><th class="tdNumber">Lecture</th><th class="tdNumber">Tutorial</th><th class="tdNumber">Practical</th><th class="tdNumber">Other</th></tr>';
-	$table .= '<tr><td>Guided learning:</td>';
-	$table .= '<td class=\"tdNumber\"><input name="txtguidedLearnLecture" type="text" Value="' . formatHours($guidedLearnLecture) . '" class="numberInput"></td>';
-	$table .= '<td class=\"tdNumber\"><input name="txtguidedLearnTutorial" type="text" Value="' . formatHours($guidedLearnTutorial) . '" class="numberInput"></td>';
-	$table .= '<td class=\"tdNumber\"><input name="txtguidedLearnPractical" type="text" Value="' . formatHours($guidedLearnPractical) . '" class="numberInput"></td>';
-	$table .= '<td class=\"tdNumber\"><input name="txtguidedLearnOther" type="text" Value="' . formatHours($guidedLearnOther) . '" class="numberInput"></td></tr>';
-	$table .= '<tr><td>Independant learning:</td>';
-	$table .= '<td class=\"tdNumber\"><input name="txtindepLearnLecture" type="text" Value="' . formatHours($indepLearnLecture) . '" class="numberInput"></td>';
-	$table .= '<td class=\"tdNumber\"><input name="txtindepLearnTutorial" type="text" Value="' . formatHours($indepLearnTutorial) . '" class="numberInput"></td>';
-	$table .= '<td class=\"tdNumber\"><input name="txtindepLearnPractical" type="text" Value="' . formatHours($indepLearnPractical) . '" class="numberInput"></td>';
-	$table .= '<td class=\"tdNumber\"><input name="txtindepLearnOther" type="text" Value="' . formatHours($indepLearnOther) . '" class="numberInput"></td></tr>';
+	$table .= '<tr><td>Guided learning</td>';
+	$table .= '<td class="tdNumber"><input name="txtguidedLearnLecture" type="text" value="' . formatHours($guidedLearnLecture) . '" class="numberInput form-control"></td>';
+	$table .= '<td class="tdNumber"><input name="txtguidedLearnTutorial" type="text" value="' . formatHours($guidedLearnTutorial) . '" class="numberInput form-control"></td>';
+	$table .= '<td class="tdNumber"><input name="txtguidedLearnPractical" type="text" value="' . formatHours($guidedLearnPractical) . '" class="numberInput form-control"></td>';
+	$table .= '<td class="tdNumber"><input name="txtguidedLearnOther" type="text" value="' . formatHours($guidedLearnOther) . '" class="numberInput form-control"></td></tr>';
+	$table .= '<tr><td>Independant learning</td>';
+	$table .= '<td class="tdNumber"><input name="txtindepLearnLecture" type="text" value="' . formatHours($indepLearnLecture) . '" class="numberInput form-control"></td>';
+	$table .= '<td class="tdNumber"><input name="txtindepLearnTutorial" type="text" value="' . formatHours($indepLearnTutorial) . '" class="numberInput form-control"></td>';
+	$table .= '<td class="tdNumber"><input name="txtindepLearnPractical" type="text" value="' . formatHours($indepLearnPractical) . '" class="numberInput form-control"></td>';
+	$table .= '<td class="tdNumber"><input name="txtindepLearnOther" type="text" value="' . formatHours($indepLearnOther) . '" class="numberInput form-control"></td></tr>';
 	$table .= '</table>';
 	$content .= $table;
 			
-	$content .= '<div id="divSubmitButtons">';
-	$content .= '<input type="submit" name="cancel" value="Cancel"  class="btnBack"/>';
-	$content .= '<input type="submit" name="save" value="Save"  class="btnSave"/>';
+	$content .= '<div>';
+	$content .= '<input type="submit" name="cancel" value="Cancel" class="pull-left btn btn-default"/>';
+	$content .= '<input type="submit" name="save" value="Save" class="pull-right btn btn-primary"/>';
 	$content .= '</div>';
+	$content .= '<div class="clearfix"></div>';
 	$content .= '</form>';
 	
 	$template->setVariable("SYLLABUS_CONTENT", $content);
-	
-	
+
 	// Display all hours with 1 decimal point for half hours as 0.5
 	function formatHours($hours) {
 		return sprintf("%01.1f", $hours);
 	}
+
 	include 'app/moduleBar.inc';
-?>

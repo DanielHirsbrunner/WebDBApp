@@ -33,10 +33,9 @@
 			$content .= '<p><b>Module: ' . $row['moduleName'] . ' Syllabus Version Nr ' . $row['versionNr'] . '.' . $row['revisionNr'] . '</b></p>';
 		}
 	}
-	$content .= '<form  method="post"><input type="submit" name="cancel" value="Cancel" class="btn btn-default">';
+	$content .= '<form  method="post"><input type="submit" name="cancel" value="Cancel" class="btn btn-info"> ';
 	$content .= '<input type="submit" name="delete" value="Delete" class="btn btn-danger"></form>';
 	
 	$template->setVariable("SYLLABUS_CONTENT", $content);
 	
 	include 'app/moduleBar.inc';
-?>
