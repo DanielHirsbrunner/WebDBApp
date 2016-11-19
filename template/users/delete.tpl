@@ -7,7 +7,7 @@
 
 	<div class="content">
 		<!-- INCLUDE include/flash_message.tpl -->
-		<p><a href="{BASE_PATH}/users">Manage users</a> <a href="{BASE_PATH}/modules">Manage modules</a></p>
+		<!-- INCLUDE include/admin_menu.tpl -->
 
 		<form action="" method="post" class="form-horizontal">
 			<h4>Do you really want to delete user <i>{DELETE_USER_NAME}</i>?</h4>

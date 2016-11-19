@@ -7,7 +7,7 @@
 
 	<div class="content">
 		<!-- INCLUDE include/flash_message.tpl -->
-		<p><a href="{BASE_PATH}/users">Manage users</a> <a href="{BASE_PATH}/modules">Manage modules</a></p>
+		<!-- INCLUDE include/admin_menu.tpl -->
 
 		<!-- BEGIN ASSESSMENT_TYPES_EDIT -->
 		<form action="" method="post" class="form-horizontal">

@@ -29,6 +29,32 @@ div.header {
 	}
 }
 
+div.admin-menu {
+	padding-bottom: 3px;
+	margin-bottom: 15px;
+	border-bottom: 1px solid #AAAAAA;
+    text-align: center;
+	& > a {
+		font-variant: small-caps;
+		font-size: 20px;
+		padding: 6px 12px;
+		&:not(:last-child) {
+			border-right: 2px solid #AAAAAA;
+		}
+		&:hover {
+			color: darken(red, 20%);
+			text-decoration: none;
+		}
+		&.active {
+			color: lighten(black, 10%);
+			text-decoration: underline;
+			&:hover {
+				color: darken(red, 20%);
+			}
+		}
+	}
+}
+
 div.content {
 	background-color: white;
 	padding: 20px 10px;

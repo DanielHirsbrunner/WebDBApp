@@ -7,9 +7,9 @@
 
 	<div class="content">
 		<!-- INCLUDE include/flash_message.tpl -->
-		<p><a href="{BASE_PATH}/users">Manage users</a> <a href="{BASE_PATH}/modules">Manage modules</a> <a href="{BASE_PATH}/assessments">Manage assessment types</a></p>
+		<!-- INCLUDE include/admin_menu.tpl -->
+
 		<p><a href="{BASE_PATH}/users/add" class="btn btn-default"> + Create new user</a></p>
-		<!-- BEGIN RESULTS_TABLE -->
 		<table>
 			<tr class="table-heading"><th>#</th><th>Username</th><th>Full name</th><th>Email</th><th>Admin</th><th>Modules</th><th>&nbsp;</th></tr>
 			<!-- BEGIN USERS_ROW -->
@@ -22,7 +22,6 @@
 			</tr>
 			<!-- END USERS_ROW -->
 		</table>
-		<!-- END RESULTS_TABLE -->
 	</div>
 </div>
 <!-- INCLUDE include/scripts.tpl -->

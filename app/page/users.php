@@ -39,3 +39,5 @@ switch ($action) {
 		}
 		break;
 }
+
+$template->setVariable("MENU_USERS", "active");

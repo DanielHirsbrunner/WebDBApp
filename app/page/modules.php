@@ -21,3 +21,5 @@ switch ($action) {
 		$modules->renderDelete();
 		break;
 }
+
+$template->setVariable("MENU_MODULES", "active");

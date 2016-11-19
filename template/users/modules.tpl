@@ -7,7 +7,8 @@
 
 	<div class="content">
 		<!-- INCLUDE include/flash_message.tpl -->
-		<p><a href="{BASE_PATH}/users">Manage users</a> <a href="{BASE_PATH}/modules">Manage modules</a></p>
+		<!-- INCLUDE include/admin_menu.tpl -->
+
 		<p>
 			<!-- BEGIN RESULTS_SELECT -->
 			<form action="{BASE_PATH}/users/modules/{FORM_ACTION_USER_ID}/add" method="post">

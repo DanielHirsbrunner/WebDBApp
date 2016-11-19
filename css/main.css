@@ -27,6 +27,31 @@ div.header > .user {
 div.header > .user span {
   margin-right: 6px;
 }
+div.admin-menu {
+  padding-bottom: 3px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #aaaaaa;
+  text-align: center;
+}
+div.admin-menu > a {
+  font-variant: small-caps;
+  font-size: 20px;
+  padding: 6px 12px;
+}
+div.admin-menu > a:not(:last-child) {
+  border-right: 2px solid #aaaaaa;
+}
+div.admin-menu > a:hover {
+  color: #990000;
+  text-decoration: none;
+}
+div.admin-menu > a.active {
+  color: #1a1a1a;
+  text-decoration: underline;
+}
+div.admin-menu > a.active:hover {
+  color: #990000;
+}
 div.content {
   background-color: white;
   padding: 20px 10px;

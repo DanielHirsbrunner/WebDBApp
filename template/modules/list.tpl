@@ -7,7 +7,8 @@
 
 	<div class="content">
 		<!-- INCLUDE include/flash_message.tpl -->
-		<p><a href="{BASE_PATH}/users">Manage users</a> <a href="{BASE_PATH}/modules">Manage modules</a> <a href="{BASE_PATH}/assessments">Manage assessment types</a></p>
+		<!-- INCLUDE include/admin_menu.tpl -->
+
 		<p><a href="{BASE_PATH}/modules/add" class="btn btn-default"> + Create new module</a></p>
 		<table>
 			<tr class="table-heading"><th>#</th><th>Name</th><th>Code</th><th>Credits</th><th>&nbsp;</th></tr>
