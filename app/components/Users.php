@@ -161,6 +161,11 @@ class Users {
 		$id = $_GET["id"];
 		$result = $this->getUserById($id);
 		if ($result) {
+			// user deleting himself
+			if ($id == $_SESSION["user"]["id"]) {
+				FlashMessage::add(FlashMessage::TYPE_ERROR, "You cannot delete your own account.");
+				OtherUtils::redirect("/users");
+			}
 			// submitting
 			if (isset($_POST["delete"])) {
 				$this->deleteUser($id);
