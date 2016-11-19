@@ -57,23 +57,19 @@ if ($page == "login" && isset($_SESSION["user"])) {
 	}
 }
 
-$_404 = false;
 // load correct page
 if ($page != "") {
 	$whitelist = ["module", "syllabusWizard", "syllabusDelete", "syllabusPrint", "syllabusTopic","syllabusTopicDelete",
 				  "login", "logout", "users", "modules", "assessments", "mqf", "activities", "deliveries"];
-	if (in_array($page, $whitelist)) {
+	if (in_array($page, $whitelist)) { // already done in .htaccess, so once it is here, it should be always true
 		include "app/page/".$page.".php";
-	} else {
-		$_404 = true;
-		// TODO 404
 	}
 } else {
 	include "app/page/index.php";
 }
 
 // parse header
-if ($page != "login" && isset($_SESSION["user"])) {
+if (isset($_SESSION["user"])) {
 	$template->setCurrentBlock("HEADER");
 	$template->setVariable("USER_NAME", $_SESSION["user"]["fullName"]);
 	$template->parseCurrentBlock("HEADER");
