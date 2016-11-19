@@ -61,7 +61,7 @@ $_404 = false;
 // load correct page
 if ($page != "") {
 	$whitelist = ["module", "syllabusWizard", "syllabusDelete", "syllabusPrint", "syllabusTopic","syllabusTopicDelete",
-				  "login", "logout", "users", "modules"];
+				  "login", "logout", "users", "modules", "assessments"];
 	if (in_array($page, $whitelist)) {
 		include "app/page/".$page.".php";
 	} else {
