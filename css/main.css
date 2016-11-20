@@ -36,10 +36,10 @@ div.admin-menu {
 div.admin-menu > a {
   font-variant: small-caps;
   font-size: 20px;
-  padding: 6px 12px 6px 6px;
+  padding: 6px 8px 6px 12px;
 }
-div.admin-menu > a:not(:last-child) {
-  border-right: 2px solid #aaaaaa;
+div.admin-menu > a + a {
+  border-left: 2px solid #aaaaaa;
 }
 div.admin-menu > a:hover {
   color: #990000;
