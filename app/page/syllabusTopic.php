@@ -27,15 +27,38 @@
 		$indepLearnOther = trim($_POST['txtindepLearnOther']);
 		
 		if ($topicId > 0) {
-			$stmt  = "UPDATE syllabusTopic SET topicNr = $topicNr, description = '$description', guidedLearnLecture = $guidedLearnLecture, guidedLearnTutorial = $guidedLearnTutorial, guidedLearnPractical = $guidedLearnPractical, guidedLearnOther = $guidedLearnOther, ";
-			$stmt .= "indepLearnLecture = $indepLearnLecture, indepLearnTutorial = $indepLearnTutorial, indepLearnPractical = $indepLearnPractical, indepLearnOther = $indepLearnOther ";
-			$stmt .= 'WHERE syllabusTopicId = ' . $topicId;
-			$db->ExecuteSelectStmt($stmt);
+			$fields_values = array(
+				'topicNr' => $topicNr,
+				'description' => $description,
+				'guidedLearnLecture' => $guidedLearnLecture,
+				'guidedLearnTutorial' => $guidedLearnTutorial,
+				'guidedLearnPractical' => $guidedLearnPractical,
+				'guidedLearnOther' => $guidedLearnOther,
+				
+				'indepLearnLecture' => $indepLearnLecture,
+				'indepLearnTutorial' => $indepLearnTutorial,
+				'indepLearnPractical' => $indepLearnPractical,
+				'indepLearnOther' => $indepLearnOther
+			);		
+			$db->ExecuteUpdateStmt('syllabusTopic', $fields_values, 'syllabusTopicId = ' . $topicId);
+			
 		} else {
-			$stmt  = 'INSERT INTO syllabusTopic (syllabusId, topicNr, description, guidedLearnLecture, ';
-			$stmt .= 'guidedLearnTutorial, guidedLearnPractical, guidedLearnOther, indepLearnLecture, indepLearnTutorial, indepLearnPractical, indepLearnOther) ';
-			$stmt .= 'VALUES (' . $syllabusId . ', ' . $topicNr . ', \'' . $description . '\', ' . $guidedLearnLecture . ', ' . $guidedLearnTutorial . ', ' . $guidedLearnPractical . ', ' . $guidedLearnOther . ', ' . $indepLearnLecture . ', ' . $indepLearnTutorial . ', ' . $indepLearnPractical . ', ' . $indepLearnOther . ')';
-			$db->ExecuteSelectStmt($stmt);
+			$fields_values = array(
+				'syllabusId' => $syllabusId,
+				'topicNr' => $topicNr,
+				'description' => $description,
+				'guidedLearnLecture' => $guidedLearnLecture,
+				'guidedLearnTutorial' => $guidedLearnTutorial,
+				'guidedLearnPractical' => $guidedLearnPractical,
+				'guidedLearnOther' => $guidedLearnOther,
+				
+				'indepLearnLecture' => $indepLearnLecture,
+				'indepLearnTutorial' => $indepLearnTutorial,
+				'indepLearnPractical' => $indepLearnPractical,
+				'indepLearnOther' => $indepLearnOther
+			);
+
+			$res = $db->ExecuteInsertStmt('syllabusTopic', $fields_values);
 		}
 	}
 	

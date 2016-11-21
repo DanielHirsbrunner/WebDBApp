@@ -6,18 +6,19 @@
 		$currMod = $_SESSION['moduleId'];
 	}
 	
+	$syllabusId = 0;
+	if (isset($_GET["id"])) {
+		$syllabusId = $_GET["id"];
+	}
 	// check if a submit button was pressed
 	if(isset($_POST['save']) || isset($_POST['saveRevision']) || isset($_POST['saveVersion']) || isset($_POST['goBack'])) {
 		require_once('/../syllabusSaver.inc');
+		$syllabusId = $_SESSION['syllabusId'];
 	}
 	
 	
 	// Initial Part
 	$fg = App\Utils\formGenerator::Instance();
-	$syllabusId = 0;
-	if (isset($_GET["id"])) {
-		$syllabusId = $_GET["id"];
-	}
 	$moduleId = 0;
 	if (isset($_SESSION['moduleId'])) {
 		$moduleId = $_SESSION['moduleId'];

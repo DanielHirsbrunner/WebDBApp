@@ -507,11 +507,11 @@ class FormGenerator
 				$table .= '<tr><td/>';
 				$table .= "<td>$description</td>";
 				if ($print) {
-					$table .= '<td colspan="4" class="tdNumber">'. $this->formatHours($indepLearning) . '</td>';
 					$table .= '<td colspan="4" class="tdNumber">' . $this->formatHours($guidedLearning) . '</td>';
+					$table .= '<td colspan="4" class="tdNumber">'. $this->formatHours($indepLearning) . '</td>';
 				} else {
-					$table .= '<td colspan="4" class="tdNumber"><input name="txtsyllabusAssType' .$syllabusAssessmentTypeId . 'Indep" type="text" value="' . $this->formatHours($indepLearning) . '" class="numberInput form-control"></td>';
 					$table .= '<td colspan="4" class="tdNumber"><input name="txtsyllabusAssType' .$syllabusAssessmentTypeId . 'Guided" type="text" value="' . $this->formatHours($guidedLearning) . '" class="numberInput form-control"></td>';
+					$table .= '<td colspan="4" class="tdNumber"><input name="txtsyllabusAssType' .$syllabusAssessmentTypeId . 'Indep" type="text" value="' . $this->formatHours($indepLearning) . '" class="numberInput form-control"></td>';
 				}
 				$table .= '<td colspan="2"/></tr>';
 			}

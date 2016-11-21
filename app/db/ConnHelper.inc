@@ -26,10 +26,33 @@ class ConnHelper
 		$result = $this->conn->query($query);
 		if (\DB::isError($result)) {
 			\App\Utils\FlashMessage::add(\App\Utils\FlashMessage::TYPE_DEBUGGING, $result->getUserinfo());
-			//echo '<p>There was an error in the database query: </p><p>'.$result->getMessage().'</p>';
 			return 0;
 		}
 		return $result;
+	}
+
+	public function ExecuteInsertStmt($table_name, $fields_values) {
+		$res = $this->conn->autoExecute($table_name, $fields_values, DB_AUTOQUERY_INSERT);
+
+		if (\DB::isError($res)) {
+			\App\Utils\FlashMessage::add(\App\Utils\FlashMessage::TYPE_DEBUGGING, $res->getUserinfo());
+		}
+	}
+
+	public function ExecuteUpdateStmt($table_name, $fields_values, $where_condition) {
+		$res = $this->conn->autoExecute($table_name, $fields_values, DB_AUTOQUERY_UPDATE, $where_condition);
+
+		if (\DB::isError($res)) {
+			\App\Utils\FlashMessage::add(\App\Utils\FlashMessage::TYPE_DEBUGGING, $res->getUserinfo());
+		}
+	}
+
+	public function ExecuteDeleteStmt($table_name, $where_condition) {
+		$res = $this->conn->query('DELETE FROM ' . $table_name . ' WHERE ' . $where_condition);
+
+		if (\DB::isError($res)) {
+			\App\Utils\FlashMessage::add(\App\Utils\FlashMessage::TYPE_DEBUGGING, $res->getUserinfo());
+		}
 	}
 	
 	// needed for variables where the user can enter text to prevent sql injection and escape special characters

@@ -61,20 +61,43 @@
 			$revisionNr = $_SESSION['syllabus']['revisionNr'];
 		}
 		
+		$db = App\DB\ConnHelper::Instance();
 		if ($createNew) {
 			// insert
 			$versionNr = getNextVersionByModul($moduleId);
-			$stmt = "call  copySyllabus($syllabusId, $versionNr, $userId )";
-			executeSqlStmt($stmt);
+			// copy an existing one to a new version
+			if ($syllabusId > 0) {
+				$stmt = "call  copySyllabus($syllabusId, $versionNr, $userId )";
+				$db->ExecuteSelectStmt($stmt);
+			} else {
+				// Insert a new empty syllabus
+				$fields_values = array(
+					'moduleId' => $moduleId,
+					'versionNr' => $versionNr ,
+					'revisionNr' => 0,
+					'academicStaff' => $academicStaffId,
+					'editBy' => $userId
+				);
+
+				$res = $db->ExecuteInsertStmt('syllabus', $fields_values);
+			}
 			$_SESSION['syllabusId'] = getIdByModulVersion($moduleId, $versionNr);
 			$syllabusId = $_SESSION['syllabusId'];
 			$revisionNr = 0;
 		}
 		
-		// update
-		$stmt = 'UPDATE syllabus SET revisionNr = ' . ( $revisionNr + ($increaseRevision ? 1 : 0)) . ', academicStaff = ' . $academicStaffId . ', semester = \'' . $semester . '\', learningOutcomes = \'' . $learningOutcomes . '\', transferableSkills = \'' . $transferableSkills . '\', synopsis = \'' . $synopsis . '\', assessmentCode = \'' . $assessmentCode . '\', editBy = ' . $userId . ' ';
-		$stmt .= 'WHERE syllabusId = ' . $syllabusId;
-		executeSqlStmt($stmt);
+		// update (also after insert or copy)
+		$fields_values = array(
+			'revisionNr' => ($revisionNr + ($increaseRevision ? 1 : 0)),
+			'academicStaff' => $academicStaffId,
+			'semester' => $semester,
+			'learningOutcomes' => $learningOutcomes,
+			'transferableSkills' => $transferableSkills,
+			'synopsis' => $synopsis,
+			'assessmentCode' => $assessmentCode,
+			'editBy' => $userId
+		);		
+		$db->ExecuteUpdateStmt('syllabus', $fields_values, 'syllabusId = ' . $syllabusId);
 		
 		$_SESSION['wizStep'] = 2;
 	}
@@ -97,16 +120,18 @@
 				$ploNr = $row['ploNr'];
 				
 				$isChecked = isset($_POST['chkMlo'.$mloNr.'Plo'. $ploNr]);
-				$stmt = '';
 				// User unchecked, delete entry
 				if (!$isChecked && $row['syllabusProgLearnOutcomeId'] > 0) {
-					$stmt = 'DELETE FROM syllabusProgLearnOutcome WHERE syllabusProgLearnOutcomeId = ' . $row['syllabusProgLearnOutcomeId'];
-				// User checked, insert entry 
+					$db->ExecuteDeleteStmt('syllabusProgLearnOutcome', 'syllabusProgLearnOutcomeId = ' . $row['syllabusProgLearnOutcomeId']);
+				
 				} else if ($isChecked && $row['syllabusProgLearnOutcomeId'] == 0) {
-					$stmt = 'INSERT INTO syllabusProgLearnOutcome (syllabusId, mlo, plo) VALUES (' . $syllabusId . ', ' . $mloNr . ', ' . $ploNr . ')';
-				}
-				if ($stmt != '') {
-					executeSqlStmt($stmt);
+					// User checked, insert entry
+					$fields_values = array(
+						'syllabusId' => $syllabusId,
+						'mlo' => $mloNr ,
+						'plo' => $ploNr
+					);
+					$db->ExecuteInsertStmt('syllabusProgLearnOutcome', $fields_values);
 				}
 			}
 		}
@@ -118,16 +143,18 @@
 				$peoNr = $row['peoNr'];
 				
 				$isChecked = isset($_POST['chkClo'.$cloNr.'Peo'. $peoNr]);
-				$stmt = '';
 				// User unchecked, delete entry
 				if (!$isChecked && $row['syllabusProgAimId'] > 0) {
-					$stmt = 'DELETE FROM syllabusProgAim WHERE syllabusProgAimId = ' . $row['syllabusProgAimId'];
-				// User checked, insert entry 
+					$db->ExecuteDeleteStmt('syllabusProgAim', 'syllabusProgAimId = ' . $row['syllabusProgAimId']);
+					
 				} else if ($isChecked && $row['syllabusProgAimId'] == 0) {
-					$stmt = 'INSERT INTO syllabusProgAim (syllabusId, clo, peo) VALUES (' . $syllabusId . ', ' . $cloNr . ', ' . $peoNr . ')';
-				}
-				if ($stmt != '') {
-					executeSqlStmt($stmt);
+					// User checked, insert entry 
+					$fields_values = array(
+						'syllabusId' => $syllabusId,
+						'clo' => $cloNr ,
+						'peo' => $peoNr
+					);
+					$res = $db->ExecuteInsertStmt('syllabusProgAim', $fields_values);
 				}
 			}
 		}
@@ -138,16 +165,17 @@
 				$assessmentTypeId = $row['assessmentTypeId'];
 				
 				$isChecked = isset($_POST['chkassessmentType'. $assessmentTypeId]);
-				$stmt = '';
 				// User unchecked, delete entry
 				if (!$isChecked && $row['syllabusassessmenttypeId'] > 0) {
-					$stmt = 'DELETE FROM syllabusassessmenttype WHERE syllabusassessmenttypeId = ' . $row['syllabusassessmenttypeId'];
+					$db->ExecuteDeleteStmt('syllabusassessmenttype', 'syllabusassessmenttypeId = ' . $row['syllabusassessmenttypeId']);
 				// User checked, insert entry 
 				} else if ($isChecked && $row['syllabusassessmenttypeId'] == 0) {
-					$stmt = 'INSERT INTO syllabusassessmenttype (syllabusId, assessmentTypeId) VALUES (' . $syllabusId . ', ' . $assessmentTypeId . ')';
-				}
-				if ($stmt != '') {
-					executeSqlStmt($stmt);
+					// User checked, insert entry 
+					$fields_values = array(
+						'syllabusId' => $syllabusId,
+						'assessmentTypeId' => $assessmentTypeId
+					);
+					$res = $db->ExecuteInsertStmt('syllabusassessmenttype', $fields_values);
 				}
 			}
 		}
@@ -158,16 +186,17 @@
 				$mqfSkillId = $row['mqfSkillId'];
 				
 				$isChecked = isset($_POST['chkmqfSkill'. $mqfSkillId]);
-				$stmt = '';
 				// User unchecked, delete entry
 				if (!$isChecked && $row['syllabusMqfSkillId'] > 0) {
-					$stmt = 'DELETE FROM syllabusMqfSkill WHERE syllabusMqfSkillId = ' . $row['syllabusMqfSkillId'];
-				// User checked, insert entry 
+					$db->ExecuteDeleteStmt('syllabusMqfSkill', 'syllabusMqfSkillId = ' . $row['syllabusMqfSkillId']);
+					
 				} else if ($isChecked && $row['syllabusMqfSkillId'] == 0) {
-					$stmt = 'INSERT INTO syllabusMqfSkill (syllabusId, mqfSkillId) VALUES (' . $syllabusId . ', ' . $mqfSkillId . ')';
-				}
-				if ($stmt != '') {
-					executeSqlStmt($stmt);
+					// User checked, insert entry 
+					$fields_values = array(
+						'syllabusId' => $syllabusId,
+						'mqfSkillId' => $mqfSkillId
+					);
+					$res = $db->ExecuteInsertStmt('syllabusMqfSkill', $fields_values);
 				}
 			}
 		}
@@ -178,16 +207,18 @@
 				$teachLearnActivityId = $row['teachLearnActivityId'];
 				
 				$isChecked = isset($_POST['chkteachlearnactivity'. $teachLearnActivityId]);
-				$stmt = '';
 				// User unchecked, delete entry
 				if (!$isChecked && $row['syllabusTeachLearnActivityId'] > 0) {
-					$stmt = 'DELETE FROM syllabusTeachLearnActivity WHERE syllabusTeachLearnActivityId = ' . $row['syllabusTeachLearnActivityId'];
+					$db->ExecuteDeleteStmt('syllabusTeachLearnActivity', 'syllabusTeachLearnActivityId = ' . $row['syllabusTeachLearnActivityId']);
+					
 				// User checked, insert entry 
 				} else if ($isChecked && $row['syllabusTeachLearnActivityId'] == 0) {
-					$stmt = 'INSERT INTO syllabusTeachLearnActivity (syllabusId, teachLearnActivityId) VALUES (' . $syllabusId . ', ' . $teachLearnActivityId . ')';
-				}
-				if ($stmt != '') {
-					executeSqlStmt($stmt);
+					// User checked, insert entry 
+					$fields_values = array(
+						'syllabusId' => $syllabusId,
+						'teachLearnActivityId' => $teachLearnActivityId
+					);
+					$res = $db->ExecuteInsertStmt('syllabusTeachLearnActivity', $fields_values);
 				}
 			}
 		}
@@ -198,16 +229,18 @@
 				$modeOfDeliveryId = $row['modeOfDeliveryId'];
 				
 				$isChecked = isset($_POST['chkmodeOfDelivery'. $modeOfDeliveryId]);
-				$stmt = '';
 				// User unchecked, delete entry
 				if (!$isChecked && $row['syllabusModeOfDeliveryId'] > 0) {
-					$stmt = 'DELETE FROM syllabusModeOfDelivery WHERE syllabusModeOfDeliveryId = ' . $row['syllabusModeOfDeliveryId'];
+					$db->ExecuteDeleteStmt('syllabusModeOfDelivery', 'syllabusModeOfDeliveryId = ' . $row['syllabusModeOfDeliveryId']);
+					
 				// User checked, insert entry 
 				} else if ($isChecked && $row['syllabusModeOfDeliveryId'] == 0) {
-					$stmt = 'INSERT INTO syllabusModeOfDelivery (syllabusId, modeOfDeliveryId) VALUES (' . $syllabusId . ', ' . $modeOfDeliveryId . ')';
-				}
-				if ($stmt != '') {
-					executeSqlStmt($stmt);
+					// User checked, insert entry 
+					$fields_values = array(
+						'syllabusId' => $syllabusId,
+						'modeOfDeliveryId' => $modeOfDeliveryId
+					);
+					$res = $db->ExecuteInsertStmt('syllabusModeOfDelivery', $fields_values);
 				}
 			}
 		}
@@ -238,8 +271,11 @@
 					$indepLearningNew = $_POST['txtsyllabusAssType' .$syllabusAssessmentTypeId . 'Indep'];
 					
 					if ($guidedLearningOld != $guidedLearningNew || $indepLearningOld != $indepLearningNew) {
-						$stmt = 'UPDATE syllabusAssessmentType SET guidedLearning = '. $guidedLearningNew . ', indepLearning =  ' . $indepLearningNew . ' WHERE syllabusAssessmentTypeId = ' . $syllabusAssessmentTypeId;
-						$db->ExecuteSelectStmt($stmt);
+						$fields_values = array(
+							'guidedLearning' => $guidedLearningNew,
+							'indepLearning' => $indepLearningNew
+						);		
+						$db->ExecuteUpdateStmt('syllabusAssessmentType', $fields_values, 'syllabusAssessmentTypeId = ' . $syllabusAssessmentTypeId);
 					}
 				}
 			}
@@ -249,8 +285,10 @@
 			$creditHoursNew = $_POST['txtcreditHours'];
 			$creditHoursOld = $_SESSION['syllabus']['creditHours'];
 			if ($creditHoursNew != $creditHoursOld) {
-				$stmt = 'UPDATE syllabus set creditHours = ' . $creditHoursNew . ' WHERE syllabusId = ' . $syllabusId;
-				$db->ExecuteSelectStmt($stmt);
+				$fields_values = array(
+					'creditHours' => $creditHoursNew
+				);		
+				$db->ExecuteUpdateStmt('syllabus', $fields_values, 'syllabusId = ' . $syllabusId);
 			}
 		}
 	}
@@ -264,23 +302,20 @@
 			$_SESSION['wizStep'] = 1;
 		}
 		// Save
-		$mainReferences = addslashes(trim($_POST['txtmainReferences']));
-		$addReferences = addslashes(trim($_POST['txtaddReferences']));
-		$addInformation= addslashes(trim($_POST['txtaddInformation']));
+		$db = App\DB\ConnHelper::Instance();
+		$fields_values = array(
+			'addInformation' => addslashes(trim($_POST['txtaddInformation'])),
+			'addReferences' => addslashes(trim($_POST['txtaddReferences'])),
+			'mainReferences' => addslashes(trim($_POST['txtmainReferences'])),
+			'editBy' => $userId
+		);		
+		$db->ExecuteUpdateStmt('syllabus', $fields_values, 'syllabusId = ' . $syllabusId);
 		
-		$stmt = 'UPDATE syllabus SET addInformation = \'' . $addInformation . '\', addReferences = \'' . $addReferences . '\', mainReferences = \'' . $mainReferences . '\', editBy = ' . $userId . ' ';
-		$stmt .= 'WHERE syllabusId = ' . $syllabusId;
-		executeSqlStmt($stmt);
 		redirectToOverview($moduleId);
 	}	
 	
 	function redirectToOverview($moduleId) {
 		// redirect to module page
 		App\Utils\OtherUtils::redirect('/module/'.$moduleId);
-	}
-	
-	function executeSqlStmt($stmt) {
-		$db = App\DB\ConnHelper::Instance();
-		return $db->ExecuteSelectStmt($stmt);
 	}
 ?>
