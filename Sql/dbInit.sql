@@ -25,6 +25,8 @@ CREATE TABLE `user` (
   KEY `password` (`password`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE UNIQUE INDEX idxUserUsername on user (userName);
+
 DROP TABLE IF EXISTS `module`;
 CREATE TABLE `module` (
   `moduleId` int(5) NOT NULL AUTO_INCREMENT,
@@ -40,6 +42,8 @@ CREATE TABLE `module` (
   KEY `fk_module_owner` (`moduleOwner`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE INDEX idxModuleName on module (name);
+
 CREATE TABLE modulePrerequisite (
   modulePrerequisiteId int(5) NOT NULL AUTO_INCREMENT,
   moduleId int(5) NOT NULL,
@@ -48,6 +52,8 @@ CREATE TABLE modulePrerequisite (
   CONSTRAINT fk_module_moduleIdPrerequisite FOREIGN KEY (moduleIdPrerequisite) REFERENCES module(moduleId),
   PRIMARY KEY (modulePrerequisiteId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE UNIQUE INDEX idxModulePrerequisiteModPreReq on modulePrerequisite (moduleId, moduleIdPrerequisite);
 
 CREATE TABLE moduleRight (
   moduleRightId int(5) NOT NULL AUTO_INCREMENT,
@@ -60,14 +66,15 @@ CREATE TABLE moduleRight (
   CONSTRAINT fk_moduleRight_module FOREIGN KEY (moduleId) REFERENCES module(moduleId) ON DELETE CASCADE,
   PRIMARY KEY (moduleRightId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE UNIQUE INDEX idxModuleRightUserModulRead on moduleRight (userId, moduleId);
 
 CREATE TABLE syllabus (
   syllabusId int(5) NOT NULL AUTO_INCREMENT,
   moduleId int(5) NOT NULL,
   versionNr int(5) NOT NULL, 
   revisionNr int(5) NOT NULL, 
-  academicStaff int(5) NOT NULL,
-  semester varchar(50) NOT NULL,
+  academicStaff int(5) NULL,
+  semester varchar(50) NULL,
   guidedLearnLecture decimal(5,2), 
   guidedLearnTutorial decimal(5,2), 
   guidedLearnPractical decimal(5,2), 
@@ -96,6 +103,8 @@ CREATE TABLE syllabus (
   PRIMARY KEY (syllabusId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE UNIQUE INDEX idxSyllabusModulVersion on syllabus (moduleId, versionNr, revisionNr);
+
 CREATE TABLE syllabusTopic (
   syllabusTopicId int(5) NOT NULL AUTO_INCREMENT,
   syllabusId int(5) NOT NULL,
@@ -115,6 +124,7 @@ CREATE TABLE syllabusTopic (
   PRIMARY KEY (syllabusTopicId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE UNIQUE INDEX idxSyllabusTopicSyllabusTopicNr on syllabusTopic (syllabusId, topicNr);
 
 CREATE TABLE assessmentType (
   assessmentTypeId int(5) NOT NULL AUTO_INCREMENT,
@@ -134,6 +144,8 @@ CREATE TABLE syllabusAssessmentType (
   PRIMARY KEY (syllabusAssessmentTypeId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE UNIQUE INDEX idxSyllabusAssessmentTypesyllabusType on syllabusAssessmentType (syllabusId, assessmentTypeId);
+
 
 CREATE TABLE mqfSkill (
   mqfSkillId int(5) NOT NULL AUTO_INCREMENT,
@@ -150,6 +162,8 @@ CREATE TABLE syllabusMqfSkill (
   CONSTRAINT fk_syllabusMqfSkill_mqfSkill FOREIGN KEY (mqfSkillId) REFERENCES mqfSkill(mqfSkillId),
   PRIMARY KEY (syllabusMqfSkillId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE UNIQUE INDEX idxSyllabusMqfSkillsyllabusType on syllabusMqfSkill (syllabusId, mqfSkillId);
 
 
 CREATE TABLE teachLearnActivity (
@@ -168,6 +182,7 @@ CREATE TABLE syllabusTeachLearnActivity (
   PRIMARY KEY (syllabusTeachLearnActivityId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE UNIQUE INDEX idxSyllabusTeachLearnActivitySyllabusTeachLearnActivity on syllabusTeachLearnActivity (syllabusId, teachLearnActivityId);
 
 CREATE TABLE modeOfDelivery (
   modeOfDeliveryId int(5) NOT NULL AUTO_INCREMENT,
@@ -184,6 +199,7 @@ CREATE TABLE syllabusModeOfDelivery (
   CONSTRAINT fk_syllabusModeOfDelivery_modeOfDelivery FOREIGN KEY (modeOfDeliveryId) REFERENCES modeOfDelivery(modeOfDeliveryId),
   PRIMARY KEY (syllabusModeOfDeliveryId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE UNIQUE INDEX idxSyllabusModeOfDeliverySyllabusModeOfDeliveryId on syllabusModeOfDelivery (syllabusId, modeOfDeliveryId);
 
 CREATE TABLE syllabusProgAim (
   syllabusProgAimId int(5) NOT NULL AUTO_INCREMENT,
@@ -193,6 +209,7 @@ CREATE TABLE syllabusProgAim (
   CONSTRAINT fk_syllabusProgAim_syllabus FOREIGN KEY (syllabusId) REFERENCES syllabus(syllabusId),
   PRIMARY KEY (syllabusProgAimId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT ='Mapping of the Module to the Programme Aims';
+CREATE UNIQUE INDEX idxSyllabusProgAimSyllabusCloPeo on syllabusProgAim (syllabusId, clo, peo);
 
 CREATE TABLE syllabusProgLearnOutcome (
   syllabusProgLearnOutcomeId int(5) NOT NULL AUTO_INCREMENT,
@@ -202,6 +219,7 @@ CREATE TABLE syllabusProgLearnOutcome (
   CONSTRAINT fk_syllabusProgLearnOutcome_syllabus FOREIGN KEY (syllabusId) REFERENCES syllabus(syllabusId),
   PRIMARY KEY (syllabusProgLearnOutcomeId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Mapping of the Module to the Programme Learning Outcomes';
+CREATE UNIQUE INDEX idxSyllabusProgLearnOutcomeMloPlo on syllabusProgLearnOutcome (syllabusId, mlo, plo);
 
 
 DELIMITER //
