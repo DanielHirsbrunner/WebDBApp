@@ -11,8 +11,8 @@ INSERT INTO `module` (`moduleId`, `name`, `code`, `credits`, `moduleOwner`, `pur
 (5,	'Forensic Computing Practice',	'ITS61503',	3,	NULL,	'This subject allows students to look in-depth into an individual computer crime scenario simulating a source of evidence of one or more computer-related crimes. They are to investigate the contents of the scenario using appropriate tools. Throughout the duration of the module advice can be sought from the subject tutor with whom the suitability of different approaches and the significance of particular pieces of evidence can be discussed.\r\nAs a result of their investigation students are to write a report detailing their findings for submission as evidence. Finally, they will give evidence as an expert witness in a mock courtroom and be cross examined by their peers or by staff.',	1,	'2016-11-18 08:42:35'),
 (6,	'OOP using C++',	'ITS61804',	4,	NULL,	'This course strengthens studentsâ€™ understanding of object-oriented programming concept and introduces them to OO concepts supported in C++. Topics covered include inheritance, polymorphism, and generic programming, Standard Template Library, and design patterns.',	1,	'2016-11-18 08:43:00');
 
-Insert into moduleRight (userId, moduleId, canread, canwrite, canapprove) 
-SELECT u.userId, m.moduleId, 1, 1, 1
+Insert into moduleRight (userId, moduleId) 
+SELECT u.userId, m.moduleId
 FROM user u cross join module m;
 
 insert into syllabus(moduleId, versionNr, revisionNr, creditHours, academicStaff, semester, editBy, learningOutcomes, transferableSkills, synopsis)
@@ -101,3 +101,6 @@ BEGIN
 END //
 DELIMITER ;
 call createSyllabusRelatedData();
+
+INSERT INTO modulePrerequisite (moduleId, moduleIdPrerequisite)
+	SELECT m.moduleId, p.moduleId FROM module m cross join module p WHERE m.code like 'ITS62304' AND (p.code like 'ITS61104' OR p.code like 'ITS61604');

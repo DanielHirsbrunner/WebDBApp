@@ -27,7 +27,7 @@
 	echo $fg->getModulePurpose(true);
 	echo $fg->getSemester(true);
 	echo $fg->getModuleCreditValue(true);
-	// TODO: get Prerequisite
+	echo $fg->getModulPrerequisite(true);
 	echo $fg->getLearningOutcome(true);
 	echo $fg->getTransferableSkills(true);
 	echo $fg->getTeachLearnAssesStrategies(true);

@@ -101,3 +101,23 @@
     float: left;
     width: 78%;
 }
+
+table.tblModulAimsMapping {
+	width: 288px;
+}
+
+table.tblLearningOutcomeMapping {
+	width: 522px;
+}
+
+table td,
+table th  {
+  border: 1px solid #cccccc;
+  padding: 4px 6px;
+}
+
+table .moduleHead td,
+table .moduleHead th {
+  border: 0px;
+  padding: 0px;
+}

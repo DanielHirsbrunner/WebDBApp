@@ -90,6 +90,7 @@
 		$content .= $fg->getMainReferences(false);
 		$content .= $fg->getAddReferences(false);
 		$content .= $fg->getOtherAddInformation(false);
+		$content .= $fg->getAprovedBy(false);
 		
 		$content .= '<div>';
 		$content .= '<input type="submit" name="goBack" value="Go back to Step 3" class ="pull-left btn btn-default" />';

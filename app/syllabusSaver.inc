@@ -307,9 +307,23 @@
 			'addInformation' => addslashes(trim($_POST['txtaddInformation'])),
 			'addReferences' => addslashes(trim($_POST['txtaddReferences'])),
 			'mainReferences' => addslashes(trim($_POST['txtmainReferences'])),
+			'approvedBy' => trim($_POST['selApprovedBy']),
 			'editBy' => $userId
-		);		
+		);
 		$db->ExecuteUpdateStmt('syllabus', $fields_values, 'syllabusId = ' . $syllabusId);
+		if (isset($_SESSION['syllabus'])) {
+			if (trim($_POST['selApprovedBy']) != $_SESSION['syllabus']["AprovedById"]) {
+				$stmt = 'update syllabus set approvedTS = ';
+				if (trim($_POST['selApprovedBy']) > 0) {
+					$stmt .= 'CURRENT_TIMESTAMP';
+				} else {
+					$stmt .= 'NULL';
+				}
+				$stmt .= ' WHERE syllabusId = ' . $syllabusId;
+				$con = $db->GetConnection();
+				$con->query($stmt);
+			}
+		}
 		
 		redirectToOverview($moduleId);
 	}	

@@ -59,9 +59,6 @@ CREATE TABLE moduleRight (
   moduleRightId int(5) NOT NULL AUTO_INCREMENT,
   moduleId int(5) NOT NULL,
   userId int(5) NOT NULL,
-  canRead bit NOT NULL DEFAULT 0,
-  canWrite bit NOT NULL DEFAULT 0,
-  canApprove bit NOT NULL DEFAULT 0,
   CONSTRAINT fk_moduleRight_user FOREIGN KEY (userId) REFERENCES user(userId) ON DELETE CASCADE,
   CONSTRAINT fk_moduleRight_module FOREIGN KEY (moduleId) REFERENCES module(moduleId) ON DELETE CASCADE,
   PRIMARY KEY (moduleRightId)

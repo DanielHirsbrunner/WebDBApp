@@ -31,7 +31,7 @@
 	
 	function getSyllabusInitStmt($syllabusId) {
 		$sylStmt  = 'SELECT m.credits, m.purpose as modulePurpose, m.code as moduleCode, m.name as moduleName, m.moduleId, versionNr, revisionNr, academicStaff, semester, creditHours, guidedLearnLecture, guidedLearnTutorial, guidedLearnPractical, guidedLearnOther, indepLearnLecture, indepLearnTutorial, indepLearnPractical, indepLearnOther, learningOutcomes, transferableSkills, synopsis, ';
-		$sylStmt .= "assessmentCode, mainReferences, addReferences, addInformation, CONCAT(ap.name, ' ', ap.surname) as approvedBy, DATE_FORMAT(s.approvedTS,'%d.%c.%Y') as approvedTS, CONCAT(staff.name, ' ', staff.surname) as academicStaffName, staff.qualification as academicStaffQualification, CONCAT(u.name, ' ', u.surname) as editBy, DATE_FORMAT(s.editTS,'%d %b %Y %T') editTS ";
+		$sylStmt .= "assessmentCode, mainReferences, addReferences, addInformation, approvedBy as approvedById, CONCAT(ap.name, ' ', ap.surname) as approvedBy, DATE_FORMAT(s.approvedTS,'%d.%c.%Y') as approvedTS, CONCAT(staff.name, ' ', staff.surname) as academicStaffName, staff.qualification as academicStaffQualification, CONCAT(u.name, ' ', u.surname) as editBy, DATE_FORMAT(s.editTS,'%d %b %Y %T') editTS ";
 		$sylStmt .= 'from syllabus s left join user staff on staff.userId = s.academicStaff join user u on s.editBy = u.userId join module m on s.moduleId = m.moduleId left join user ap on s.approvedBy = ap.userId where syllabusId = ' . $syllabusId;
 		return $sylStmt;
 	}
@@ -136,4 +136,12 @@
 		$moduleStmt .= 'WHERE moduleId = ' . $modId . ' ';
 		$moduleStmt .= 'ORDER BY versionNr, revisionNr';
 		return $moduleStmt;
+	}
+	
+	function getModulePrerequisiteStmt($syllabusId) {
+		$modPrereqStmt  = 'SELECT mp.moduleId, p.code  ';
+		$modPrereqStmt .= 'FROM syllabus s inner join modulePrerequisite mp on s.moduleId = mp.moduleId INNER JOIN module p on mp.moduleIdPrerequisite = p.moduleId ';
+		$modPrereqStmt .= 'WHERE syllabusId = ' . $syllabusId . ' ';
+		$modPrereqStmt .= 'ORDER BY p.code';
+		return $modPrereqStmt;
 	}
