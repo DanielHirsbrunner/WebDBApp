@@ -158,7 +158,7 @@ class Modules {
 				} else {
 					$this->template->setVariable("VALUE_BUTTON", "Create module");
 					$this->fillModuleOwnerSelect();
-					$this->fillPrerequisiteSelect($id);
+					$this->fillPrerequisiteSelect(0);
 				}
 			}
 
@@ -198,7 +198,7 @@ class Modules {
 			"editBy"		=> $_SESSION["user"]["id"]
 		);
 
-		$this->db->autoExecute($tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
+		improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
 	}
 
 	private function updateModule($name, $code, $credits, $ownerId, $prereqId, $purpose) {
@@ -216,7 +216,7 @@ class Modules {
 
 		$id = $_GET["id"];
 
-		$this->db->autoExecute($tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "moduleId = '$id'");
+		improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "moduleId = '$id'");
 	}
 
 	private function deleteModule($id) {

@@ -4,6 +4,7 @@ App\Utils\OtherUtils::checkAdmin();
 
 $action = App\Utils\OtherUtils::getAdminPageAction(["add", "edit", "delete", "modules"]);
 
+require "app/utils/autoExecute.inc";
 require "app/components/Users.php";
 $users = new App\Components\Users($db->GetConnection(), $template);
 

@@ -197,7 +197,7 @@ class Users {
 			"isAdmin"		=> $admin
 		);
 
-		$this->db->autoExecute($tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
+		improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
 	}
 
 	private function updateUser($username, $password, $name, $surname, $email, $qualification, $admin) {
@@ -217,7 +217,7 @@ class Users {
 		$tableName = "user";
 		$id = $_GET["id"];
 
-		$this->db->autoExecute($tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "userId = '$id'");
+		improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "userId = '$id'");
 	}
 
 	private function deleteUser($id) {

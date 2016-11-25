@@ -131,7 +131,7 @@ class Assessments {
 			"description"	=> $description
 		);
 
-		$this->db->autoExecute($tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
+		improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
 	}
 
 	private function updateAssessment($description) {
@@ -143,7 +143,7 @@ class Assessments {
 
 		$id = $_GET["id"];
 
-		$this->db->autoExecute($tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "assessmentTypeId = '$id'");
+		improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "assessmentTypeId = '$id'");
 	}
 
 	private function deleteAssessment($id) {

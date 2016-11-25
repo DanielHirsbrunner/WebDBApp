@@ -134,15 +134,12 @@ class UserModules {
 	private function insertModuleRight($userId, $moduleId) {
 		$fieldsValues = array(
 			"moduleId"		=> $moduleId,
-			"userId"		=> $userId,
-			"canRead"		=> true,
-			"canWrite"		=> true,
-			"canApprove"	=> true
+			"userId"		=> $userId
 		);
 
 		$tableName = "moduleright";
 
-		$this->db->autoExecute($tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
+		improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
 	}
 
 	public function removeModule() {
