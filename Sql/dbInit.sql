@@ -6,7 +6,7 @@
  * Date 2016.11.09
  */
 DROP DATABASE IF EXISTS moduleinfo;
-CREATE DATABASE moduleinfo;
+CREATE DATABASE moduleinfo /*!40100 DEFAULT CHARACTER SET utf8 */;
 
 USE moduleinfo;
 
@@ -35,9 +35,12 @@ CREATE TABLE `module` (
   `credits` tinyint(4) DEFAULT NULL,
   `moduleOwner` int(5) DEFAULT NULL,
   `purpose` text NOT NULL,
+  `prerequisite` int(5) NOT NULL,
   `editBy` int(5) NOT NULL,
   `editTS` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`moduleId`),
+  CONSTRAINT fk_module_module FOREIGN KEY (prerequisite) REFERENCES module(moduleId),
+  CONSTRAINT fk_module_moduleOwner FOREIGN KEY (moduleOwner) REFERENCES user(userId),
   KEY `fk_module_editBy` (`editBy`),
   KEY `fk_module_owner` (`moduleOwner`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
