@@ -9,15 +9,19 @@ $modules = new App\Components\Deliveries($db->GetConnection(), $template);
 
 switch ($action) {
 	case "list":
+		$template->setGlobalVariable("TITLE", "List of modes of delivery – ");
 		$modules->renderList();
 		break;
 	case "add":
+		$template->setGlobalVariable("TITLE", "Add new mode of delivery – ");
 		$modules->renderAdd();
 		break;
 	case "edit":
+		$template->setGlobalVariable("TITLE", "Edit mode of delivery – ");
 		$modules->renderEdit();
 		break;
 	case "delete":
+		$template->setGlobalVariable("TITLE", "Delete mode of delivery – ");
 		$modules->renderDelete();
 		break;
 }

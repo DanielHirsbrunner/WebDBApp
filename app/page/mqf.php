@@ -9,15 +9,19 @@ $modules = new App\Components\MQF($db->GetConnection(), $template);
 
 switch ($action) {
 	case "list":
+		$template->setGlobalVariable("TITLE", "List of MQF skills – ");
 		$modules->renderList();
 		break;
 	case "add":
+		$template->setGlobalVariable("TITLE", "Add new MQF skill – ");
 		$modules->renderAdd();
 		break;
 	case "edit":
+		$template->setGlobalVariable("TITLE", "Edit MQF skill – ");
 		$modules->renderEdit();
 		break;
 	case "delete":
+		$template->setGlobalVariable("TITLE", "Delete MQF skill – ");
 		$modules->renderDelete();
 		break;
 }

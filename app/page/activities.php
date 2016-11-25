@@ -9,15 +9,19 @@ $modules = new App\Components\Activities($db->GetConnection(), $template);
 
 switch ($action) {
 	case "list":
+		$template->setGlobalVariable("TITLE", "List of activities – ");
 		$modules->renderList();
 		break;
 	case "add":
+		$template->setGlobalVariable("TITLE", "Add new activity – ");
 		$modules->renderAdd();
 		break;
 	case "edit":
+		$template->setGlobalVariable("TITLE", "Edit activity – ");
 		$modules->renderEdit();
 		break;
 	case "delete":
+		$template->setGlobalVariable("TITLE", "Delete activity – ");
 		$modules->renderDelete();
 		break;
 }

@@ -36,3 +36,5 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
 	$template->loadTemplateFile("login.tpl", true, true);
 	$template->setVariable("USERNAME_VALUE", "");
 }
+
+$template->setGlobalVariable("TITLE", "Login :: ");
