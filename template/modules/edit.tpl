@@ -9,7 +9,6 @@
 		<!-- INCLUDE include/flash_message.tpl -->
 		<!-- INCLUDE include/admin_menu.tpl -->
 
-		<!-- BEGIN MODULES_EDIT -->
 		<form action="" method="post" class="form-horizontal">
 			<div class="row form-group required {ERROR_NAME}">
 				<div class="col-sm-offset-1 col-sm-2 control-label"><label for="name">Name</label></div>
@@ -46,9 +45,42 @@
 			</div>
 			<!-- END ERROR_CREDITS_NUMBER -->
 
-			<div class="row form-group required">
-				Module Owner
+			<div class="row form-group {ERROR_PREREQUISITE}">
+				<div class="col-sm-offset-1 col-sm-2 control-label"><label for="prerequisite">Prerequisite</label></div>
+				<div class="col-sm-8">
+					<select id="prerequisite" name="prerequisite" class="selectpicker" data-live-search="true">
+						<!-- BEGIN PREREQUISITE_OPTION -->
+						<option value="{PREREQUISITE_ID}"{PREREQUISITE_SELECTED}>{PREREQUISITE_CODE}</option>
+						<!-- END PREREQUISITE_OPTION -->
+					</select>
+				</div>
 			</div>
+			<!-- BEGIN ERROR_PREREQUISITE_NOT_FOUND -->
+			<div class="row form-group has-error">
+				<div class="col-sm-offset-3 help-block">This module doesn't exists.</div>
+			</div>
+			<!-- END ERROR_PREREQUISITE_NOT_FOUND -->
+			<!-- BEGIN ERROR_PREREQUISITE_ITSELF -->
+			<div class="row form-group has-error">
+				<div class="col-sm-offset-3 help-block">Module cannot be a prerequisite for itself.</div>
+			</div>
+			<!-- END ERROR_PREREQUISITE_ITSELF -->
+
+			<div class="row form-group {ERROR_OWNER}">
+				<div class="col-sm-offset-1 col-sm-2 control-label"><label for="owner">Module Owner</label></div>
+				<div class="col-sm-8">
+					<select id="owner" name="owner" class="selectpicker" data-live-search="true">
+						<!-- BEGIN OWNER_OPTION -->
+						<option value="{OWNER_ID}"{OWNER_SELECTED}>{OWNER_NAME}</option>
+						<!-- END OWNER_OPTION -->
+					</select>
+				</div>
+			</div>
+			<!-- BEGIN ERROR_OWNER_NOT_FOUND -->
+			<div class="row form-group has-error">
+				<div class="col-sm-offset-3 help-block">This user doesn't exists.</div>
+			</div>
+			<!-- END ERROR_OWNER_NOT_FOUND -->
 
 			<div class="row form-group required {ERROR_PURPOSE}">
 				<div class="col-sm-offset-1 col-sm-2 control-label"><label for="purpose">Purpose</label></div>
@@ -65,7 +97,6 @@
 			</div>
 
 		</form>
-		<!-- END MODULES_EDIT -->
 	</div>
 </div>
 <!-- INCLUDE include/scripts.tpl -->

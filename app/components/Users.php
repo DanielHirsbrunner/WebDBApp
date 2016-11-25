@@ -18,24 +18,25 @@ class Users {
 	}
 
 	public function renderList() {
-
-		$query = "SELECT userId, userName, password, name, surname, email, qualification, isAdmin FROM user";
-
-		$statement = $this->db->prepare($query);
-		$result = $this->db->execute($statement);
+		$result = $this->getAllUsers();
 
 		$this->template->loadTemplateFile("/users/list.tpl", true, true);
 
-		while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
-			$this->template->setCurrentBlock("USERS_ROW");
+		if (!$result) {
+			FlashMessage::add(FlashMessage::TYPE_ERROR, "An error occurred when trying to load list of all users.");
+		} else {
 
-			$this->template->setVariable("USERNAME", $row["userName"]);
-			$this->template->setVariable("FULLNAME", $row["name"]." ".$row["surname"]);
-			$this->template->setVariable("EMAIL", $row["email"]);
-			$this->template->setVariable("ADMIN", $row["isAdmin"] ? "Yes" : "No");
-			$this->template->setVariable("USER_ID", $row["userId"]);
+			while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+				$this->template->setCurrentBlock("USERS_ROW");
 
-			$this->template->parseCurrentBlock("USERS_ROW");
+				$this->template->setVariable("USERNAME", $row["userName"]);
+				$this->template->setVariable("FULLNAME", $row["name"]." ".$row["surname"]);
+				$this->template->setVariable("EMAIL", $row["email"]);
+				$this->template->setVariable("ADMIN", $row["isAdmin"] ? "Yes" : "No");
+				$this->template->setVariable("USER_ID", $row["userId"]);
+
+				$this->template->parseCurrentBlock("USERS_ROW");
+			}
 		}
 	}
 	
@@ -241,6 +242,26 @@ class Users {
 		$button = $editing ? "Update user" : "Create user";
 		$this->template->setVariable("VALUE_BUTTON", $button);
 		$this->template->parseCurrentBlock("USERS_EDIT");
+	}
+
+	public function getAllUsers() {
+		$query = "SELECT * FROM user";
+
+		$statement = $this->db->prepare($query);
+		$result = $this->db->execute($statement);
+
+		if (\DB::isError($result)) {
+			FlashMessage::add(FlashMessage::TYPE_DEBUGGING, $result->getUserinfo());
+			return false;
+		}
+
+		$numRows = $result->numRows();
+
+		if ($numRows == 0) {
+			return false;
+		} else {
+			return $result;
+		}
 	}
 
 	public function getUserById($userId) {
