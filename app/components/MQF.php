@@ -29,7 +29,7 @@ class MQF {
 		while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 			$this->template->setCurrentBlock("MQF_ROW");
 
-			$this->template->setVariable("MQF_DESC", $row["description"]);
+			$this->template->setVariable("MQF_DESC", htmlspecialchars($row["description"]));
 			$this->template->setVariable("MQF_ID", $row["mqfSkillId"]);
 
 			$this->template->parseCurrentBlock("MQF_ROW");
@@ -88,7 +88,8 @@ class MQF {
 						$msg = "created";
 					}
 
-					FlashMessage::add(FlashMessage::TYPE_SUCCESS, "MQF skill was successfuly $msg.");
+					$descriptionHtml = htmlspecialchars($description);
+					FlashMessage::add(FlashMessage::TYPE_SUCCESS, "MQF skill <i>$descriptionHtml</i> was successfuly $msg.");
 					OtherUtils::redirect("/mqf");
 				}
 			} else {
@@ -111,12 +112,12 @@ class MQF {
 			// submitting
 			if (isset($_POST["delete"])) {
 				$this->deleteMQF($id);
-				$desc = $result["description"];
+				$desc = htmlspecialchars($result["description"]);
 				FlashMessage::add(FlashMessage::TYPE_SUCCESS, "MQF skill <i>$desc</i> was successfuly deleted.");
 				OtherUtils::redirect("/mqf");
 			} else {
 				$this->template->loadTemplateFile("/mqf/delete.tpl", true, true);
-				$this->template->setVariable("DELETE_MQF_DESC", $result["description"]);
+				$this->template->setVariable("DELETE_MQF_DESC", htmlspecialchars($result["description"]));
 			}
 		} else {
 			FlashMessage::add(FlashMessage::TYPE_ERROR, "MQF skill was not found.");

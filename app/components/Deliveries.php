@@ -29,7 +29,7 @@ class Deliveries {
 		while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 			$this->template->setCurrentBlock("DELIVERY_ROW");
 
-			$this->template->setVariable("DELIVERY_DESC", $row["description"]);
+			$this->template->setVariable("DELIVERY_DESC", htmlspecialchars($row["description"]));
 			$this->template->setVariable("DELIVERY_ID", $row["modeOfDeliveryId"]);
 
 			$this->template->parseCurrentBlock("DELIVERY_ROW");
@@ -88,7 +88,8 @@ class Deliveries {
 						$msg = "created";
 					}
 
-					FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Mode of delivery was successfuly $msg.");
+					$descriptionHtml = htmlspecialchars($description);
+					FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Mode of delivery <i>$descriptionHtml</i> was successfuly $msg.");
 					OtherUtils::redirect("/deliveries");
 				}
 			} else {
@@ -111,12 +112,12 @@ class Deliveries {
 			// submitting
 			if (isset($_POST["delete"])) {
 				$this->deleteModeOfDelivery($id);
-				$desc = $result["description"];
+				$desc = htmlspecialchars($result["description"]);
 				FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Mode of delivery <i>$desc</i> was successfuly deleted.");
 				OtherUtils::redirect("/deliveries");
 			} else {
 				$this->template->loadTemplateFile("/deliveries/delete.tpl", true, true);
-				$this->template->setVariable("DELETE_DELIVERY_DESC", $result["description"]);
+				$this->template->setVariable("DELETE_DELIVERY_DESC", htmlspecialchars($result["description"]));
 			}
 		} else {
 			FlashMessage::add(FlashMessage::TYPE_ERROR, "Mode of delivery was not found.");

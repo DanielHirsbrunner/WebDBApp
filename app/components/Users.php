@@ -29,9 +29,9 @@ class Users {
 			while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 				$this->template->setCurrentBlock("USERS_ROW");
 
-				$this->template->setVariable("USERNAME", $row["userName"]);
-				$this->template->setVariable("FULLNAME", $row["name"]." ".$row["surname"]);
-				$this->template->setVariable("EMAIL", $row["email"]);
+				$this->template->setVariable("USERNAME", htmlspecialchars($row["userName"]));
+				$this->template->setVariable("FULLNAME", htmlspecialchars($row["name"]." ".$row["surname"]));
+				$this->template->setVariable("EMAIL", htmlspecialchars($row["email"]));
 				$this->template->setVariable("ADMIN", $row["isAdmin"] ? "Yes" : "No");
 				$this->template->setVariable("USER_ID", $row["userId"]);
 
@@ -140,7 +140,8 @@ class Users {
 						$msg = "created";
 					}
 
-					FlashMessage::add(FlashMessage::TYPE_SUCCESS, "User was successfuly $msg.");
+					$fullNameHtml = htmlspecialchars($name." ".$surname);
+					FlashMessage::add(FlashMessage::TYPE_SUCCESS, "User <i>$fullNameHtml</i> was successfuly $msg.");
 					OtherUtils::redirect("/users");
 				}
 			} else {
@@ -170,12 +171,12 @@ class Users {
 			// submitting
 			if (isset($_POST["delete"])) {
 				$this->deleteUser($id);
-				$fullName = $result["name"]." ".$result["surname"];
+				$fullName = htmlspecialchars($result["name"]." ".$result["surname"]);
 				FlashMessage::add(FlashMessage::TYPE_SUCCESS, "User <i>$fullName</i> was successfuly deleted.");
 				OtherUtils::redirect("/users");
 			} else {
 				$this->template->loadTemplateFile("/users/delete.tpl", true, true);
-				$this->template->setVariable("DELETE_USER_NAME", $result["name"]." ".$result["surname"]);
+				$this->template->setVariable("DELETE_USER_NAME", htmlspecialchars($result["name"]." ".$result["surname"]));
 			}
 		} else {
 			FlashMessage::add(FlashMessage::TYPE_ERROR, "User was not found.");

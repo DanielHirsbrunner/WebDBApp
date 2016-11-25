@@ -29,7 +29,7 @@ class Activities {
 		while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 			$this->template->setCurrentBlock("ACTIVITY_ROW");
 
-			$this->template->setVariable("ACTIVITY_DESC", $row["description"]);
+			$this->template->setVariable("ACTIVITY_DESC", htmlspecialchars($row["description"]));
 			$this->template->setVariable("ACTIVITY_ID", $row["teachLearnActivityId"]);
 
 			$this->template->parseCurrentBlock("ACTIVITY_ROW");
@@ -88,7 +88,8 @@ class Activities {
 						$msg = "created";
 					}
 
-					FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Activity was successfuly $msg.");
+					$descriptionHtml = htmlspecialchars($description);
+					FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Activity <i>$descriptionHtml</i> was successfuly $msg.");
 					OtherUtils::redirect("/activities");
 				}
 			} else {
@@ -111,12 +112,12 @@ class Activities {
 			// submitting
 			if (isset($_POST["delete"])) {
 				$this->deleteActivity($id);
-				$desc = $result["description"];
+				$desc = htmlspecialchars($result["description"]);
 				FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Activity <i>$desc</i> was successfuly deleted.");
 				OtherUtils::redirect("/activities");
 			} else {
 				$this->template->loadTemplateFile("/activities/delete.tpl", true, true);
-				$this->template->setVariable("DELETE_ACTIVITY_DESC", $result["description"]);
+				$this->template->setVariable("DELETE_ACTIVITY_DESC", htmlspecialchars($result["description"]));
 			}
 		} else {
 			FlashMessage::add(FlashMessage::TYPE_ERROR, "Activity was not found.");

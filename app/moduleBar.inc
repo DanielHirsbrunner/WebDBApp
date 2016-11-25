@@ -10,8 +10,8 @@ if ($result = $db->ExecuteSelectStmt($moduleStmt)) {
 	while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 		$template->setCurrentBlock("MODULE_LIST");
 		$template->setVariable("MODULE_ID", $row['moduleId']);
-		$template->setVariable("MODULE_NUMBER", stripslashes($row['code']));
-		$template->setVariable("MODULE_DESCRIPTION", stripslashes($row['name']));
+		$template->setVariable("MODULE_NUMBER", htmlspecialchars($row['code']));
+		$template->setVariable("MODULE_DESCRIPTION", htmlspecialchars($row['name']));
 		$template->setVariable("SELECTED", ($currMod == $row['moduleId'] ? "selected" : ""));
 		$template->parseCurrentBlock("MODULE_LIST");
 	}

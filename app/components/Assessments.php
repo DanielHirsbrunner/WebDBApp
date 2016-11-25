@@ -29,7 +29,7 @@ class Assessments {
 		while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 			$this->template->setCurrentBlock("ASSESSMENTS_ROW");
 
-			$this->template->setVariable("ASSESSMENT_DESC", $row["description"]);
+			$this->template->setVariable("ASSESSMENT_DESC", htmlspecialchars($row["description"]));
 			$this->template->setVariable("ASSESSMENT_ID", $row["assessmentTypeId"]);
 
 			$this->template->parseCurrentBlock("ASSESSMENTS_ROW");
@@ -88,7 +88,8 @@ class Assessments {
 						$msg = "created";
 					}
 
-					FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Assessment type was successfuly $msg.");
+					$descriptionHtml = htmlspecialchars($description);
+					FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Assessment type <i>$descriptionHtml</i> was successfuly $msg.");
 					OtherUtils::redirect("/assessments");
 				}
 			} else {
@@ -111,12 +112,12 @@ class Assessments {
 			// submitting
 			if (isset($_POST["delete"])) {
 				$this->deleteAssessment($id);
-				$desc = $result["description"];
+				$desc = htmlspecialchars($result["description"]);
 				FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Assessment type <i>$desc</i> was successfuly deleted.");
 				OtherUtils::redirect("/assessments");
 			} else {
 				$this->template->loadTemplateFile("/assessments/delete.tpl", true, true);
-				$this->template->setVariable("DELETE_ASSESSMENT_DESC", $result["description"]);
+				$this->template->setVariable("DELETE_ASSESSMENT_DESC", htmlspecialchars($result["description"]));
 			}
 		} else {
 			FlashMessage::add(FlashMessage::TYPE_ERROR, "Assessment type was not found.");

@@ -344,7 +344,7 @@ class FormGenerator
 				if ($print && $row['syllabusModeOfDeliveryId'] > 0) {
 					$list .= ($list != '' ? ', ' : '') . $description;
 				} else if (!$print) {
-					$list .= '<label class="checkbox-inline"><input type="checkbox" name="chkmodeOfDelivery'. $modeOfDeliveryId . '" ' . ($row['syllabusModeOfDeliveryId'] > 0 ? 'checked ' : '') . 'value = "' . $description . '">' . $description . '</label>';
+					$list .= '<label class="checkbox-inline"><input type="checkbox" name="chkmodeOfDelivery'. $modeOfDeliveryId . '" ' . ($row['syllabusModeOfDeliveryId'] > 0 ? 'checked ' : '') . 'value = "' . $description . '">' . htmlspecialchars($description) . '</label>';
 				}
 			}
 		}
@@ -368,7 +368,7 @@ class FormGenerator
 			while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 				$mqfSkillId = $row['mqfSkillId'];
 				$description = $row['description'];
-				$syllabusMqfSkillPart .= '<div class="checkbox"><label><input type="checkbox" name="chkmqfSkill'. $mqfSkillId . '" ' . ($row['syllabusMqfSkillId'] > 0 ? 'checked ' : '') . 'value = "' . $description . '">' . $description . '</label></div>';
+				$syllabusMqfSkillPart .= '<div class="checkbox"><label><input type="checkbox" name="chkmqfSkill'. $mqfSkillId . '" ' . ($row['syllabusMqfSkillId'] > 0 ? 'checked ' : '') . 'value = "' . $description . '">' . htmlspecialchars($description) . '</label></div>';
 			}
 		}
 		
@@ -380,7 +380,7 @@ class FormGenerator
 			while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 				$teachLearnActivityId = $row['teachLearnActivityId'];
 				$description = $row['description'];
-				$teachlearnactivityPart .= '<div class="checkbox"><label><input type="checkbox" name="chkteachlearnactivity'. $teachLearnActivityId . '" ' . ($row['syllabusTeachLearnActivityId'] > 0 ? 'checked ' : '') . 'value = "' . $description . '">' . $description . '</label></div>';
+				$teachlearnactivityPart .= '<div class="checkbox"><label><input type="checkbox" name="chkteachlearnactivity'. $teachLearnActivityId . '" ' . ($row['syllabusTeachLearnActivityId'] > 0 ? 'checked ' : '') . 'value = "' . $description . '">' . htmlspecialchars($description) . '</label></div>';
 			}
 			$teachlearnactivityPart .= '</ul>';
 		}
@@ -392,7 +392,7 @@ class FormGenerator
 			while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 				$assessmentTypeId = $row['assessmentTypeId'];
 				$description = $row['description'];
-				$assessmentTypePart .= '<div class="checkbox"><label><input  type="checkbox" name="chkassessmentType'. $assessmentTypeId . '" ' . ($row['syllabusassessmenttypeId'] > 0 ? 'checked ' : '') . ' value = "' . $description . '" />' . $description . '</label></div>';
+				$assessmentTypePart .= '<div class="checkbox"><label><input  type="checkbox" name="chkassessmentType'. $assessmentTypeId . '" ' . ($row['syllabusassessmenttypeId'] > 0 ? 'checked ' : '') . ' value = "' . $description . '" />' . htmlspecialchars($description) . '</label></div>';
 			}
 			$assessmentTypePart .= '</ul>';
 		}

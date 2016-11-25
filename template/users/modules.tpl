@@ -14,7 +14,7 @@
 			<form action="{BASE_PATH}/users/modules/{FORM_ACTION_USER_ID}/add" method="post">
 				<select class="selectpicker" data-live-search="true" name="module">
 					<!-- BEGIN SELECT_OPTION -->
-					<option value="{MODULE_ID}" data-tokens="{NAME} {CODE}">{NAME} ({CODE})</option>
+					<option value="{MODULE_ID}">{NAME} - {CODE}</option>
 					<!-- END SELECT_OPTION -->
 				</select>
 				<input type="submit" class="btn btn-default" value="+ Add">

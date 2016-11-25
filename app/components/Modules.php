@@ -31,10 +31,10 @@ class Modules {
 			while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 				$this->template->setCurrentBlock("MODULES_ROW");
 
-				$this->template->setVariable("MODULE_NAME", $row["name"]);
-				$this->template->setVariable("MODULE_CODE", $row["code"]);
-				$this->template->setVariable("MODULE_CREDITS", $row["credits"]);
-				$this->template->setVariable("MODULE_ID", $row["moduleId"]);
+				$this->template->setVariable("MODULE_NAME", htmlspecialchars($row["name"]));
+				$this->template->setVariable("MODULE_CODE", htmlspecialchars($row["code"]));
+				$this->template->setVariable("MODULE_CREDITS", htmlspecialchars($row["credits"]));
+				$this->template->setVariable("MODULE_ID", htmlspecialchars($row["moduleId"]));
 
 				$this->template->parseCurrentBlock("MODULES_ROW");
 			}
@@ -114,7 +114,7 @@ class Modules {
 					$this->template->touchBlock("ERROR_PREREQUISITE_NOT_FOUND");
 				}
 				if ($prereqId == "0") $prereqId = NULL;
-				if ($prereqId == $id) {
+				if ($prereqId === $id) {// null == 0 is true
 					$isError = true;
 					$this->template->setVariable("ERROR_PREREQUISITE", "has-error");
 					$this->template->touchBlock("ERROR_PREREQUISITE_ITSELF");
@@ -147,7 +147,8 @@ class Modules {
 						$msg = "created";
 					}
 
-					FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Module was successfuly $msg.");
+					$nameHtml = htmlspecialchars($name);
+					FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Module <i>$nameHtml</i> was successfuly $msg.");
 					OtherUtils::redirect("/modules");
 				}
 			} else {
@@ -172,12 +173,12 @@ class Modules {
 			// submitting
 			if (isset($_POST["delete"])) {
 				$this->deleteModule($id);
-				$name = $result["name"];
+				$name = htmlspecialchars($result["name"]);
 				FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Module <i>$name</i> was successfuly deleted.");
 				OtherUtils::redirect("/modules");
 			} else {
 				$this->template->loadTemplateFile("/modules/delete.tpl", true, true);
-				$this->template->setVariable("DELETE_MODULE_NAME", $result["name"]);
+				$this->template->setVariable("DELETE_MODULE_NAME", htmlspecialchars($result["name"]));
 			}
 		} else {
 			FlashMessage::add(FlashMessage::TYPE_ERROR, "Module was not found.");
@@ -256,7 +257,7 @@ class Modules {
 
 			$this->template->setVariable("OWNER_ID", $row["userId"]);
 			$this->template->setVariable("OWNER_SELECTED", $row["userId"] == $ownerId ? " selected" : "");
-			$this->template->setVariable("OWNER_NAME", $row["name"]." ".$row["surname"]);
+			$this->template->setVariable("OWNER_NAME", htmlspecialchars($row["name"]." ".$row["surname"]));
 
 			$this->template->parseCurrentBlock("OWNER_OPTION");
 		}
@@ -278,7 +279,7 @@ class Modules {
 
 			$this->template->setVariable("PREREQUISITE_ID", $row["moduleId"]);
 			$this->template->setVariable("PREREQUISITE_SELECTED", $row["moduleId"] == $prereqId ? " selected" : "");
-			$this->template->setVariable("PREREQUISITE_CODE", $row["code"]." - ".$row["name"]);
+			$this->template->setVariable("PREREQUISITE_CODE", htmlspecialchars($row["code"]." - ".$row["name"]));
 
 			$this->template->parseCurrentBlock("PREREQUISITE_OPTION");
 		}

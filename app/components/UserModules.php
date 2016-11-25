@@ -48,8 +48,8 @@ class UserModules {
 				$this->template->setCurrentBlock("SELECT_OPTION");
 
 				$this->template->setVariable("MODULE_ID", $row["moduleId"]);
-				$this->template->setVariable("NAME", $row["name"]);
-				$this->template->setVariable("CODE", $row["code"]);
+				$this->template->setVariable("NAME", htmlspecialchars($row["name"]));
+				$this->template->setVariable("CODE", htmlspecialchars($row["code"]));
 
 				$this->template->parseCurrentBlock("SELECT_OPTION");
 			}
@@ -69,8 +69,8 @@ class UserModules {
 				$this->template->setCurrentBlock("MODULES_ROW");
 
 				$this->template->setVariable("MODULE_ID", $row["moduleId"]);
-				$this->template->setVariable("NAME", $row["name"]);
-				$this->template->setVariable("CODE", $row["code"]);
+				$this->template->setVariable("NAME", htmlspecialchars($row["name"]));
+				$this->template->setVariable("CODE", htmlspecialchars($row["code"]));
 				$this->template->setVariable("USER_ID", $id);
 
 				$this->template->parseCurrentBlock("MODULES_ROW");
@@ -119,7 +119,7 @@ class UserModules {
 					FlashMessage::add(FlashMessage::TYPE_ERROR, "Module was not found.");
 				} else {
 					$this->insertModuleRight($id, $_POST["module"]);
-					$name = $module["name"];
+					$name = htmlspecialchars($module["name"]);
 					FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Module <i>$name</i> was assigned.");
 				}
 			} else {
@@ -156,7 +156,7 @@ class UserModules {
 				FlashMessage::add(FlashMessage::TYPE_ERROR, "Module was not found.");
 			} else {
 				$this->removeModuleRight($id, $moduleId);
-				$name = $module["name"];
+				$name = htmlspecialchars($module["name"]);
 				FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Module <i>$name</i> was unassigned.");
 			}
 		}
