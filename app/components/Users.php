@@ -239,6 +239,10 @@ class Users {
 		$params = [$id];
 
 		$result = $this->db->execute($statement, $params);
+
+		if (\DB::isError($result)) {
+			FlashMessage::add(FlashMessage::TYPE_DEBUGGING, $result->getUserinfo());
+		}
 	}
 
 	private function fillForm($username, $name, $surname, $email, $qualification, $isAdmin, $editing) {
