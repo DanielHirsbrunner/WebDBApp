@@ -5,24 +5,24 @@ App\Utils\OtherUtils::checkAdmin();
 $action = App\Utils\OtherUtils::getAdminPageAction(["add", "edit", "delete"]);
 
 require "app/components/Activities.php";
-$modules = new App\Components\Activities($db->GetConnection(), $template);
+$activities = new App\Components\Activities($db->GetConnection(), $template);
 
 switch ($action) {
 	case "list":
 		$template->setGlobalVariable("TITLE", "List of activities – ");
-		$modules->renderList();
+		$activities->renderList();
 		break;
 	case "add":
 		$template->setGlobalVariable("TITLE", "Add new activity – ");
-		$modules->renderAdd();
+		$activities->renderAdd();
 		break;
 	case "edit":
 		$template->setGlobalVariable("TITLE", "Edit activity – ");
-		$modules->renderEdit();
+		$activities->renderEdit();
 		break;
 	case "delete":
 		$template->setGlobalVariable("TITLE", "Delete activity – ");
-		$modules->renderDelete();
+		$activities->renderDelete();
 		break;
 }
 

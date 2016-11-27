@@ -5,24 +5,24 @@ App\Utils\OtherUtils::checkAdmin();
 $action = App\Utils\OtherUtils::getAdminPageAction(["add", "edit", "delete"]);
 
 require "app/components/Deliveries.php";
-$modules = new App\Components\Deliveries($db->GetConnection(), $template);
+$deliveries = new App\Components\Deliveries($db->GetConnection(), $template);
 
 switch ($action) {
 	case "list":
 		$template->setGlobalVariable("TITLE", "List of modes of delivery – ");
-		$modules->renderList();
+		$deliveries->renderList();
 		break;
 	case "add":
 		$template->setGlobalVariable("TITLE", "Add new mode of delivery – ");
-		$modules->renderAdd();
+		$deliveries->renderAdd();
 		break;
 	case "edit":
 		$template->setGlobalVariable("TITLE", "Edit mode of delivery – ");
-		$modules->renderEdit();
+		$deliveries->renderEdit();
 		break;
 	case "delete":
 		$template->setGlobalVariable("TITLE", "Delete mode of delivery – ");
-		$modules->renderDelete();
+		$deliveries->renderDelete();
 		break;
 }
 

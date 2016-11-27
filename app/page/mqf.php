@@ -5,24 +5,24 @@ App\Utils\OtherUtils::checkAdmin();
 $action = App\Utils\OtherUtils::getAdminPageAction(["add", "edit", "delete"]);
 
 require "app/components/MQF.php";
-$modules = new App\Components\MQF($db->GetConnection(), $template);
+$mqf = new App\Components\MQF($db->GetConnection(), $template);
 
 switch ($action) {
 	case "list":
 		$template->setGlobalVariable("TITLE", "List of MQF skills – ");
-		$modules->renderList();
+		$mqf->renderList();
 		break;
 	case "add":
 		$template->setGlobalVariable("TITLE", "Add new MQF skill – ");
-		$modules->renderAdd();
+		$mqf->renderAdd();
 		break;
 	case "edit":
 		$template->setGlobalVariable("TITLE", "Edit MQF skill – ");
-		$modules->renderEdit();
+		$mqf->renderEdit();
 		break;
 	case "delete":
 		$template->setGlobalVariable("TITLE", "Delete MQF skill – ");
-		$modules->renderDelete();
+		$mqf->renderDelete();
 		break;
 }
 

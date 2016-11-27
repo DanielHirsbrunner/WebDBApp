@@ -5,24 +5,24 @@ App\Utils\OtherUtils::checkAdmin();
 $action = App\Utils\OtherUtils::getAdminPageAction(["add", "edit", "delete"]);
 
 require "app/components/Assessments.php";
-$modules = new App\Components\Assessments($db->GetConnection(), $template);
+$assessments = new App\Components\Assessments($db->GetConnection(), $template);
 
 switch ($action) {
 	case "list":
 		$template->setGlobalVariable("TITLE", "List of assessment types – ");
-		$modules->renderList();
+		$assessments->renderList();
 		break;
 	case "add":
 		$template->setGlobalVariable("TITLE", "Add new assessment types – ");
-		$modules->renderAdd();
+		$assessments->renderAdd();
 		break;
 	case "edit":
 		$template->setGlobalVariable("TITLE", "Edit assessment types – ");
-		$modules->renderEdit();
+		$assessments->renderEdit();
 		break;
 	case "delete":
 		$template->setGlobalVariable("TITLE", "Delete assessment types – ");
-		$modules->renderDelete();
+		$assessments->renderDelete();
 		break;
 }
 
