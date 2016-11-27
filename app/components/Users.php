@@ -181,10 +181,18 @@ class Users {
 			}
 			// submitting
 			if (isset($_POST["delete"])) {
-				$this->deleteUser($id);
-				$fullName = htmlspecialchars($result["name"]." ".$result["surname"]);
-				FlashMessage::add(FlashMessage::TYPE_SUCCESS, "User <i>$fullName</i> was successfuly deleted.");
-				OtherUtils::redirect("/users");
+				$result2 = $this->deleteUser($id);
+				if ($_POST["delete"] == "ajax" && !$result2) {
+					http_response_code(400);
+				} else {
+					$fullName = htmlspecialchars($result["name"]." ".$result["surname"]);
+					if (!$result2) {
+						FlashMessage::add(FlashMessage::TYPE_ERROR, "User <i>$fullName</i> cannot be deleted. Check is there isn't any sylabus item referencing this record.");
+					} else {
+						FlashMessage::add(FlashMessage::TYPE_SUCCESS, "User <i>$fullName</i> was successfuly deleted.");
+					}
+					OtherUtils::redirect("/users");
+				}
 			} else {
 				$this->template->loadTemplateFile("/users/delete.tpl", true, true);
 				$this->template->setVariable("DELETE_USER_NAME", htmlspecialchars($result["name"]." ".$result["surname"]));
@@ -242,6 +250,9 @@ class Users {
 
 		if (\DB::isError($result)) {
 			FlashMessage::add(FlashMessage::TYPE_DEBUGGING, $result->getUserinfo());
+			return false;
+		} else {
+			return true;
 		}
 	}
 

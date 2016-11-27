@@ -122,10 +122,18 @@ class Deliveries {
 		if ($result) {
 			// submitting
 			if (isset($_POST["delete"])) {
-				$this->deleteModeOfDelivery($id);
-				$desc = htmlspecialchars($result["description"]);
-				FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Mode of delivery <i>$desc</i> was successfuly deleted.");
-				OtherUtils::redirect("/deliveries");
+				$result2 = $this->deleteModeOfDelivery($id);
+				if ($_POST["delete"] == "ajax" && !$result2) {
+					http_response_code(400);
+				} else {
+					$desc = htmlspecialchars($result["description"]);
+					if (!$result2) {
+						FlashMessage::add(FlashMessage::TYPE_ERROR, "Mode of delivery <i>$desc</i> cannot be deleted. Check is there isn't any sylabus item referencing this record.");
+					} else {
+						FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Mode of delivery <i>$desc</i> was successfuly deleted.");
+					}
+					OtherUtils::redirect("/deliveries");
+				}
 			} else {
 				$this->template->loadTemplateFile("/deliveries/delete.tpl", true, true);
 				$this->template->setVariable("DELETE_DELIVERY_DESC", htmlspecialchars($result["description"]));
@@ -168,6 +176,9 @@ class Deliveries {
 
 		if (\DB::isError($result)) {
 			FlashMessage::add(FlashMessage::TYPE_DEBUGGING, $result->getUserinfo());
+			return false;
+		} else {
+			return true;
 		}
 	}
 

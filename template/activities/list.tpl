@@ -30,7 +30,7 @@
 				<tr>
 					<td>{ACTIVITY_ID}</td><td>{ACTIVITY_DESC}</td>
 					<td><a href="{BASE_PATH}/activities/edit/{ACTIVITY_ID}"><span class="glyphicon glyphicon-pencil"></a>
-						<a href="{BASE_PATH}/activities/delete/{ACTIVITY_ID}"><span class="glyphicon glyphicon-remove"></a>
+						<a class="ajax-delete" href="{BASE_PATH}/activities/delete/{ACTIVITY_ID}"><span class="glyphicon glyphicon-remove"></a>
 					</td>
 				</tr>
 				<!-- END ACTIVITY_ROW -->

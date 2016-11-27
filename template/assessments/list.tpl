@@ -30,7 +30,7 @@
 				<tr>
 					<td>{ASSESSMENT_ID}</td><td>{ASSESSMENT_DESC}</td>
 					<td><a href="{BASE_PATH}/assessments/edit/{ASSESSMENT_ID}"><span class="glyphicon glyphicon-pencil"></a>
-						<a href="{BASE_PATH}/assessments/delete/{ASSESSMENT_ID}"><span class="glyphicon glyphicon-remove"></a>
+						<a class="ajax-delete" href="{BASE_PATH}/assessments/delete/{ASSESSMENT_ID}"><span class="glyphicon glyphicon-remove"></a>
 					</td>
 				</tr>
 				<!-- END ASSESSMENTS_ROW -->

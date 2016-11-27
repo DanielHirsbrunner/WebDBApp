@@ -49,7 +49,7 @@
 					<td>{MODULE_ID}</td><td>{NAME}</td><td>{CODE}</td>
 					<td><a href="{BASE_PATH}/users/modules/{USER_ID}/remove/{MODULE_ID}">Unassign</a></td>
 					<td><a href="{BASE_PATH}/modules/edit/{MODULE_ID}"><span class="glyphicon glyphicon-pencil"></a>
-						<a href="{BASE_PATH}/modules/delete/{MODULE_ID}"><span class="glyphicon glyphicon-remove"></a>
+						<a class="ajax-delete" href="{BASE_PATH}/modules/delete/{MODULE_ID}"><span class="glyphicon glyphicon-remove"></a>
 					</td>
 				</tr>
 				<!-- END MODULES_ROW -->

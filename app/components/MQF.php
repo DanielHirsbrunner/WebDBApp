@@ -122,10 +122,18 @@ class MQF {
 		if ($result) {
 			// submitting
 			if (isset($_POST["delete"])) {
-				$this->deleteMQF($id);
-				$desc = htmlspecialchars($result["description"]);
-				FlashMessage::add(FlashMessage::TYPE_SUCCESS, "MQF skill <i>$desc</i> was successfuly deleted.");
-				OtherUtils::redirect("/mqf");
+				$result2 = $this->deleteMQF($id);
+				if ($_POST["delete"] == "ajax" && !$result2) {
+					http_response_code(400);
+				} else {
+					$desc = htmlspecialchars($result["description"]);
+					if (!$result2) {
+						FlashMessage::add(FlashMessage::TYPE_ERROR, "MQF skill <i>$desc</i> cannot be deleted. Check is there isn't any sylabus item referencing this record.");
+					} else {
+						FlashMessage::add(FlashMessage::TYPE_SUCCESS, "MQF skill <i>$desc</i> was successfuly deleted.");
+					}
+					OtherUtils::redirect("/mqf");
+				}
 			} else {
 				$this->template->loadTemplateFile("/mqf/delete.tpl", true, true);
 				$this->template->setVariable("DELETE_MQF_DESC", htmlspecialchars($result["description"]));
@@ -168,6 +176,9 @@ class MQF {
 
 		if (\DB::isError($result)) {
 			FlashMessage::add(FlashMessage::TYPE_DEBUGGING, $result->getUserinfo());
+			return false;
+		} else {
+			return true;
 		}
 	}
 

@@ -183,10 +183,18 @@ class Modules {
 		if ($result) {
 			// submitting
 			if (isset($_POST["delete"])) {
-				$this->deleteModule($id);
-				$name = htmlspecialchars($result["name"]);
-				FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Module <i>$name</i> was successfuly deleted.");
-				OtherUtils::redirect("/modules");
+				$result2 = $this->deleteModule($id);
+				if ($_POST["delete"] == "ajax" && !$result2) {
+					http_response_code(400);
+				} else {
+					$name = htmlspecialchars($result["name"]);
+					if (!$result2) {
+						FlashMessage::add(FlashMessage::TYPE_ERROR, "Module <i>$name</i> cannot be deleted. Check is there isn't any sylabus item referencing this record.");
+					} else {
+						FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Module <i>$name</i> was successfuly deleted.");
+					}
+					OtherUtils::redirect("/modules");
+				}
 			} else {
 				$this->template->loadTemplateFile("/modules/delete.tpl", true, true);
 				$this->template->setVariable("DELETE_MODULE_NAME", htmlspecialchars($result["name"]));
@@ -241,6 +249,9 @@ class Modules {
 
 		if (\DB::isError($result)) {
 			FlashMessage::add(FlashMessage::TYPE_DEBUGGING, $result->getUserinfo());
+			return false;
+		} else {
+			return true;
 		}
 	}
 

@@ -30,7 +30,7 @@
 				<tr>
 					<td>{MQF_ID}</td><td>{MQF_DESC}</td>
 					<td><a href="{BASE_PATH}/mqf/edit/{MQF_ID}"><span class="glyphicon glyphicon-pencil"></a>
-						<a href="{BASE_PATH}/mqf/delete/{MQF_ID}"><span class="glyphicon glyphicon-remove"></a>
+						<a class="ajax-delete" href="{BASE_PATH}/mqf/delete/{MQF_ID}"><span class="glyphicon glyphicon-remove"></a>
 					</td>
 				</tr>
 				<!-- END MQF_ROW -->

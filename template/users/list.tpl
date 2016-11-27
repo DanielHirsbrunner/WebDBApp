@@ -35,7 +35,7 @@
 				<td>{USER_ID}</td><td>{USERNAME}</td><td>{FULLNAME}</td><td>{EMAIL}</td><td>{ADMIN}</td>
 				<td><a href="{BASE_PATH}/users/modules/{USER_ID}">Edit modules</a></td>
 				<td><a href="{BASE_PATH}/users/edit/{USER_ID}"><span class="glyphicon glyphicon-pencil"></a>
-					<a href="{BASE_PATH}/users/delete/{USER_ID}"><span class="glyphicon glyphicon-remove"></a>
+					<a class="ajax-delete" href="{BASE_PATH}/users/delete/{USER_ID}"><span class="glyphicon glyphicon-remove"></a>
 				</td>
 			</tr>
 			<!-- END USERS_ROW -->

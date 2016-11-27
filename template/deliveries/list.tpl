@@ -30,7 +30,7 @@
 				<tr>
 					<td>{DELIVERY_ID}</td><td>{DELIVERY_DESC}</td>
 					<td><a href="{BASE_PATH}/deliveries/edit/{DELIVERY_ID}"><span class="glyphicon glyphicon-pencil"></a>
-						<a href="{BASE_PATH}/deliveries/delete/{DELIVERY_ID}"><span class="glyphicon glyphicon-remove"></a>
+						<a class="ajax-delete" href="{BASE_PATH}/deliveries/delete/{DELIVERY_ID}"><span class="glyphicon glyphicon-remove"></a>
 					</td>
 				</tr>
 				<!-- END DELIVERY_ROW -->

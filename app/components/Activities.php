@@ -122,10 +122,18 @@ class Activities {
 		if ($result) {
 			// submitting
 			if (isset($_POST["delete"])) {
-				$this->deleteActivity($id);
-				$desc = htmlspecialchars($result["description"]);
-				FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Activity <i>$desc</i> was successfuly deleted.");
-				OtherUtils::redirect("/activities");
+				$result2 = $this->deleteActivity($id);
+				if ($_POST["delete"] == "ajax" && !$result2) {
+					http_response_code(400);
+				} else {
+					$desc = htmlspecialchars($result["description"]);
+					if (!$result2) {
+						FlashMessage::add(FlashMessage::TYPE_ERROR, "Activity <i>$desc</i> cannot be deleted. Check is there isn't any sylabus item referencing this record.");
+					} else {
+						FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Activity <i>$desc</i> was successfuly deleted.");
+					}
+					OtherUtils::redirect("/activities");
+				}
 			} else {
 				$this->template->loadTemplateFile("/activities/delete.tpl", true, true);
 				$this->template->setVariable("DELETE_ACTIVITY_DESC", htmlspecialchars($result["description"]));
@@ -168,6 +176,9 @@ class Activities {
 
 		if (\DB::isError($result)) {
 			FlashMessage::add(FlashMessage::TYPE_DEBUGGING, $result->getUserinfo());
+			return false;
+		} else {
+			return true;
 		}
 	}
 
