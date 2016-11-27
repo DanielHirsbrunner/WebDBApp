@@ -38,6 +38,18 @@ class OtherUtils {
 		return $action;
 	}
 
+	public static function improvedAutoExecute($db, $tableName, $fieldsValues, $method, $condition = "") {
+
+		$result = $db->autoExecute($tableName, $fieldsValues, $method, $condition);
+
+		if (\DB::isError($result)) {
+			FlashMessage::add(FlashMessage::TYPE_DEBUGGING, $result->getUserinfo());
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 	public static function handleDeleteResult($postDelete, $result2, $errorMsg, $successMsg, $redirect) {
 		if ($postDelete == "ajax") {
 			if (!$result2) {

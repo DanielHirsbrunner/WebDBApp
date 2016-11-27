@@ -152,7 +152,7 @@ class Deliveries {
 			"description"	=> $description
 		);
 
-		return improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
+		return OtherUtils::improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
 	}
 
 	private function updateModeOfDelivery($description) {
@@ -164,7 +164,7 @@ class Deliveries {
 
 		$id = $_GET["id"];
 
-		return improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "modeOfDeliveryId = '$id'");
+		return OtherUtils::improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "modeOfDeliveryId = '$id'");
 	}
 
 	private function deleteModeOfDelivery($id) {

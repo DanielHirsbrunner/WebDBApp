@@ -225,7 +225,7 @@ class Users {
 			"isAdmin"		=> $admin
 		);
 
-		return improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
+		return OtherUtils::improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
 	}
 
 	private function updateUser($username, $password, $name, $surname, $email, $qualification, $admin) {
@@ -245,7 +245,7 @@ class Users {
 		$tableName = "user";
 		$id = $_GET["id"];
 
-		return improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "userId = '$id'");
+		return OtherUtils::improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "userId = '$id'");
 	}
 
 	private function deleteUser($id) {

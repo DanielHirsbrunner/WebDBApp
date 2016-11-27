@@ -152,7 +152,7 @@ class MQF {
 			"description"	=> $description
 		);
 
-		return improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
+		return OtherUtils::improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
 	}
 
 	private function updateMQF($description) {
@@ -164,7 +164,7 @@ class MQF {
 
 		$id = $_GET["id"];
 
-		return improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "mqfSkillId = '$id'");
+		return OtherUtils::improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "mqfSkillId = '$id'");
 	}
 
 	private function deleteMQF($id) {

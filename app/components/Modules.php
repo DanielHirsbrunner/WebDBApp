@@ -219,7 +219,7 @@ class Modules {
 			"editBy"		=> $_SESSION["user"]["id"]
 		);
 
-		return improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
+		return OtherUtils::improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
 	}
 
 	private function updateModule($name, $code, $credits, $ownerId, $prereqId, $purpose) {
@@ -237,7 +237,7 @@ class Modules {
 
 		$id = $_GET["id"];
 
-		return improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "moduleId = '$id'");
+		return OtherUtils::improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "moduleId = '$id'");
 	}
 
 	private function deleteModule($id) {

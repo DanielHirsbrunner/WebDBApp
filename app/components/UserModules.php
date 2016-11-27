@@ -143,7 +143,7 @@ class UserModules {
 
 		$tableName = "moduleright";
 
-		return improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
+		return OtherUtils::improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
 	}
 
 	public function removeModule() {

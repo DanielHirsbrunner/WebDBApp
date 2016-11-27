@@ -152,7 +152,7 @@ class Activities {
 			"description"	=> $description
 		);
 
-		return improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
+		return OtherUtils::improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
 	}
 
 	private function updateActivity($description) {
@@ -164,7 +164,7 @@ class Activities {
 
 		$id = $_GET["id"];
 
-		return improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "teachLearnActivityId = '$id'");
+		return OtherUtils::improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "teachLearnActivityId = '$id'");
 	}
 
 	private function deleteActivity($id) {

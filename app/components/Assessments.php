@@ -152,7 +152,7 @@ class Assessments {
 			"description"	=> $description
 		);
 
-		return improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
+		return OtherUtils::improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
 	}
 
 	private function updateAssessment($description) {
@@ -164,7 +164,7 @@ class Assessments {
 
 		$id = $_GET["id"];
 
-		return improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "assessmentTypeId = '$id'");
+		return OtherUtils::improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "assessmentTypeId = '$id'");
 	}
 
 	private function deleteAssessment($id) {
