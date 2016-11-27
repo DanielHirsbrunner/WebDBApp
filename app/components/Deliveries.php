@@ -80,16 +80,27 @@ class Deliveries {
 					// update
 					$msg = "";
 					if ($editing) {
-						$this->updateModeOfDelivery($description);
-						$msg = "updated";
+						if (!$this->updateModeOfDelivery($description)) {
+							$isError = true;
+							$msg = "updating";
+						} else {
+							$msg = "updated";
+						}
 					// insert
 					} else {
-						$this->insertModeOfDelivery($description);
-						$msg = "created";
+						if (!$this->insertModeOfDelivery($description)) {
+							$isError = true;
+							$msg = "creating";
+						} else {
+							$msg = "created";
+						}
 					}
-
-					$descriptionHtml = htmlspecialchars($description);
-					FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Mode of delivery <i>$descriptionHtml</i> was successfuly $msg.");
+					if ($isError) {
+						FlashMessage::add(FlashMessage::TYPE_ERROR, "An error occured when $msg mode of delivery.");
+					} else {
+						$descriptionHtml = htmlspecialchars($description);
+						FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Mode of delivery <i>$descriptionHtml</i> was successfuly $msg.");
+					}
 					OtherUtils::redirect("/deliveries");
 				}
 			} else {
@@ -132,7 +143,7 @@ class Deliveries {
 			"description"	=> $description
 		);
 
-		improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
+		return improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
 	}
 
 	private function updateModeOfDelivery($description) {
@@ -144,7 +155,7 @@ class Deliveries {
 
 		$id = $_GET["id"];
 
-		improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "modeOfDeliveryId = '$id'");
+		return improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "modeOfDeliveryId = '$id'");
 	}
 
 	private function deleteModeOfDelivery($id) {

@@ -80,16 +80,27 @@ class Assessments {
 					// update
 					$msg = "";
 					if ($editing) {
-						$this->updateAssessment($description);
-						$msg = "updated";
+						if (!$this->updateAssessment($description)) {
+							$isError = true;
+							$msg = "updating";
+						} else {
+							$msg = "updated";
+						}
 					// insert
 					} else {
-						$this->insertAssessment($description);
-						$msg = "created";
+						if (!$this->insertAssessment($description)) {
+							$isError = true;
+							$msg = "creating";
+						} else {
+							$msg = "created";
+						}
 					}
-
-					$descriptionHtml = htmlspecialchars($description);
-					FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Assessment type <i>$descriptionHtml</i> was successfuly $msg.");
+					if ($isError) {
+						FlashMessage::add(FlashMessage::TYPE_ERROR, "An error occured when $msg assessment.");
+					} else {
+						$descriptionHtml = htmlspecialchars($description);
+						FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Assessment type <i>$descriptionHtml</i> was successfuly $msg.");
+					}
 					OtherUtils::redirect("/assessments");
 				}
 			} else {
@@ -132,7 +143,7 @@ class Assessments {
 			"description"	=> $description
 		);
 
-		improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
+		return improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
 	}
 
 	private function updateAssessment($description) {
@@ -144,7 +155,7 @@ class Assessments {
 
 		$id = $_GET["id"];
 
-		improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "assessmentTypeId = '$id'");
+		return improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "assessmentTypeId = '$id'");
 	}
 
 	private function deleteAssessment($id) {

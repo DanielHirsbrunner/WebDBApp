@@ -80,16 +80,27 @@ class Activities {
 					// update
 					$msg = "";
 					if ($editing) {
-						$this->updateActivity($description);
-						$msg = "updated";
+						if (!$this->updateActivity($description)) {
+							$isError = true;
+							$msg = "updating";
+						} else {
+							$msg = "updated";
+						}
 					// insert
 					} else {
-						$this->insertActivity($description);
-						$msg = "created";
+						if (!$this->insertActivity($description)) {
+							$isError = true;
+							$msg = "creating";
+						} else {
+							$msg = "created";
+						}
 					}
-
-					$descriptionHtml = htmlspecialchars($description);
-					FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Activity <i>$descriptionHtml</i> was successfuly $msg.");
+					if ($isError) {
+						FlashMessage::add(FlashMessage::TYPE_ERROR, "An error occured when $msg activity.");
+					} else {
+						$descriptionHtml = htmlspecialchars($description);
+						FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Activity <i>$descriptionHtml</i> was successfuly $msg.");
+					}
 					OtherUtils::redirect("/activities");
 				}
 			} else {
@@ -132,7 +143,7 @@ class Activities {
 			"description"	=> $description
 		);
 
-		improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
+		return improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
 	}
 
 	private function updateActivity($description) {
@@ -144,7 +155,7 @@ class Activities {
 
 		$id = $_GET["id"];
 
-		improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "teachLearnActivityId = '$id'");
+		return improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "teachLearnActivityId = '$id'");
 	}
 
 	private function deleteActivity($id) {

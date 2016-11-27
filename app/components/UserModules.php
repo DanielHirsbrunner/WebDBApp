@@ -118,15 +118,17 @@ class UserModules {
 				if (!$module) {
 					FlashMessage::add(FlashMessage::TYPE_ERROR, "Module was not found.");
 				} else {
-					$this->insertModuleRight($id, $_POST["module"]);
-					$name = htmlspecialchars($module["name"]);
-					FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Module <i>$name</i> was assigned.");
+					if (!$this->insertModuleRight($id, $_POST["module"])) {
+						FlashMessage::add(FlashMessage::TYPE_ERROR, "An error occured when assigning module to user.");
+					} else {
+						$name = htmlspecialchars($module["name"]);
+						FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Module <i>$name</i> was assigned.");
+					}
 				}
 			} else {
 				FlashMessage::add(FlashMessage::TYPE_ERROR, "Wrong request. Try again.");
 			}
 		}
-
 
 		OtherUtils::redirect("/users/modules/".$id, true, 303);
 	}
@@ -139,7 +141,7 @@ class UserModules {
 
 		$tableName = "moduleright";
 
-		improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
+		return improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
 	}
 
 	public function removeModule() {

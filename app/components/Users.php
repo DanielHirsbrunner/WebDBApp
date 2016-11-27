@@ -132,16 +132,27 @@ class Users {
 					// update
 					$msg = "";
 					if ($editing) {
-						$this->updateUser($username, $password, $name, $surname, $email, $qualification, $admin);
-						$msg = "updated";
+						if (!$this->updateUser($username, $password, $name, $surname, $email, $qualification, $admin)) {
+							$isError = true;
+							$msg = "updating";
+						} else {
+							$msg = "updated";
+						}
 					// insert
 					} else {
-						$this->insertUser($username, $password, $name, $surname, $email, $qualification, $admin);
-						$msg = "created";
+						if (!$this->insertUser($username, $password, $name, $surname, $email, $qualification, $admin)) {
+							$isError = true;
+							$msg = "creating";
+						} else {
+							$msg = "created";
+						}
 					}
-
-					$fullNameHtml = htmlspecialchars($name." ".$surname);
-					FlashMessage::add(FlashMessage::TYPE_SUCCESS, "User <i>$fullNameHtml</i> was successfuly $msg.");
+					if ($isError) {
+						FlashMessage::add(FlashMessage::TYPE_ERROR, "An error occured when $msg user.");
+					} else {
+						$fullNameHtml = htmlspecialchars($name." ".$surname);
+						FlashMessage::add(FlashMessage::TYPE_SUCCESS, "User <i>$fullNameHtml</i> was successfuly $msg.");
+					}
 					OtherUtils::redirect("/users");
 				}
 			} else {
@@ -198,7 +209,7 @@ class Users {
 			"isAdmin"		=> $admin
 		);
 
-		improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
+		return improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
 	}
 
 	private function updateUser($username, $password, $name, $surname, $email, $qualification, $admin) {
@@ -218,7 +229,7 @@ class Users {
 		$tableName = "user";
 		$id = $_GET["id"];
 
-		improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "userId = '$id'");
+		return improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "userId = '$id'");
 	}
 
 	private function deleteUser($id) {

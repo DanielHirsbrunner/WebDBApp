@@ -80,16 +80,27 @@ class MQF {
 					// update
 					$msg = "";
 					if ($editing) {
-						$this->updateMQF($description);
-						$msg = "updated";
+						if (!$this->updateMQF($description)) {
+							$isError = true;
+							$msg = "updating";
+						} else {
+							$msg = "updated";
+						}
 					// insert
 					} else {
-						$this->insertMQF($description);
-						$msg = "created";
+						if (!$this->insertMQF($description)) {
+							$isError = true;
+							$msg = "creating";
+						} else {
+							$msg = "created";
+						}
 					}
-
-					$descriptionHtml = htmlspecialchars($description);
-					FlashMessage::add(FlashMessage::TYPE_SUCCESS, "MQF skill <i>$descriptionHtml</i> was successfuly $msg.");
+					if ($isError) {
+						FlashMessage::add(FlashMessage::TYPE_ERROR, "An error occured when $msg MQF skill.");
+					} else {
+						$descriptionHtml = htmlspecialchars($description);
+						FlashMessage::add(FlashMessage::TYPE_SUCCESS, "MQF skill <i>$descriptionHtml</i> was successfuly $msg.");
+					}
 					OtherUtils::redirect("/mqf");
 				}
 			} else {
@@ -132,7 +143,7 @@ class MQF {
 			"description"	=> $description
 		);
 
-		improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
+		return improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
 	}
 
 	private function updateMQF($description) {
@@ -144,7 +155,7 @@ class MQF {
 
 		$id = $_GET["id"];
 
-		improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "mqfSkillId = '$id'");
+		return improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "mqfSkillId = '$id'");
 	}
 
 	private function deleteMQF($id) {

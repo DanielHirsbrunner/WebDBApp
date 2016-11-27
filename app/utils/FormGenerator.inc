@@ -150,7 +150,7 @@ class FormGenerator
 	
 	public function getAprovedBy($print) {
 		$divName = 'divAprovedBy';
-		$inputLabel = 'AprovedBy:';
+		$inputLabel = 'Approved By:';
 		$currApprover = $this->getSyllabusVarNr('approvedById');
 		
 		if (!$print) {

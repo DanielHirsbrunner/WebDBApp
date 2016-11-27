@@ -139,16 +139,27 @@ class Modules {
 					// update
 					$msg = "";
 					if ($editing) {
-						$this->updateModule($name, $code, $credits, $ownerId, $prereqId, $purpose);
-						$msg = "updated";
+						if (!$this->updateModule($name, $code, $credits, $ownerId, $prereqId, $purpose)) {
+							$isError = true;
+							$msg = "updating";
+						} else {
+							$msg = "updated";
+						}
 					// insert
 					} else {
-						$this->insertModule($name, $code, $credits, $ownerId, $prereqId, $purpose);
-						$msg = "created";
+						if (!$this->insertModule($name, $code, $credits, $ownerId, $prereqId, $purpose)) {
+							$isError = true;
+							$msg = "creating";
+						} else {
+							$msg = "created";
+						}
 					}
-
-					$nameHtml = htmlspecialchars($name);
-					FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Module <i>$nameHtml</i> was successfuly $msg.");
+					if ($isError) {
+						FlashMessage::add(FlashMessage::TYPE_ERROR, "An error occured when $msg module.");
+					} else {
+						$nameHtml = htmlspecialchars($name);
+						FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Module <i>$nameHtml</i> was successfuly $msg.");
+					}
 					OtherUtils::redirect("/modules");
 				}
 			} else {
@@ -199,7 +210,7 @@ class Modules {
 			"editBy"		=> $_SESSION["user"]["id"]
 		);
 
-		improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
+		return improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
 	}
 
 	private function updateModule($name, $code, $credits, $ownerId, $prereqId, $purpose) {
@@ -217,7 +228,7 @@ class Modules {
 
 		$id = $_GET["id"];
 
-		improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "moduleId = '$id'");
+		return improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_UPDATE, "moduleId = '$id'");
 	}
 
 	private function deleteModule($id) {
