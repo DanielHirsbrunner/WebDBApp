@@ -270,7 +270,7 @@ class FormGenerator
 			$sylId = $_SESSION['syllabusId'];
 		}
 		
-		$table  = '<table class="tblModulAimsMapping"><tr class="table-heading"><th>CLO</th><th>PEO1</th><th>PEO2</th><th>PEO3</th><th>PEO4</th></tr>';
+		$table  = '<table class="tblModulAimsMapping custom"><thead><tr><th>CLO</th><th>PEO1</th><th>PEO2</th><th>PEO3</th><th>PEO4</th></tr></thead><tbody>';
 		
 		$prevCloNr = 0;
 		$peoStmt  = getModuleAimStmt($sylId);
@@ -286,7 +286,7 @@ class FormGenerator
 			}
 			$table .= '</tr>';
 		}
-		$table .= '</table>';
+		$table .= '</tbody></table>';
 		if ($print) {
 			return $this->getDivPrint($divName, $inputLabel, $table);
 		} else {
@@ -303,7 +303,7 @@ class FormGenerator
 			$sylId = $_SESSION['syllabusId'];
 		}
 	
-		$table  = '<table class="tblLearningOutcomeMapping"><tr class="table-heading"><th>MLO</th><th>PLO1</th><th>PLO2</th><th>PLO3</th><th>PLO4</th><th>PLO5</th><th>PLO6</th><th>PLO7</th><th>PLO8</th></tr>';
+		$table  = '<table class="tblLearningOutcomeMapping custom"><thead><tr><th>MLO</th><th>PLO1</th><th>PLO2</th><th>PLO3</th><th>PLO4</th><th>PLO5</th><th>PLO6</th><th>PLO7</th><th>PLO8</th></tr></thead><tbody>';
 		$prevMloNr = 0;
 		$ploStmt  = getLearningOutcomeStmt($sylId);
 		if ($result = $this->db->ExecuteSelectStmt($ploStmt)) {
@@ -318,7 +318,7 @@ class FormGenerator
 			}
 			$table .= '</tr>';
 		}
-		$table .= '</table>';
+		$table .= '</tbody></table>';
 		if ($print) {
 			return $this->getDivPrint($divName, $inputLabel, $table);
 		} else {
@@ -348,7 +348,11 @@ class FormGenerator
 				}
 			}
 		}
-		return $this->getDivPrint($divName, $inputLabel, $list);
+		if ($print) {
+			return $this->getDivPrint($divName, $inputLabel, $list);
+		} else {
+			return "<p><strong>$inputLabel</strong></p>".$list."<br><br>";
+		}
 	}
 		
 	
@@ -397,9 +401,9 @@ class FormGenerator
 			$assessmentTypePart .= '</ul>';
 		}
 		
-		$table  = '<table><tr class="table-heading"><th>MQF Skills</th><th>Teaching and Learning activities</th><th>Type of Assessment</th></tr>';
+		$table  = '<table class="custom"><thead><tr><th>MQF Skills</th><th>Teaching and Learning activities</th><th>Type of Assessment</th></tr></thead><tbody>';
 		$table .= '<tr><td>' . $syllabusMqfSkillPart . '</td><td>' . $teachlearnactivityPart . '</td><td>' . $assessmentTypePart . '</td></tr>';
-		$table .= '</table>';
+		$table .= '</tbody></table>';
 		if ($print) {
 			return $this->getDivPrint($divName, $inputLabel, $table);
 		} else {
@@ -416,8 +420,8 @@ class FormGenerator
 			$syllabusId = $_SESSION['syllabusId'];
 		}
 		
-		$table = '<table><tr class="table-heading"><th>Nr</th><th>Topic</th><th colspan="4">Face to Face / Guided Learning</th><th colspan="4">Independent Learning</th><th>Total</th>'. ($print? '' : '<th></th>') . '</tr> ';
-		$table .= '<tr class="table-heading"><th/><th/><th class="tdNumber">L</th><th class="tdNumber">T</th><th class="tdNumber">P</th><th class="tdNumber">O</th><th class="tdNumber">L</th><th class="tdNumber">T</th><th class="tdNumber">P</th><th class="tdNumber">O</th><th/>'. ($print? '' : '<th/>') . '</tr>';
+		$table = '<table class="custom"><thead><tr><th>Nr</th><th>Topic</th><th colspan="4">Face to Face / Guided Learning</th><th colspan="4">Independent Learning</th><th>Total</th>'. ($print? '' : '<th></th>') . '</tr></thead><tbody> ';
+		$table .= '<tr><th/><th/><th class="tdNumber">L</th><th class="tdNumber">T</th><th class="tdNumber">P</th><th class="tdNumber">O</th><th class="tdNumber">L</th><th class="tdNumber">T</th><th class="tdNumber">P</th><th class="tdNumber">O</th><th/>'. ($print? '' : '<th/>') . '</tr>';
 		
 		// Table with Topics
 		$topicStmt  = getTopicStmt($syllabusId);
@@ -577,7 +581,7 @@ class FormGenerator
 			$table .= '<td colspan="8" class="tdNumber"><input name="txtcreditHours" type="text" value="' . $creditHours . '" class="numberInput form-control"></td>';
 		}
 		$table .= '<td colspan="2"/></tr>';
-		$table .= '</table>';
+		$table .= '</tbody></table>';
 		if ($print) {
 			//return $this->getDiv($divName, $inputLabel, $table);
 			return '<div id = "' . $divName . '" class="inputDiv">' . $table . '</div>';

@@ -9,9 +9,27 @@
 		<!-- INCLUDE include/flash_message.tpl -->
 		<!-- INCLUDE include/admin_menu.tpl -->
 
-		<p><a href="{BASE_PATH}/users/add" class="btn btn-default"> + Create new user</a></p>
-		<table>
-			<tr class="table-heading"><th>#</th><th>Username</th><th>Full name</th><th>Email</th><th>Admin</th><th>Modules</th><th>&nbsp;</th></tr>
+		<p class="pull-left"><a href="{BASE_PATH}/users/add" class="btn btn-default"> + Create new user</a></p>
+		<table class="table"
+				id="table"
+				data-toggle="table"
+				data-unique-id="id"
+
+				data-show-columns="true"
+
+				data-search="true"
+				data-advanced-search="true"
+				data-id-table="advancedTable">
+		<thead><tr>
+				<th data-field="id" data-sortable="true">#</th>
+				<th data-field="username" data-sortable="true">Username</th>
+				<th data-field="fullname" data-sortable="true">Full name</th>
+				<th data-field="email" data-sortable="true">Email</th>
+				<th data-field="admin" data-sortable="true">Admin</th>
+				<th data-searchable="false">Modules</th>
+				<th data-searchable="false">&nbsp;</th>
+		</tr></they>
+		<tbody>
 			<!-- BEGIN USERS_ROW -->
 			<tr>
 				<td>{USER_ID}</td><td>{USERNAME}</td><td>{FULLNAME}</td><td>{EMAIL}</td><td>{ADMIN}</td>
@@ -21,6 +39,7 @@
 				</td>
 			</tr>
 			<!-- END USERS_ROW -->
+		</tbody>
 		</table>
 	</div>
 </div>

@@ -14,8 +14,24 @@
 			</div>
 
 			<div class="col-sm-9 syllabuses">
-				<table>
-					<tr class="table-heading"><th>Version</th><th>Last change</th><th>Edited by</th><th>&nbsp;&nbsp;</th></tr>
+				<p class="pull-left"><a href ="{BASE_PATH}/syllabusWizard/0" class="btn btn-default">+ new empty syllabus</a></p>
+				<table class="table"
+					id="table"
+					data-toggle="table"
+					data-unique-id="id"
+
+					data-show-columns="true"
+
+					data-search="true"
+					data-advanced-search="true"
+					data-id-table="advancedTable">
+				<thead><tr>
+					<th data-field="version" data-sortable="true">Version</th>
+					<th data-field="last_change">Last change</th>
+					<th data-field="edited_by" data-sortable="true">Edited by</th>
+					<th data-searchable="false">&nbsp;&nbsp;</th>
+				</tr></thead>
+				<tbody>
 					<!-- BEGIN SYLLABUS_LIST -->
 					<tr>
 						<td>{SYLLABUS_VERSION}</td><td>{SYLLABUS_EDITTS}</td><td>{SYLLABUS_EDITBY}</td>
@@ -25,9 +41,9 @@
 						</td>
 					</tr>
 					<!-- END SYLLABUS_LIST -->
+				</tbody>
 				</table>
 				<br/><br/>
-				<a href ="{BASE_PATH}/syllabusWizard/0" class="btn btn-default">+ new empty syllabus</a>
 			</div>
 		</div>
 	</div>

@@ -43,6 +43,7 @@ class UserModules {
 		if ($numRows == 0) {
 			$this->template->touchBlock("ALL_MODULES_ASSIGNED");
 		} else {
+			$this->template->setCurrentBlock("RESULTS_SELECT2");
 			$this->template->setVariable("FORM_ACTION_USER_ID", $id);
 			while ($row = $modules->fetchRow(DB_FETCHMODE_ASSOC)) {
 				$this->template->setCurrentBlock("SELECT_OPTION");
@@ -53,6 +54,7 @@ class UserModules {
 
 				$this->template->parseCurrentBlock("SELECT_OPTION");
 			}
+			$this->template->parseCurrentBlock("RESULTS_SELECT2");
 		}
 		$this->template->parseCurrentBlock("RESULTS_SELECT");
 

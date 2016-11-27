@@ -98,14 +98,14 @@
 	}
 	
 	
-	$table = '<table>';//<tr><th style="width:200px;"/><th style="width:400px;" />';
+	$table = '<table class="custom"><tbody>';//<tr><th style="width:200px;"/><th style="width:400px;" />';
 	$table .= '<tr><td class="_25"><label for="txttopicNr">Topic number</label></td><td><input id="txttopicNr" name="txttopicNr" type="text" value="' . $topicNr . '" class="numberInput form-control pull-left"></td></tr>';
 	$table .= '<tr><td class="_25"><label for="txtdescription">Topic description</label></td><td><textarea id="txtdescription" name="txtdescription" rows="4" class="textarea form-control">' . $description . '</textarea></td></tr>';
-	$table .= '</table><br/>';
+	$table .= '</tbody></table><br/>';
 	$content .= $table;
 	
-	$table = '<table style="width:100%;"><tr><th>Learning</th><th class="tdNumber">Lecture</th><th class="tdNumber">Tutorial</th><th class="tdNumber">Practical</th><th class="tdNumber">Other</th></tr>';
-	$table .= '<tr><td>Guided learning</td>';
+	$table = '<table class="custom"><thead><tr><th>Learning</th><th class="tdNumber">Lecture</th><th class="tdNumber">Tutorial</th><th class="tdNumber">Practical</th><th class="tdNumber">Other</th></tr></thead>';
+	$table .= '<tbody><tr><td>Guided learning</td>';
 	$table .= '<td class="tdNumber"><input name="txtguidedLearnLecture" type="text" value="' . formatHours($guidedLearnLecture) . '" class="numberInput form-control"></td>';
 	$table .= '<td class="tdNumber"><input name="txtguidedLearnTutorial" type="text" value="' . formatHours($guidedLearnTutorial) . '" class="numberInput form-control"></td>';
 	$table .= '<td class="tdNumber"><input name="txtguidedLearnPractical" type="text" value="' . formatHours($guidedLearnPractical) . '" class="numberInput form-control"></td>';
@@ -115,7 +115,7 @@
 	$table .= '<td class="tdNumber"><input name="txtindepLearnTutorial" type="text" value="' . formatHours($indepLearnTutorial) . '" class="numberInput form-control"></td>';
 	$table .= '<td class="tdNumber"><input name="txtindepLearnPractical" type="text" value="' . formatHours($indepLearnPractical) . '" class="numberInput form-control"></td>';
 	$table .= '<td class="tdNumber"><input name="txtindepLearnOther" type="text" value="' . formatHours($indepLearnOther) . '" class="numberInput form-control"></td></tr>';
-	$table .= '</table>';
+	$table .= '</tbody></table>';
 	$content .= $table;
 			
 	$content .= '<div>';

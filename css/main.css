@@ -87,26 +87,26 @@ ul.modules > li.selected > a {
 div.syllabuses {
   border-left: 1px solid #bbbbbb;
 }
-table {
-  width: 100%;
-  margin-bottom: 10px;
-}
-table tr:not(.table-heading):hover {
-  background-color: #eeeeee;
-}
-table td,
-table th {
-  border: 1px solid #cccccc;
-  padding: 4px 6px;
-}
 table span.glyphicon {
   font-size: 18px;
   margin-right: 10px;
 }
-table td.td-checkbox {
+table.custom {
+  width: 100%;
+  margin-bottom: 10px;
+}
+table.custom tbody > tr:hover {
+  background-color: #eeeeee;
+}
+table.custom td,
+table.custom th {
+  border: 1px solid #cccccc;
+  padding: 4px 6px;
+}
+table.custom td.td-checkbox {
   padding: 0;
 }
-table td.td-checkbox input {
+table.custom td.td-checkbox input {
   margin: 0;
 }
 .flash {
