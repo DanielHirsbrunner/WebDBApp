@@ -123,24 +123,25 @@ class MQF {
 			// submitting
 			if (isset($_POST["delete"])) {
 				$result2 = $this->deleteMQF($id);
-				if ($_POST["delete"] == "ajax" && !$result2) {
-					http_response_code(400);
-				} else {
-					$desc = htmlspecialchars($result["description"]);
-					if (!$result2) {
-						FlashMessage::add(FlashMessage::TYPE_ERROR, "MQF skill <i>$desc</i> cannot be deleted. Check is there isn't any sylabus item referencing this record.");
-					} else {
-						FlashMessage::add(FlashMessage::TYPE_SUCCESS, "MQF skill <i>$desc</i> was successfuly deleted.");
-					}
-					OtherUtils::redirect("/mqf");
-				}
+
+				$desc = htmlspecialchars($result["description"]);
+				$errorMsg = "MQF skil <i>$desc</i> cannot be deleted. Check is there isn't any syllabus item referencing this record.";
+				$successMsg = "MQF skil <i>$desc</i> was successfuly deleted.";
+
+				OtherUtils::handleDeleteResult($_POST["delete"],  $result2, $errorMsg, $successMsg, "/mqf");
 			} else {
 				$this->template->loadTemplateFile("/mqf/delete.tpl", true, true);
 				$this->template->setVariable("DELETE_MQF_DESC", htmlspecialchars($result["description"]));
 			}
 		} else {
-			FlashMessage::add(FlashMessage::TYPE_ERROR, "MQF skill was not found.");
-			OtherUtils::redirect("/mqf", true, 303);
+			if (isset($_POST["delete"]) && $_POST["delete"] == "ajax") {
+				http_response_code(400);
+				echo "MQF skill was not found.";
+				exit;
+			} else {
+				FlashMessage::add(FlashMessage::TYPE_ERROR, "MQF skill was not found.");
+				OtherUtils::redirect("/mqf");
+			}
 		}
 	}
 

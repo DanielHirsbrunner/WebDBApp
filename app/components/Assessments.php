@@ -123,24 +123,25 @@ class Assessments {
 			// submitting
 			if (isset($_POST["delete"])) {
 				$result2 = $this->deleteAssessment($id);
-				if ($_POST["delete"] == "ajax" && !$result2) {
-					http_response_code(400);
-				} else {
-					$desc = htmlspecialchars($result["description"]);
-					if (!$result2) {
-						FlashMessage::add(FlashMessage::TYPE_ERROR, "Assessment type <i>$desc</i> cannot be deleted. Check is there isn't any sylabus item referencing this record.");
-					} else {
-						FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Assessment type <i>$desc</i> was successfuly deleted.");
-					}
-					OtherUtils::redirect("/assessments");
-				}
+
+				$desc = htmlspecialchars($result["description"]);
+				$errorMsg = "Assessment type <i>$desc</i> cannot be deleted. Check is there isn't any sylabus item referencing this record.";
+				$successMsg = "Assessment type <i>$desc</i> was successfuly deleted.";
+
+				OtherUtils::handleDeleteResult($_POST["delete"],  $result2, $errorMsg, $successMsg, "/assessments");
 			} else {
 				$this->template->loadTemplateFile("/assessments/delete.tpl", true, true);
 				$this->template->setVariable("DELETE_ASSESSMENT_DESC", htmlspecialchars($result["description"]));
 			}
 		} else {
-			FlashMessage::add(FlashMessage::TYPE_ERROR, "Assessment type was not found.");
-			OtherUtils::redirect("/assessments", true, 303);
+			if (isset($_POST["delete"]) && $_POST["delete"] == "ajax") {
+				http_response_code(400);
+				echo "Assessment type was not found.";
+				exit;
+			} else {
+				FlashMessage::add(FlashMessage::TYPE_ERROR, "Assessment type was not found.");
+				OtherUtils::redirect("/assessments");
+			}
 		}
 	}
 

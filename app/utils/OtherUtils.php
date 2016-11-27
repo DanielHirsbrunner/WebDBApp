@@ -38,4 +38,23 @@ class OtherUtils {
 		return $action;
 	}
 
+	public static function handleDeleteResult($postDelete, $result2, $errorMsg, $successMsg, $redirect) {
+		if ($postDelete == "ajax") {
+			if (!$result2) {
+				http_response_code(400);
+				echo $errorMsg;
+			} else {
+				echo $successMsg;
+			}
+			exit;
+		} else {
+			if (!$result2) {
+				FlashMessage::add(FlashMessage::TYPE_ERROR, $errorMsg);
+			} else {
+				FlashMessage::add(FlashMessage::TYPE_SUCCESS, $successMsg);
+			}
+			OtherUtils::redirect($redirect);
+		}
+	}
+
 }

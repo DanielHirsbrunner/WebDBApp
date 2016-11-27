@@ -123,24 +123,25 @@ class Deliveries {
 			// submitting
 			if (isset($_POST["delete"])) {
 				$result2 = $this->deleteModeOfDelivery($id);
-				if ($_POST["delete"] == "ajax" && !$result2) {
-					http_response_code(400);
-				} else {
-					$desc = htmlspecialchars($result["description"]);
-					if (!$result2) {
-						FlashMessage::add(FlashMessage::TYPE_ERROR, "Mode of delivery <i>$desc</i> cannot be deleted. Check is there isn't any sylabus item referencing this record.");
-					} else {
-						FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Mode of delivery <i>$desc</i> was successfuly deleted.");
-					}
-					OtherUtils::redirect("/deliveries");
-				}
+
+				$desc = htmlspecialchars($result["description"]);
+				$errorMsg = "Mode of delivery <i>$desc</i> cannot be deleted. Check is there isn't any sylabus item referencing this record.";
+				$successMsg = "Mode of delivery <i>$desc</i> was successfuly deleted.";
+
+				OtherUtils::handleDeleteResult($_POST["delete"],  $result2, $errorMsg, $successMsg, "/deliveries");
 			} else {
 				$this->template->loadTemplateFile("/deliveries/delete.tpl", true, true);
 				$this->template->setVariable("DELETE_DELIVERY_DESC", htmlspecialchars($result["description"]));
 			}
 		} else {
-			FlashMessage::add(FlashMessage::TYPE_ERROR, "Mode of delivery was not found.");
-			OtherUtils::redirect("/deliveries", true, 303);
+			if (isset($_POST["delete"]) && $_POST["delete"] == "ajax") {
+				http_response_code(400);
+				echo "Mode of delivery was not found.";
+				exit;
+			} else {
+				FlashMessage::add(FlashMessage::TYPE_ERROR, "Mode of delivery was not found.");
+				OtherUtils::redirect("/deliveries");
+			}
 		}
 	}
 

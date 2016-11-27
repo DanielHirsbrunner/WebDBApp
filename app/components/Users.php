@@ -176,30 +176,38 @@ class Users {
 		if ($result) {
 			// user deleting himself
 			if ($id == $_SESSION["user"]["id"]) {
-				FlashMessage::add(FlashMessage::TYPE_ERROR, "You cannot delete your own account.");
-				OtherUtils::redirect("/users");
+				$msg = "You cannot delete your own account.";
+				if (isset($_POST["delete"]) && $_POST["delete"] == "ajax") {
+					http_response_code(400);
+					echo $msg;
+					exit;
+				} else {
+					FlashMessage::add(FlashMessage::TYPE_ERROR, $msg);
+					OtherUtils::redirect("/users");
+				}
 			}
 			// submitting
 			if (isset($_POST["delete"])) {
 				$result2 = $this->deleteUser($id);
-				if ($_POST["delete"] == "ajax" && !$result2) {
-					http_response_code(400);
-				} else {
-					$fullName = htmlspecialchars($result["name"]." ".$result["surname"]);
-					if (!$result2) {
-						FlashMessage::add(FlashMessage::TYPE_ERROR, "User <i>$fullName</i> cannot be deleted. Check is there isn't any sylabus item referencing this record.");
-					} else {
-						FlashMessage::add(FlashMessage::TYPE_SUCCESS, "User <i>$fullName</i> was successfuly deleted.");
-					}
-					OtherUtils::redirect("/users");
-				}
+
+				$fullName = htmlspecialchars($result["name"]." ".$result["surname"]);
+				$errorMsg = "User <i>$fullName</i> cannot be deleted. Check is there isn't any syllabus item referencing this record.";
+				$successMsg = "User <i>$fullName</i> was successfuly deleted.";
+
+				OtherUtils::handleDeleteResult($_POST["delete"],  $result2, $errorMsg, $successMsg, "/users");
 			} else {
 				$this->template->loadTemplateFile("/users/delete.tpl", true, true);
 				$this->template->setVariable("DELETE_USER_NAME", htmlspecialchars($result["name"]." ".$result["surname"]));
 			}
 		} else {
-			FlashMessage::add(FlashMessage::TYPE_ERROR, "User was not found.");
-			OtherUtils::redirect("/users", true, 303);
+			if (isset($_POST["delete"]) && $_POST["delete"] == "ajax") {
+				http_response_code(400);
+				echo "User was not found.";
+				exit;
+			} else {
+				FlashMessage::add(FlashMessage::TYPE_ERROR, "User was not found.");
+				OtherUtils::redirect("/users");
+			}
 		}
 	}
 

@@ -184,24 +184,25 @@ class Modules {
 			// submitting
 			if (isset($_POST["delete"])) {
 				$result2 = $this->deleteModule($id);
-				if ($_POST["delete"] == "ajax" && !$result2) {
-					http_response_code(400);
-				} else {
-					$name = htmlspecialchars($result["name"]);
-					if (!$result2) {
-						FlashMessage::add(FlashMessage::TYPE_ERROR, "Module <i>$name</i> cannot be deleted. Check is there isn't any sylabus item referencing this record.");
-					} else {
-						FlashMessage::add(FlashMessage::TYPE_SUCCESS, "Module <i>$name</i> was successfuly deleted.");
-					}
-					OtherUtils::redirect("/modules");
-				}
+
+				$name = htmlspecialchars($result["name"]);
+				$errorMsg = "Module <i>$name</i> cannot be deleted. Check is there isn't any syllabus item referencing this record.";
+				$successMsg = "Module <i>$name</i> was successfuly deleted.";
+
+				OtherUtils::handleDeleteResult($_POST["delete"],  $result2, $errorMsg, $successMsg, "/modules");
 			} else {
 				$this->template->loadTemplateFile("/modules/delete.tpl", true, true);
 				$this->template->setVariable("DELETE_MODULE_NAME", htmlspecialchars($result["name"]));
 			}
 		} else {
-			FlashMessage::add(FlashMessage::TYPE_ERROR, "Module was not found.");
-			OtherUtils::redirect("/modules", true, 303);
+			if (isset($_POST["delete"]) && $_POST["delete"] == "ajax") {
+				http_response_code(400);
+				echo "Module was not found.";
+				exit;
+			} else {
+				FlashMessage::add(FlashMessage::TYPE_ERROR, "Module was not found.");
+				OtherUtils::redirect("/modules");
+			}
 		}
 	}
 
