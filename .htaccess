@@ -2,6 +2,7 @@ RewriteEngine on
 
 # for production
 #RewriteBase /project2/
+#RewriteBase /~0329100/assign2/
 
 
 RewriteCond %{REQUEST_URI} ^/([^/]+)/
