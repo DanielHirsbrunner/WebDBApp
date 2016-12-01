@@ -1,4 +1,5 @@
 <?php
+	$template->setGlobalVariable("TITLE", "Edit – ");
 	$template->loadTemplateFile("syllabus.tpl", true, true);
 	$content = '<form method="post">';
 	$currMod = '';

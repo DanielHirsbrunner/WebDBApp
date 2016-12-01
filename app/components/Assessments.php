@@ -19,7 +19,7 @@ class Assessments {
 
 	public function renderList() {
 
-		$query = "SELECT assessmentTypeId, description FROM assessmenttype";
+		$query = "SELECT assessmentTypeId, description, isWrittenTest FROM assessmenttype";
 
 		$statement = $this->db->prepare($query);
 		$result = $this->db->execute($statement);
@@ -30,6 +30,7 @@ class Assessments {
 			$this->template->setCurrentBlock("ASSESSMENTS_ROW");
 
 			$this->template->setVariable("ASSESSMENT_DESC", htmlspecialchars($row["description"]));
+			$this->template->setVariable("ASSESSMENT_ISWRITTENTEST", $row["isWrittenTest"] ? "Yes" : "No");
 			$this->template->setVariable("ASSESSMENT_ID", $row["assessmentTypeId"]);
 
 			$this->template->parseCurrentBlock("ASSESSMENTS_ROW");
@@ -63,6 +64,7 @@ class Assessments {
 
 				// check description
 				$description = trim($_POST["description"]);
+				$isWrittenTest = isset($_POST["isWrittenTest"]);
 				if (strlen($description) > 100) {
 					$isError = true;
 					$this->template->setVariable("ERROR_DESC", "has-error");
@@ -71,7 +73,7 @@ class Assessments {
 
 				// if and error occurred, fill inputs
 				if ($isError) {
-					$this->fillForm($description, $editing);
+					$this->fillForm($description, $isWrittenTest, $editing);
 
 					$this->template->parseCurrentBlock("ASSESSMENT_TYPES_EDIT");
 
@@ -80,7 +82,7 @@ class Assessments {
 					// update
 					$msg = "";
 					if ($editing) {
-						if (!$this->updateAssessment($description)) {
+						if (!$this->updateAssessment($description, $isWrittenTest)) {
 							$isError = true;
 							$msg = "updating";
 						} else {
@@ -88,7 +90,7 @@ class Assessments {
 						}
 					// insert
 					} else {
-						if (!$this->insertAssessment($description)) {
+						if (!$this->insertAssessment($description, $isWrittenTest)) {
 							$isError = true;
 							$msg = "creating";
 						} else {
@@ -105,7 +107,7 @@ class Assessments {
 				}
 			} else {
 				if ($editing) {
-					$this->fillForm($assessment["description"], true);
+					$this->fillForm($assessment["description"],$assessment["isWrittenTest"], true);
 				} else {
 					$this->template->setCurrentBlock("ASSESSMENT_TYPES_EDIT");
 					$this->template->setVariable("VALUE_BUTTON", "Create assessment type");
@@ -145,21 +147,23 @@ class Assessments {
 		}
 	}
 
-	private function insertAssessment($description) {
+	private function insertAssessment($description, $isWrittenTest) {
 		$tableName = "assessmenttype";
 
 		$fieldsValues = array(
-			"description"	=> $description
+			"description"	=> $description,
+			"isWrittenTest" => $isWrittenTest
 		);
 
 		return OtherUtils::improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
 	}
 
-	private function updateAssessment($description) {
+	private function updateAssessment($description, $isWrittenTest) {
 		$tableName = "assessmenttype";
 
 		$fieldsValues = array(
-			"description"	=> $description
+			"description"	=> $description,
+			"isWrittenTest" => $isWrittenTest
 		);
 
 		$id = $_GET["id"];
@@ -183,10 +187,11 @@ class Assessments {
 		}
 	}
 
-	private function fillForm($description, $editing) {
+	private function fillForm($description, $isWrittenTest, $editing) {
 		$this->template->setCurrentBlock("ASSESSMENT_TYPES_EDIT");
 
 		$this->template->setVariable("VALUE_DESC", htmlspecialchars($description));
+		$this->template->setVariable("VALUE_ISWRITTENTEST",  $isWrittenTest ? "checked" : "");
 
 		$button = $editing ? "Update assessment type" : "Create assessment type";
 		$this->template->setVariable("VALUE_BUTTON", $button);

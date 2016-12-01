@@ -35,7 +35,7 @@ CREATE TABLE `module` (
   `credits` tinyint(4) DEFAULT NULL,
   `moduleOwner` int(5) DEFAULT NULL,
   `purpose` text NOT NULL,
-  `prerequisite` int(5) NOT NULL,
+  `prerequisite` int(5) NULL,
   `editBy` int(5) NOT NULL,
   `editTS` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`moduleId`),
@@ -46,17 +46,6 @@ CREATE TABLE `module` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE INDEX idxModuleName on module (name);
-
-CREATE TABLE modulePrerequisite (
-  modulePrerequisiteId int(5) NOT NULL AUTO_INCREMENT,
-  moduleId int(5) NOT NULL,
-  moduleIdPrerequisite int(5) NOT NULL,
-  CONSTRAINT fk_module_module FOREIGN KEY (moduleId) REFERENCES module(moduleId),
-  CONSTRAINT fk_module_moduleIdPrerequisite FOREIGN KEY (moduleIdPrerequisite) REFERENCES module(moduleId),
-  PRIMARY KEY (modulePrerequisiteId)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE UNIQUE INDEX idxModulePrerequisiteModPreReq on modulePrerequisite (moduleId, moduleIdPrerequisite);
 
 CREATE TABLE moduleRight (
   moduleRightId int(5) NOT NULL AUTO_INCREMENT,
@@ -92,7 +81,7 @@ CREATE TABLE syllabus (
   addReferences text(4000),
   addInformation text(4000),
   approvedBy int(5),
-  approvedTS timestamp,  
+  approvedTS DATETIME,  
   editBy int(5) NOT NULL,
   editTS timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   
@@ -129,9 +118,10 @@ CREATE UNIQUE INDEX idxSyllabusTopicSyllabusTopicNr on syllabusTopic (syllabusId
 CREATE TABLE assessmentType (
   assessmentTypeId int(5) NOT NULL AUTO_INCREMENT,
   description varchar(255) NOT NULL,
+  isWrittenTest bit NOT NULL DEFAULT 0,
   PRIMARY KEY (assessmentTypeId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-Insert into assessmentType(description) values ('Final Exam'), ('Assignment'), ('Assignment/ Documentation'), ('Presentation');
+Insert into assessmentType(description, isWrittenTest) values ('Final Exam', 1), ('Assignment', 0), ('Assignment/ Documentation', 0), ('Presentation', 0);
 
 CREATE TABLE syllabusAssessmentType (
   syllabusAssessmentTypeId int(5) NOT NULL AUTO_INCREMENT,
@@ -139,6 +129,7 @@ CREATE TABLE syllabusAssessmentType (
   assessmentTypeId int(5) NOT NULL,
   guidedLearning decimal(5,2), 
   indepLearning decimal(5,2), 
+  weightage decimal(5,2), 
   CONSTRAINT fk_syllabusAssessmentType_syllabus FOREIGN KEY (syllabusId) REFERENCES syllabus(syllabusId),
   CONSTRAINT fk_syllabusAssessmentType_assessmentType FOREIGN KEY (assessmentTypeId) REFERENCES assessmentType(assessmentTypeId),
   PRIMARY KEY (syllabusAssessmentTypeId)

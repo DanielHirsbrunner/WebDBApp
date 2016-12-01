@@ -115,10 +115,10 @@
 	}
 	
 	function getSyllabusAssessmentTypeStmt($syllabusId) {
-		$assessmentStmt  = 'SELECT syllabusAssessmentTypeId, a.description, sa.guidedLearning, sa.indepLearning ';
+		$assessmentStmt  = 'SELECT syllabusAssessmentTypeId, a.description, sa.guidedLearning, sa.indepLearning, sa.weightage, a.isWrittenTest ';
 		$assessmentStmt .= 'FROM syllabusAssessmentType sa join assessmentType a on sa.assessmentTypeId = a.assessmentTypeId ';
 		$assessmentStmt .= 'WHERE syllabusId = ' . $syllabusId . ' ';
-		$assessmentStmt .= 'ORDER BY a.description;';
+		$assessmentStmt .= 'ORDER BY a.isWrittenTest DESC, a.description;';
 		return $assessmentStmt;
 	}
 	
@@ -139,8 +139,8 @@
 	}
 	
 	function getModulePrerequisiteStmt($syllabusId) {
-		$modPrereqStmt  = 'SELECT mp.moduleId, p.code  ';
-		$modPrereqStmt .= 'FROM syllabus s inner join modulePrerequisite mp on s.moduleId = mp.moduleId INNER JOIN module p on mp.moduleIdPrerequisite = p.moduleId ';
+		$modPrereqStmt  = 'SELECT m.moduleId, p.code  ';
+		$modPrereqStmt .= 'FROM syllabus s inner join module m on s.moduleId = m.moduleId INNER JOIN module p on m.prerequisite = p.moduleId ';
 		$modPrereqStmt .= 'WHERE syllabusId = ' . $syllabusId . ' ';
 		$modPrereqStmt .= 'ORDER BY p.code';
 		return $modPrereqStmt;

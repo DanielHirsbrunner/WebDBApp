@@ -264,32 +264,31 @@
 			while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 				$syllabusAssessmentTypeId = $row['syllabusAssessmentTypeId'];
 				
-				if (isset($_POST['txtsyllabusAssType' .$syllabusAssessmentTypeId . 'Guided']) && isset($_POST['txtsyllabusAssType' .$syllabusAssessmentTypeId . 'Indep'])) {
-					$guidedLearningOld = $row['guidedLearning'];
-					$indepLearningOld = $row['indepLearning'];
-					$guidedLearningNew = $_POST['txtsyllabusAssType' .$syllabusAssessmentTypeId . 'Guided'];
-					$indepLearningNew = $_POST['txtsyllabusAssType' .$syllabusAssessmentTypeId . 'Indep'];
-					
-					if ($guidedLearningOld != $guidedLearningNew || $indepLearningOld != $indepLearningNew) {
-						$fields_values = array(
-							'guidedLearning' => $guidedLearningNew,
-							'indepLearning' => $indepLearningNew
-						);		
-						$db->ExecuteUpdateStmt('syllabusAssessmentType', $fields_values, 'syllabusAssessmentTypeId = ' . $syllabusAssessmentTypeId);
-					}
+				$guidedLearningOld = $row['guidedLearning'];
+				$indepLearningOld = $row['indepLearning'];
+				$weightageOld = $row['indepLearning'];
+				$guidedLearningNew = \App\Utils\OtherUtils::getPostVarNumber('txtsyllabusAssType' .$syllabusAssessmentTypeId . 'Guided');
+				$indepLearningNew = \App\Utils\OtherUtils::getPostVarNumber('txtsyllabusAssType' .$syllabusAssessmentTypeId . 'Indep');
+				$weightageNew = \App\Utils\OtherUtils::getPostVarNumber('txtsyllabusAssType' .$syllabusAssessmentTypeId . 'Weight');
+				
+				if ($guidedLearningOld != $guidedLearningNew || $indepLearningOld != $indepLearningNew || $weightageOld != $weightageNew) {
+					$fields_values = array(
+						'guidedLearning' => $guidedLearningNew,
+						'indepLearning' => $indepLearningNew,
+						'weightage' => $weightageNew
+					);		
+					$db->ExecuteUpdateStmt('syllabusAssessmentType', $fields_values, 'syllabusAssessmentTypeId = ' . $syllabusAssessmentTypeId);
 				}
 			}
 		}
 		// CreditHours
-		if (isset($_POST['txtcreditHours'])) {
-			$creditHoursNew = $_POST['txtcreditHours'];
-			$creditHoursOld = $_SESSION['syllabus']['creditHours'];
-			if ($creditHoursNew != $creditHoursOld) {
-				$fields_values = array(
-					'creditHours' => $creditHoursNew
-				);		
-				$db->ExecuteUpdateStmt('syllabus', $fields_values, 'syllabusId = ' . $syllabusId);
-			}
+		$creditHoursNew = \App\Utils\OtherUtils::getPostVarNumber('txtcreditHours');
+		$creditHoursOld = \App\Utils\OtherUtils::getSyllabusVarNr('creditHours');
+		if ($creditHoursNew != $creditHoursOld) {
+			$fields_values = array(
+				'creditHours' => $creditHoursNew
+			);		
+			$db->ExecuteUpdateStmt('syllabus', $fields_values, 'syllabusId = ' . $syllabusId);
 		}
 	}
 	
@@ -302,27 +301,23 @@
 			$_SESSION['wizStep'] = 1;
 		}
 		// Save
+		$approvedBy = \App\Utils\OtherUtils::getPostVarNumber('selApprovedBy');
 		$db = App\DB\ConnHelper::Instance();
 		$fields_values = array(
 			'addInformation' => addslashes(trim($_POST['txtaddInformation'])),
 			'addReferences' => addslashes(trim($_POST['txtaddReferences'])),
 			'mainReferences' => addslashes(trim($_POST['txtmainReferences'])),
-			'approvedBy' => trim($_POST['selApprovedBy']),
-			'editBy' => $userId
+			'approvedBy' => ($approvedBy == 0 ? null : $approvedBy),
+			'editBy' => $userId,
 		);
 		$db->ExecuteUpdateStmt('syllabus', $fields_values, 'syllabusId = ' . $syllabusId);
-		if (isset($_SESSION['syllabus'])) {
-			if (trim($_POST['selApprovedBy']) != $_SESSION['syllabus']["AprovedById"]) {
-				$stmt = 'update syllabus set approvedTS = ';
-				if (trim($_POST['selApprovedBy']) > 0) {
-					$stmt .= 'CURRENT_TIMESTAMP';
-				} else {
-					$stmt .= 'NULL';
-				}
-				$stmt .= ' WHERE syllabusId = ' . $syllabusId;
-				$con = $db->GetConnection();
-				$con->query($stmt);
-			}
+		
+		if ($approvedBy != \App\Utils\OtherUtils::getSyllabusVarNr('AprovedById')) {
+			date_default_timezone_set('Asia/Kuala_Lumpur');
+			$fields_values = array(
+				'approvedTS' => date('Y-m-d H:i:s')
+			);
+			$db->ExecuteUpdateStmt('syllabus', $fields_values, 'syllabusId = ' . $syllabusId);
 		}
 		
 		redirectToOverview($moduleId);

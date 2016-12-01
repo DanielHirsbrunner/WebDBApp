@@ -1,5 +1,6 @@
 <?php
 	$template->loadTemplateFile("syllabus.tpl", true, true);
+	$template->setGlobalVariable("TITLE", "Delete Topic from ");
 	$content = '<form method="post">';
 	$syllabusTopicId = 0;
 	if (isset($_GET["id"])) {

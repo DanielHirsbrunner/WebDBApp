@@ -1,5 +1,6 @@
 <?php
 	$template->loadTemplateFile("syllabus.tpl", true, true);
+	$template->setGlobalVariable("TITLE", "Topic Details – ");
 	$content = '<H3>Topic Details</H3>';
 		$content .= '<form method="post">';
 	
@@ -13,59 +14,73 @@
 		$syllabusId = $_SESSION["syllabusId"];
 	}
 	
+	// check for dupplicate Topic Numbers
+	$validNr = true;
 	if (isset($_POST['save'])) {
-		$topicNr = trim($_POST['txttopicNr']);
-		$description = addslashes(trim($_POST['txtdescription']));
-		$guidedLearnLecture = trim($_POST['txtguidedLearnLecture']);
-		$guidedLearnTutorial = trim($_POST['txtguidedLearnTutorial']);
-		$guidedLearnPractical = trim($_POST['txtguidedLearnPractical']);
-		$guidedLearnOther = trim($_POST['txtguidedLearnOther']);
+		$topicNr = App\Utils\OtherUtils::getPostVarNumber('txttopicNr');
+		$stmt = 'SELECT * FROM syllabusTopic WHERE syllabusId = ' . $syllabusId . ' AND topicNr = ' . $topicNr . ( $topicId > 0 ? ' AND syllabusTopicId != ' . $topicId : '');
 		
-		$indepLearnLecture = trim($_POST['txtindepLearnLecture']);
-		$indepLearnTutorial = trim($_POST['txtindepLearnTutorial']);
-		$indepLearnPractical = trim($_POST['txtindepLearnPractical']);
-		$indepLearnOther = trim($_POST['txtindepLearnOther']);
-		
-		if ($topicId > 0) {
-			$fields_values = array(
-				'topicNr' => $topicNr,
-				'description' => $description,
-				'guidedLearnLecture' => $guidedLearnLecture,
-				'guidedLearnTutorial' => $guidedLearnTutorial,
-				'guidedLearnPractical' => $guidedLearnPractical,
-				'guidedLearnOther' => $guidedLearnOther,
-				
-				'indepLearnLecture' => $indepLearnLecture,
-				'indepLearnTutorial' => $indepLearnTutorial,
-				'indepLearnPractical' => $indepLearnPractical,
-				'indepLearnOther' => $indepLearnOther
-			);		
-			$db->ExecuteUpdateStmt('syllabusTopic', $fields_values, 'syllabusTopicId = ' . $topicId);
-			
-		} else {
-			$fields_values = array(
-				'syllabusId' => $syllabusId,
-				'topicNr' => $topicNr,
-				'description' => $description,
-				'guidedLearnLecture' => $guidedLearnLecture,
-				'guidedLearnTutorial' => $guidedLearnTutorial,
-				'guidedLearnPractical' => $guidedLearnPractical,
-				'guidedLearnOther' => $guidedLearnOther,
-				
-				'indepLearnLecture' => $indepLearnLecture,
-				'indepLearnTutorial' => $indepLearnTutorial,
-				'indepLearnPractical' => $indepLearnPractical,
-				'indepLearnOther' => $indepLearnOther
-			);
-
-			$res = $db->ExecuteInsertStmt('syllabusTopic', $fields_values);
+		if ($result = $db->ExecuteSelectStmt($stmt)) {
+			if ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+				$validNr = false;
+				\App\Utils\FlashMessage::add(\App\Utils\FlashMessage::TYPE_ERROR, 'The topic number ' . $topicNr . ' already exists!<br/> Please choose an other number.');
+			}
 		}
 	}
 	
-	if(isset($_POST['cancel']) || isset($_POST['save'])) {
-		App\Utils\OtherUtils::redirect('/syllabusWizard/'.$syllabusId);
+	if ($validNr) {
+		if (isset($_POST['save'])) {
+			$description = addslashes(trim($_POST['txtdescription']));
+			$guidedLearnLecture = App\Utils\OtherUtils::getPostVarNumber('txtguidedLearnLecture');
+			$guidedLearnTutorial = App\Utils\OtherUtils::getPostVarNumber('txtguidedLearnTutorial');
+			$guidedLearnPractical = App\Utils\OtherUtils::getPostVarNumber('txtguidedLearnPractical');
+			$guidedLearnOther = App\Utils\OtherUtils::getPostVarNumber('txtguidedLearnOther');
+			
+			$indepLearnLecture = App\Utils\OtherUtils::getPostVarNumber('txtindepLearnLecture');
+			$indepLearnTutorial = App\Utils\OtherUtils::getPostVarNumber('txtindepLearnTutorial');
+			$indepLearnPractical = App\Utils\OtherUtils::getPostVarNumber('txtindepLearnPractical');
+			$indepLearnOther = App\Utils\OtherUtils::getPostVarNumber('txtindepLearnOther');
+			
+			if ($topicId > 0) {
+				$fields_values = array(
+					'topicNr' => $topicNr,
+					'description' => $description,
+					'guidedLearnLecture' => $guidedLearnLecture,
+					'guidedLearnTutorial' => $guidedLearnTutorial,
+					'guidedLearnPractical' => $guidedLearnPractical,
+					'guidedLearnOther' => $guidedLearnOther,
+					
+					'indepLearnLecture' => $indepLearnLecture,
+					'indepLearnTutorial' => $indepLearnTutorial,
+					'indepLearnPractical' => $indepLearnPractical,
+					'indepLearnOther' => $indepLearnOther
+				);		
+				$db->ExecuteUpdateStmt('syllabusTopic', $fields_values, 'syllabusTopicId = ' . $topicId);
+				
+			} else {
+				$fields_values = array(
+					'syllabusId' => $syllabusId,
+					'topicNr' => $topicNr,
+					'description' => $description,
+					'guidedLearnLecture' => $guidedLearnLecture,
+					'guidedLearnTutorial' => $guidedLearnTutorial,
+					'guidedLearnPractical' => $guidedLearnPractical,
+					'guidedLearnOther' => $guidedLearnOther,
+					
+					'indepLearnLecture' => $indepLearnLecture,
+					'indepLearnTutorial' => $indepLearnTutorial,
+					'indepLearnPractical' => $indepLearnPractical,
+					'indepLearnOther' => $indepLearnOther
+				);
+
+				$res = $db->ExecuteInsertStmt('syllabusTopic', $fields_values);
+			}
+		}
+		
+		if(isset($_POST['cancel']) || isset($_POST['save'])) {
+			App\Utils\OtherUtils::redirect('/syllabusWizard/'.$syllabusId);
+		}
 	}
-	
 	$topicNr = 0;
 	$description = '';
 	$guidedLearnLecture =0;

@@ -1,5 +1,6 @@
 <?php
 	$template->loadTemplateFile("syllabus.tpl", true, true);
+	$template->setGlobalVariable("TITLE", "Delete ");
 	$content = '<form method="post">';
 	$currMod = '';
 	if (isset($_SESSION['moduleId'])) {

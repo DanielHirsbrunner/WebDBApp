@@ -5,6 +5,7 @@
 	<?php
 		echo '<link rel="stylesheet" type="text/css" href="' . $_SESSION["basePath"] . '/css/bootstrap.min.css">';
 		echo '<link rel="stylesheet" type="text/css" href="' . $_SESSION["basePath"] . '/css/syllabusPrint.css">';
+		$template->setGlobalVariable("TITLE", "Print – ");
 	?>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 
@@ -31,11 +32,11 @@
 	echo $fg->getLearningOutcome(true);
 	echo $fg->getTransferableSkills(true);
 	echo $fg->getTeachLearnAssesStrategies(true);
-	echo $fg->getSynopsis(true);
 	echo '<div id="pageBreak"  class="pageBreak"></div>';
 	echo str_replace('PageNumber', '2 of 4', $pageHeader);
+	echo $fg->getSynopsis(true);
 	echo $fg->getModeOfDelivery(true);
-	// TODO: Assessment Methods and Types
+	echo $fg->getAssessmentMethodsPrint();
 	echo $fg->getAssessmentCode(true);
 	echo $fg->getModulAimsMapping(true);
 	echo $fg->getLearningOutcomeMapping(true);

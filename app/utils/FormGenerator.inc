@@ -39,13 +39,13 @@ class FormGenerator
 	
 	public function getModuleHead() {
 		$content = '<div id="printHeader">';
-		$moduleCode = $this->getSyllabusVarText('moduleCode');
-		$moduleName = $this->getSyllabusVarText('moduleName');
+		$moduleCode = OtherUtils::getSyllabusVarText('moduleCode');
+		$moduleName = OtherUtils::getSyllabusVarText('moduleName');
 		$effectiveDate = date("d.m.Y");
-		$versionNr = $this->getSyllabusVarNr('versionNr');
-		$revisionNr =  $this->getSyllabusVarNr('revisionNr');
-		$approvedBy = $this->getSyllabusVarText('approvedBy');
-		$approvalDate = $this->getSyllabusVarText('approvedTS');
+		$versionNr = OtherUtils::getSyllabusVarNr('versionNr');
+		$revisionNr =  OtherUtils::getSyllabusVarNr('revisionNr');
+		$approvedBy = OtherUtils::getSyllabusVarText('approvedBy');
+		$approvalDate = OtherUtils::getSyllabusVarText('approvedTS');
 		$content .= '<table class="moduleHead"><tr>';
 		$content .= '<td style="width:25%;text-align:center;"><img src="' . $_SESSION["basePath"] . '/img/taylorsLogo.png" alt="Taylors\'s University" style="width:130px;"></td>';
 		$content .= '<td style="width:35%;text-align:center;"><b>'. $moduleCode . ' ' . $moduleName . '<br/>Module Summary of Information</b></td>';
@@ -72,8 +72,8 @@ class FormGenerator
 			$syllabusId = $_SESSION['syllabusId'];
 		}			
 		$currModule = 0;
-		$currModuleName = $this->getSyllabusVarText('moduleName');
-		$currModuleCode = $this->getSyllabusVarText('moduleCode');
+		$currModuleName = OtherUtils::getSyllabusVarText('moduleName');
+		$currModuleCode = OtherUtils::getSyllabusVarText('moduleCode');
 		if (isset($_SESSION['moduleId'])) {
 			$currModule = $_SESSION['moduleId'];
 		}
@@ -103,7 +103,7 @@ class FormGenerator
 	public function getModulePurpose($print) {
 		$divName = 'divModulePurpose';
 		$inputLabel = 'Rationale for the inclusion of the module in the programme:';
-		$currModulePurpose = $this->getSyllabusVarText('modulePurpose');
+		$currModulePurpose = OtherUtils::getSyllabusVarText('modulePurpose');
 		
 		if ($print) {
 			return $this->getDivPrint($divName, $inputLabel, $this->getTextLabel($currModulePurpose));
@@ -117,7 +117,7 @@ class FormGenerator
 	public function getModuleCreditValue($print) {
 		$divName = 'divModuleCreditValue';
 		$inputLabel = 'Credit Value:';
-		$currModuleCredits = $this->getSyllabusVarNr('credits');
+		$currModuleCredits = OtherUtils::getSyllabusVarNr('credits');
 		
 		if ($print) {
 			return $this->getDivPrint($divName, $inputLabel, $this->getTextLabel($currModuleCredits));
@@ -131,11 +131,11 @@ class FormGenerator
 	public function getAcademicStaff($print) {
 		$divName = 'divStaff';
 		$inputLabel = 'Names of academic staff' . ($print ? ' (Qualification)':'') . ':';
-		$currStaff = $this->getSyllabusVarNr('academicStaff');
+		$currStaff = OtherUtils::getSyllabusVarNr('academicStaff');
 		
 		if ($print) {
-			$currStaffName = $this->getSyllabusVarText('academicStaffName');
-			$currStaffQualification= $this->getSyllabusVarText('academicStaffQualification');
+			$currStaffName = OtherUtils::getSyllabusVarText('academicStaffName');
+			$currStaffQualification= OtherUtils::getSyllabusVarText('academicStaffQualification');
 			$value = $this->getTextLabel($currStaffName. '<br/>' . $currStaffQualification);
 			return $this->getDivPrint($divName, $inputLabel, $value);
 			
@@ -151,26 +151,29 @@ class FormGenerator
 	public function getAprovedBy($print) {
 		$divName = 'divAprovedBy';
 		$inputLabel = 'Approved By:';
-		$currApprover = $this->getSyllabusVarNr('approvedById');
+		$currApprover = OtherUtils::getSyllabusVarNr('approvedById');
 		
 		if (!$print) {
 			$nameProperty = 'selApprovedBy';
 			$inputPart = '<div class="col-sm-9"><select id="'.$nameProperty.'" name="'.$nameProperty.'" class="selectpicker" data-live-search="true">';
-			$inputPart .= $this->getUserSelectOptions($currApprover);
+			$inputPart .= $this->getUserSelectOptions($currApprover, true);
 			$inputPart .= '</select></div>';
 			return $this->getDiv($divName, $inputLabel, $inputPart, $nameProperty);
 		}
 	}
 	
-	private function getUserSelectOptions($selectedUser) {
+	private function getUserSelectOptions($selectedUser, $addEmpty=false) {
 		$html = '';
+		if ($addEmpty) {
+			$html .= '<option' . (empty($selectedUser) ? ' ' : ' selected') . ' value=""></option>';
+		}
 		$userStmt = 'SELECT userId, name, surname from user order by name, surname';
 		if ($result = $this->db->ExecuteSelectStmt($userStmt)) {
 			while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 				$userName = htmlspecialchars(stripslashes($row['name']));
 				$userSurname = htmlspecialchars(stripslashes($row['surname']));
 				$userId = $row['userId'];
-				$selected = ($userId == $selectedUser ? " selected" : "");
+				$selected = ($userId == $selectedUser ? ' selected' : '');
 				$html .= "<option$selected value=\"$userId\">$userName - $userSurname</option>";
 			}
 		}
@@ -201,7 +204,7 @@ class FormGenerator
 	public function getSemester($print) {
 		$divName = 'divSemester';
 		$inputLabel = 'Semester and Year offered:';
-		$currSemester = $this->getSyllabusVarText('semester');
+		$currSemester = OtherUtils::getSyllabusVarText('semester');
 		
 		if ($print) {
 			return $this->getDivPrint($divName, $inputLabel, $this->getTextLabel($currSemester));
@@ -215,7 +218,7 @@ class FormGenerator
 	public function getAssessmentCode($print) {
 		$divName = 'divAssessmentCode';
 		$inputLabel = 'Assessment Code:';
-		$currValue = $this->getSyllabusVarText('assessmentCode');
+		$currValue = OtherUtils::getSyllabusVarText('assessmentCode');
 		
 		if ($print) {
 			return $this->getDivPrint($divName, $inputLabel, $this->getTextLabel($currValue));
@@ -282,7 +285,11 @@ class FormGenerator
 					$table .= ($prevCloNr > 0 ? '</tr> ' : '') . "<tr><td>CLO$cloNr</td>";
 					$prevCloNr = $cloNr;
 				}
-				$table .= '<td class="td-checkbox"><input type="checkbox" name="chkClo'.$cloNr.'Peo'. $peoNr. '" ' . ($row['syllabusProgAimId'] > 0 ? 'checked ' : '') . 'class="form-control checkbox"' . '/></td>';
+				if ($print) {
+					$table .= '<td>'. ($row['syllabusProgAimId'] > 0 ? '<img src="' . $_SESSION["basePath"] . '/img/selected.png" style="width:35px;">' : '') . '</td>';
+				} else {
+					$table .= '<td class="td-checkbox"><input type="checkbox" name="chkClo'.$cloNr.'Peo'. $peoNr. '" ' . ($row['syllabusProgAimId'] > 0 ? 'checked ' : '') . 'class="form-control checkbox"' . '/></td>';
+				}
 			}
 			$table .= '</tr>';
 		}
@@ -314,7 +321,11 @@ class FormGenerator
 					$table .= ($prevMloNr > 0 ? '</tr> ' : '') . "<tr><td>MLO$mloNr</td>";
 					$prevMloNr = $mloNr;
 				}
-				$table .= '<td class="td-checkbox"><input type="checkbox" name="chkMlo'.$mloNr.'Plo'. $ploNr. '" ' . ($row['syllabusProgLearnOutcomeId'] > 0 ? 'checked ' : '') . 'class="form-control checkbox" /></td>';
+				if ($print) {
+					$table .= '<td>'. ($row['syllabusProgLearnOutcomeId'] > 0 ? '<img src="' . $_SESSION["basePath"] . '/img/selected.png" style="width:35px;">' : '') . '</td>';
+				} else {
+					$table .= '<td class="td-checkbox"><input type="checkbox" name="chkMlo'.$mloNr.'Plo'. $ploNr. '" ' . ($row['syllabusProgLearnOutcomeId'] > 0 ? 'checked ' : '') . 'class="form-control checkbox" /></td>';
+				}
 			}
 			$table .= '</tr>';
 		}
@@ -411,6 +422,50 @@ class FormGenerator
 			//return $this->getDiv($divName, $inputLabel, $table, '');
 		}
 	}
+	public function getAssessmentMethodsPrint() {
+		$divName = 'divAssessmentMethods';
+		$inputLabel = 'Assessment Methods and Types:';
+		$syllabusId = 0;
+		if (isset($_SESSION['syllabusId'])) {
+			$syllabusId = $_SESSION['syllabusId'];
+		}
+	
+		
+		$table = '<table class="custom"><thead><tr><th>Type of Assessment / Assessment Components:</th><th>Assessment Method</th><th class="tdNumber">Length/ duration</th><th class="tdNumber">Preparation time</th><th class="tdNumber">Total Time</th><th class="tdNumber">Percentage (%)</th></tr></thead><tbody> ';
+		
+		$totAssessmentsGuided = 0;
+		$totAssessmentsIndependant = 0;
+		$totAssessmentsWeightage = 0;
+		$assessmentStmt = getSyllabusAssessmentTypeStmt($syllabusId);
+		if ($result = $this->db->ExecuteSelectStmt($assessmentStmt)) {
+			while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
+				$syllabusAssessmentTypeId = $row['syllabusAssessmentTypeId'];
+				$description = htmlspecialchars(stripslashes($row['description']));
+				$isWrittenTest = $row['isWrittenTest'];
+				$guidedLearning = $row['guidedLearning'];
+				$weightage = $row['weightage'];
+				$indepLearning = $row['indepLearning'];
+				$totAssessmentsGuided += $guidedLearning;
+				$totAssessmentsWeightage += $weightage;
+				$totAssessmentsIndependant += $indepLearning;
+				$table .= '<tr><td>' . ($isWrittenTest ? 'Written Tests' : 'Assignments') . '</td>';
+				$table .= '<td>' . $description . '</td>';
+				$table .= '<td class="tdNumber">' . $this->formatHours($guidedLearning) . '</td>';
+				$table .= '<td class="tdNumber">'. $this->formatHours($indepLearning) . '</td>';
+				$table .= '<td class="tdNumber">'. $this->formatHours($indepLearning + $guidedLearning) . '</td>';
+				$table .= '<td class="tdNumber">'. $this->formatHours($weightage) . '</td></tr>';
+			}
+		}
+		
+		$table .= '<tr><td colspan="2"><b>Total</b></td>';
+		$table .= '<td class="tdNumber"><b>' . $this->formatHours($totAssessmentsGuided) . '</b></td>';
+		$table .= '<td class="tdNumber"><b>'. $this->formatHours($totAssessmentsIndependant) . '</b></td>';
+		$table .= '<td class="tdNumber"><b>'. $this->formatHours($totAssessmentsGuided + $totAssessmentsIndependant) . '</b></td>';
+		$table .= '<td class="tdNumber"><b>'. $this->formatHours($totAssessmentsWeightage) . '</b></td></tr>';
+		
+		$table .= '</tbody></table>';
+		return $this->getDivPrint($divName, $inputLabel, $table);
+	}
 	
 	public function getTopics($print) {
 		$divName = "divTopics";
@@ -420,7 +475,7 @@ class FormGenerator
 			$syllabusId = $_SESSION['syllabusId'];
 		}
 		
-		$table = '<table class="custom"><thead><tr><th>Nr</th><th>Topic</th><th colspan="4">Face to Face / Guided Learning</th><th colspan="4">Independent Learning</th><th>Total</th>'. ($print? '' : '<th></th>') . '</tr></thead><tbody> ';
+		$table = '<table class="tblTopics custom"><thead><tr><th>Nr</th><th>Topic</th><th colspan="4">Face to Face / Guided Learning</th><th colspan="4">Independent Learning</th><th>Total</th>'. ($print? '' : '<th></th>') . '</tr></thead><tbody> ';
 		$table .= '<tr><th/><th/><th class="tdNumber">L</th><th class="tdNumber">T</th><th class="tdNumber">P</th><th class="tdNumber">O</th><th class="tdNumber">L</th><th class="tdNumber">T</th><th class="tdNumber">P</th><th class="tdNumber">O</th><th/>'. ($print? '' : '<th/>') . '</tr>';
 		
 		// Table with Topics
@@ -504,7 +559,7 @@ class FormGenerator
 		$table .= '<td>Total Independant and Guided Learning</td>';
 		$table .= '<td colspan="4">Face to Face Learning</td>';
 		$table .= '<td colspan="4">Independent Learning</td>';
-		$table .= '<td colspan="2"/></tr>';
+		$table .= '<td colspan="2"/>' . ($print ? '' : 'weightage %') . '</tr>';
 		if ($totGuidedLearnLecture > 0 || $totIndepLearnLecture > 0) {
 			$table .= '<tr><td/>';
 			$table .= '<td>Lecture</td>';
@@ -545,17 +600,19 @@ class FormGenerator
 				$guidedLearning = $row['guidedLearning'];
 				$totAssessmentsGuided += $guidedLearning;
 				$indepLearning = $row['indepLearning'];
+				$weightage = $row['weightage'];
 				$totAssessmentsIndependant += $indepLearning;
 				$table .= '<tr><td/>';
 				$table .= "<td>$description</td>";
 				if ($print) {
 					$table .= '<td colspan="4" class="tdNumber">' . $this->formatHours($guidedLearning) . '</td>';
 					$table .= '<td colspan="4" class="tdNumber">'. $this->formatHours($indepLearning) . '</td>';
+					$table .= '<td colspan="2"/></tr>';
 				} else {
 					$table .= '<td colspan="4" class="tdNumber"><input name="txtsyllabusAssType' .$syllabusAssessmentTypeId . 'Guided" type="text" value="' . $this->formatHours($guidedLearning) . '" class="numberInput form-control"></td>';
 					$table .= '<td colspan="4" class="tdNumber"><input name="txtsyllabusAssType' .$syllabusAssessmentTypeId . 'Indep" type="text" value="' . $this->formatHours($indepLearning) . '" class="numberInput form-control"></td>';
+					$table .= '<td colspan="2" class="tdNumber"><input name="txtsyllabusAssType' .$syllabusAssessmentTypeId . 'Weight" type="text" value="' . $this->formatHours($weightage) . '" class="numberInput form-control"></td>';
 				}
-				$table .= '<td colspan="2"/></tr>';
 			}
 		}
 		
@@ -594,7 +651,7 @@ class FormGenerator
 
 	private function getTextAreaDiv($print, $fieldName, $inputLabel) {
 		$divName = 'div' . $fieldName;
-		$currValue = $this->getSyllabusVarText($fieldName);
+		$currValue = OtherUtils::getSyllabusVarText($fieldName);
 		
 		if ($print) {
 			return $this->getDivPrint($divName, $inputLabel, $this->getTextLabel($currValue));
@@ -637,20 +694,5 @@ class FormGenerator
 	// Display all hours with 1 decimal point for half hours as 0.5
 	private function formatHours($hours) {
 		return sprintf("%01.1f", $hours);
-	}
-	
-	private function getSyllabusVarText($variable) {
-		if (isset($_SESSION['syllabus'])) {
-			return htmlspecialchars(stripslashes($_SESSION['syllabus'][$variable]));
-		} else {
-			return '';
-		}
-	}
-	private function getSyllabusVarNr($variable) {
-		if (isset($_SESSION['syllabus'])) {
-			return $_SESSION['syllabus'][$variable];
-		} else {
-			return 0;
-		}
 	}
 }

@@ -4,36 +4,14 @@
 }
 #syllabusPrint {
         width: 650px;
-        /* to centre page on screen*/
         margin-left: auto;
         margin-right: auto;
-        -- margin-top: 100px;
 }
 #printHeader {
 	width: 100%;
     margin-bottom: 15px;
 }
-/*
-@media print {
-	#printHeader {
-		width: 100%;
-		position: fixed;
-		top: 0;
-	}
-}
-#divTeachLearnAssesStrategies {
-    page-break-after: always;
-}
-#divsynopsis {
-    -- margin-top: 100px;
-}
-#divLearningOutcomeMapping {
-    page-break-after: always;
-}
-#divTopics {
-    -- margin-top: 100px;
-}
-*/
+
 .pageBreak {
     page-break-after: always;
 }
@@ -108,6 +86,10 @@ table.tblModulAimsMapping {
 
 table.tblLearningOutcomeMapping {
 	width: 522px;
+}
+
+table.tblTopics {
+	width: 99.8%;
 }
 
 table td,

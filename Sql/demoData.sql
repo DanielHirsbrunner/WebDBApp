@@ -9,22 +9,30 @@ INSERT INTO `module` (`moduleId`, `name`, `code`, `credits`, `moduleOwner`, `pur
 (3,	'Distributed Application Development',	'ITS61604',	4,	NULL,	'This course introduces the concepts of distributed application development. Topics covered include client-server model and programming in socket level and using Remote Method Invocation (RMI). Laboratory instruction will include program development and walk-through.', NULL,	1,	'2016-11-18 08:41:12'),
 (4,	'Data Structures and Algorithms',	'ITS60504',	4,	NULL,	'This course introduces students to algorithm analysis and discusses the working of various data structures in details. Topics covered include Principles of Algorithms Analysis, Linked Lists, Stacks and Queues, Trees and Recursion, Hashing, Sorting Methods, Binary Search Trees and Graph Theory.', NULL,	1,	'2016-11-18 08:41:45'),
 (5,	'Forensic Computing Practice',	'ITS61503',	3,	NULL,	'This subject allows students to look in-depth into an individual computer crime scenario simulating a source of evidence of one or more computer-related crimes. They are to investigate the contents of the scenario using appropriate tools. Throughout the duration of the module advice can be sought from the subject tutor with whom the suitability of different approaches and the significance of particular pieces of evidence can be discussed.\r\nAs a result of their investigation students are to write a report detailing their findings for submission as evidence. Finally, they will give evidence as an expert witness in a mock courtroom and be cross examined by their peers or by staff.', NULL,	1,	'2016-11-18 08:42:35'),
-(6,	'OOP using C++',	'ITS61804',	4,	NULL,	'This course strengthens studentsâ€™ understanding of object-oriented programming concept and introduces them to OO concepts supported in C++. Topics covered include inheritance, polymorphism, and generic programming, Standard Template Library, and design patterns.', NULL,	1,	'2016-11-18 08:43:00');
+(6,	'OOP using C++',	'ITS61804',	4,	NULL,	'This course strengthens students understanding of object-oriented programming concept and introduces them to OO concepts supported in C++. Topics covered include inheritance, polymorphism, and generic programming, Standard Template Library, and design patterns.', NULL,	1,	'2016-11-18 08:43:00');
 
 Insert into moduleRight (userId, moduleId) 
 SELECT u.userId, m.moduleId
 FROM user u cross join module m;
 
-insert into syllabus(moduleId, versionNr, revisionNr, creditHours, academicStaff, semester, editBy, learningOutcomes, transferableSkills, synopsis)
+insert into syllabus(moduleId, versionNr, revisionNr, creditHours, academicStaff, semester, editBy, learningOutcomes, transferableSkills, synopsis, mainReferences, addReferences, addInformation, assessmentCode)
 	values
 		((SELECT moduleId from module where code like 'ITS62304' LIMIT 1), 1, 2, 4, (SELECT userId from user where userName like 'admin' LIMIT 1), 'elective', (SELECT userId from user where userName like 'LimEngLye' LIMIT 1),
 		'At the end of this course, the students should be able to:\n 1. Demonstrate the knowledge in developing web database solutions and web database applications. (C5, MQF LO 1)\n 2. Develop medium scale web applications using MySQL databases and evaluate the performance of the web database systems. (C6, P7, MQF LO 2)\n 3. Communicate effectively with peers to work on a medium scale web application in a team to accomplish task and demonstrate ability to work as an individual or in a team with leadership skills. (C3, P5, MQF LO 5)',
 		'Helps to learn Practical Skills, Communication and Team work.',
-		'This subject introduces students to the principles and practice of implementing and designing medium-size web database applications. Topics include server side scripting, session management, authentication and authorization.'),
+		'This subject introduces students to the principles and practice of implementing and designing medium-size web database applications. Topics include server side scripting, session management, authentication and authorization.',
+		'1. Robin Nixon (2014), Learning PHP, MySQL & JavaScript: With jQuery, CSS & HTML5 (Learning Php, Mysql, Javascript, Css & Html5). O\'Reilly Media',
+		'1. Williams, H., Lane, D. (2002). Web Database Applications with PHP and MySQL. O’Reilly.\n2. D.Gosselin (2010). PHP Programming with MySQL: The Web Technologies Series. Paperback',
+		'',
+		'ITS62304_SOCIT_29082016'),
 		((SELECT moduleId from module where code like 'ITS62304' LIMIT 1), 2, 1, 4, (SELECT userId from user where userName like 'admin' LIMIT 1), 'elective', (SELECT userId from user where userName like 'LimEngLye' LIMIT 1),
 		'At the end of this course, the students should be able to:\n 1. Demonstrate the knowledge in developing web database solutions and web database applications. (C5, MQF LO 1)\n 2. Develop medium scale web applications using MySQL databases and evaluate the performance of the web database systems. (C6, P7, MQF LO 2)\n 3. Communicate effectively with peers to work on a medium scale web application in a team to accomplish task and demonstrate ability to work as an individual or in a team with leadership skills. (C3, P5, MQF LO 5)',
 		'Helps to learn Practical Skills, Communication and Team work.',
-		'This subject introduces students to the principles and practice of implementing and designing medium-size web database applications. Topics include server side scripting, session management, authentication and authorization.');
+		'This subject introduces students to the principles and practice of implementing and designing medium-size web database applications. Topics include server side scripting, session management, authentication and authorization.',
+				'1. Robin Nixon (2014), Learning PHP, MySQL & JavaScript: With jQuery, CSS & HTML5 (Learning Php, Mysql, Javascript, Css & Html5). O\'Reilly Media',
+		'1. Williams, H., Lane, D. (2002). Web Database Applications with PHP and MySQL. O’Reilly.\n2. D.Gosselin (2010). PHP Programming with MySQL: The Web Technologies Series. Paperback',
+		'',
+		'ITS62304_SOCIT_29082016');
 		
 
 DELIMITER //		
@@ -62,14 +70,14 @@ BEGIN
 			(syl2, 11, 'Performance and Web Optimization',1, 1.5, 2, 0, 2, 1.5, 0, 0),
 			(syl2, 12, 'Revision',1, 1.5, 2, 0, 2, 1.5, 0, 0);
 			
-		INSERT INTO syllabusAssessmentType (syllabusId, assessmentTypeId, guidedLearning, indepLearning)
+		INSERT INTO syllabusAssessmentType (syllabusId, assessmentTypeId, guidedLearning, indepLearning, weightage)
 			VALUES 
-				(syl1, 1, 0, 14),
-				(syl1, 2, 0.5, 27.5),
-				(syl1, 3, 2, 6),
-				(syl2, 1, 0, 14),
-				(syl2, 2, 0.5, 27.5),
-				(syl2, 3, 2, 6);
+				(syl1, 1, 0, 14, 40),
+				(syl1, 2, 0, 12, 20),
+				(syl1, 3, 0.5, 39.5, 40),
+				(syl2, 1, 0, 14, 40),
+				(syl2, 2, 0, 12, 20),
+				(syl2, 3, 0.5, 39.5, 40);
 				
 		INSERT INTO syllabusModeOfDelivery (syllabusId, modeOfDeliveryId)
 		SELECT syl1, modeOfDeliveryId FROM modeOfDelivery;
@@ -102,5 +110,5 @@ END //
 DELIMITER ;
 call createSyllabusRelatedData();
 
-INSERT INTO modulePrerequisite (moduleId, moduleIdPrerequisite)
-	SELECT m.moduleId, p.moduleId FROM module m cross join module p WHERE m.code like 'ITS62304' AND (p.code like 'ITS61104' OR p.code like 'ITS61604');
+-- INSERT INTO modulePrerequisite (moduleId, moduleIdPrerequisite)
+--	SELECT m.moduleId, p.moduleId FROM module m cross join module p WHERE m.code like 'ITS62304' AND (p.code like 'ITS61104' OR p.code like 'ITS61604');

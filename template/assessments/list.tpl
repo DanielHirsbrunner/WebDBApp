@@ -23,12 +23,13 @@
 			<thead><tr>
 				<th data-field="id" data-sortable="true">#</th>
 				<th data-field="description" data-sortable="true">Description</th>
+				<th data-field="isWrittenTest" data-sortable="true">Is written test</th>
 				<th data-searchable="false">&nbsp;</th>
 			</tr></thead>
 			<tbody>
 				<!-- BEGIN ASSESSMENTS_ROW -->
 				<tr>
-					<td>{ASSESSMENT_ID}</td><td>{ASSESSMENT_DESC}</td>
+					<td>{ASSESSMENT_ID}</td><td>{ASSESSMENT_DESC}</td><td>{ASSESSMENT_ISWRITTENTEST}</td>
 					<td><a href="{BASE_PATH}/assessments/edit/{ASSESSMENT_ID}"><span class="glyphicon glyphicon-pencil"></a>
 						<a class="ajax-delete" href="{BASE_PATH}/assessments/delete/{ASSESSMENT_ID}"><span class="glyphicon glyphicon-remove"></a>
 					</td>

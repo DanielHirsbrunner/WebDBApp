@@ -26,8 +26,6 @@
 		</div>
 
 	</form>
-	<p>admin / admin</p>
-	<p>LimEngLye / secret</p>
 </div>
 <!-- INCLUDE include/scripts.tpl -->
 </body>

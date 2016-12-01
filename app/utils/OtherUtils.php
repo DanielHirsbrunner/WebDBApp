@@ -68,5 +68,29 @@ class OtherUtils {
 			OtherUtils::redirect($redirect);
 		}
 	}
+	
+	public static function getSyllabusVarText($variable) {
+		if (isset($_SESSION['syllabus'])) {
+			return htmlspecialchars(stripslashes($_SESSION['syllabus'][$variable]));
+		} else {
+			return '';
+		}
+	}
+	
+	public static function getSyllabusVarNr($variable) {
+		if (!isset($_SESSION['syllabus']) || empty($_SESSION['syllabus'][$variable])) {
+			return 0; 
+		} else {
+			return $_SESSION['syllabus'][$variable];
+		}
+	} 
+	
+	public static function getPostVarNumber($variable) {
+		if (!isset($_POST[$variable]) || empty($_POST[$variable])) {
+			return 0; 
+		} else {
+			return $_POST[$variable];
+		}
+	}
 
 }

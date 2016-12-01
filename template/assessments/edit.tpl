@@ -21,7 +21,11 @@
 				<div class="col-sm-offset-3 help-block">Description is too long. Maximum is 100 characters.</div>
 			</div>
 			<!-- END ERROR_DESC_LONG -->
-
+			<div class="row form-group">
+				<div class="col-sm-offset-1 col-sm-2 control-label"><label for="isWrittenTest">Is written test</label></div>
+				<div class="col-sm-8"><input type="checkbox" class="checkbox" name="isWrittenTest" {VALUE_ISWRITTENTEST} id="isWrittenTest"></div>
+			</div>
+			
 			<div class="row form-group">
 				<div class="col-sm-offset-3 col-sm-6"><input type="submit" class="btn btn-primary" value="{VALUE_BUTTON}"></div>
 			</div>
