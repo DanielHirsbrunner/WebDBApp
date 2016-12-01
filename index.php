@@ -4,7 +4,7 @@ namespace App;
 
 session_start();
 
-define("DEBUGGING", true);
+define("DEBUGGING", false);
 
 // DB
 require_once("lib/DB.php");

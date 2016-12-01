@@ -109,6 +109,3 @@ BEGIN
 END //
 DELIMITER ;
 call createSyllabusRelatedData();
-
--- INSERT INTO modulePrerequisite (moduleId, moduleIdPrerequisite)
---	SELECT m.moduleId, p.moduleId FROM module m cross join module p WHERE m.code like 'ITS62304' AND (p.code like 'ITS61104' OR p.code like 'ITS61604');
