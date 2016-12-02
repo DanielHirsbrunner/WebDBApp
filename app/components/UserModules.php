@@ -88,7 +88,7 @@ class UserModules {
 				  FROM `module`
 				  WHERE `moduleId` $not IN (
 					SELECT `moduleId` 
-					FROM `moduleright` 
+					FROM `moduleRight`
 					WHERE (`userId` = ?) 
 					GROUP BY `moduleId`)
 				  ORDER BY moduleId";
@@ -141,7 +141,7 @@ class UserModules {
 			"userId"		=> $userId
 		);
 
-		$tableName = "moduleright";
+		$tableName = "moduleRight";
 
 		return OtherUtils::improvedAutoExecute($this->db, $tableName, $fieldsValues, DB_AUTOQUERY_INSERT);
 	}
@@ -170,7 +170,7 @@ class UserModules {
 
 	private function removeModuleRight($userId, $moduleId) {
 
-		$query = "DELETE FROM moduleright WHERE userId = ? AND moduleId = ?";
+		$query = "DELETE FROM moduleRight WHERE userId = ? AND moduleId = ?";
 
 		$statement = $this->db->prepare($query);
 		$params = [$userId, $moduleId];

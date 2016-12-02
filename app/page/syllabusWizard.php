@@ -13,7 +13,7 @@
 	}
 	// check if a submit button was pressed
 	if(isset($_POST['save']) || isset($_POST['saveRevision']) || isset($_POST['saveVersion']) || isset($_POST['goBack'])) {
-		require_once('/../syllabusSaver.inc');
+		require_once('app/syllabusSaver.inc');
 		$syllabusId = $_SESSION['syllabusId'];
 	}
 	
