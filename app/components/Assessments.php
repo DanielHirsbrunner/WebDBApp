@@ -19,7 +19,7 @@ class Assessments {
 
 	public function renderList() {
 
-		$query = "SELECT assessmentTypeId, description, isWrittenTest FROM assessmenttype";
+		$query = "SELECT assessmentTypeId, description, BIN(isWrittenTest + 0) AS isWrittenTest FROM assessmentType";
 
 		$statement = $this->db->prepare($query);
 		$result = $this->db->execute($statement);
@@ -148,7 +148,7 @@ class Assessments {
 	}
 
 	private function insertAssessment($description, $isWrittenTest) {
-		$tableName = "assessmenttype";
+		$tableName = "assessmentType";
 
 		$fieldsValues = array(
 			"description"	=> $description,
@@ -159,7 +159,7 @@ class Assessments {
 	}
 
 	private function updateAssessment($description, $isWrittenTest) {
-		$tableName = "assessmenttype";
+		$tableName = "assessmentType";
 
 		$fieldsValues = array(
 			"description"	=> $description,
@@ -172,7 +172,7 @@ class Assessments {
 	}
 
 	private function deleteAssessment($id) {
-		$query = "DELETE FROM assessmenttype WHERE assessmentTypeId = ?";
+		$query = "DELETE FROM assessmentType WHERE assessmentTypeId = ?";
 
 		$statement = $this->db->prepare($query);
 		$params = [$id];
@@ -200,7 +200,7 @@ class Assessments {
 	}
 
 	public function getAssessmentTypeById($id) {
-		$query = "SELECT * FROM assessmenttype WHERE assessmentTypeId = ?";
+		$query = "SELECT * FROM assessmentType WHERE assessmentTypeId = ?";
 
 		$statement = $this->db->prepare($query);
 		$params = [$id];

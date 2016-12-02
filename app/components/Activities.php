@@ -19,7 +19,7 @@ class Activities {
 
 	public function renderList() {
 
-		$query = "SELECT teachLearnActivityId, description FROM teachlearnactivity";
+		$query = "SELECT teachLearnActivityId, description FROM teachLearnActivity";
 
 		$statement = $this->db->prepare($query);
 		$result = $this->db->execute($statement);
@@ -146,7 +146,7 @@ class Activities {
 	}
 
 	private function insertActivity($description) {
-		$tableName = "teachlearnactivity";
+		$tableName = "teachLearnActivity";
 
 		$fieldsValues = array(
 			"description"	=> $description
@@ -156,7 +156,7 @@ class Activities {
 	}
 
 	private function updateActivity($description) {
-		$tableName = "teachlearnactivity";
+		$tableName = "teachLearnActivity";
 
 		$fieldsValues = array(
 			"description"	=> $description
@@ -168,7 +168,7 @@ class Activities {
 	}
 
 	private function deleteActivity($id) {
-		$query = "DELETE FROM teachlearnactivity WHERE teachLearnActivityId = ?";
+		$query = "DELETE FROM teachLearnActivity WHERE teachLearnActivityId = ?";
 
 		$statement = $this->db->prepare($query);
 		$params = [$id];
@@ -195,7 +195,7 @@ class Activities {
 	}
 
 	public function getActivityById($id) {
-		$query = "SELECT * FROM teachlearnactivity WHERE teachLearnActivityId = ?";
+		$query = "SELECT * FROM teachLearnActivity WHERE teachLearnActivityId = ?";
 
 		$statement = $this->db->prepare($query);
 		$params = [$id];

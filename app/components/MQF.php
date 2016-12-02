@@ -19,7 +19,7 @@ class MQF {
 
 	public function renderList() {
 
-		$query = "SELECT mqfSkillId, description FROM mqfskill";
+		$query = "SELECT mqfSkillId, description FROM mqfSkill";
 
 		$statement = $this->db->prepare($query);
 		$result = $this->db->execute($statement);
@@ -146,7 +146,7 @@ class MQF {
 	}
 
 	private function insertMQF($description) {
-		$tableName = "mqfskill";
+		$tableName = "mqfSkill";
 
 		$fieldsValues = array(
 			"description"	=> $description
@@ -156,7 +156,7 @@ class MQF {
 	}
 
 	private function updateMQF($description) {
-		$tableName = "mqfskill";
+		$tableName = "mqfSkill";
 
 		$fieldsValues = array(
 			"description"	=> $description
@@ -168,7 +168,7 @@ class MQF {
 	}
 
 	private function deleteMQF($id) {
-		$query = "DELETE FROM mqfskill WHERE mqfSkillId = ?";
+		$query = "DELETE FROM mqfSkill WHERE mqfSkillId = ?";
 
 		$statement = $this->db->prepare($query);
 		$params = [$id];
@@ -195,7 +195,7 @@ class MQF {
 	}
 
 	public function getMQFSkillById($id) {
-		$query = "SELECT * FROM mqfskill WHERE mqfSkillId = ?";
+		$query = "SELECT * FROM mqfSkill WHERE mqfSkillId = ?";
 
 		$statement = $this->db->prepare($query);
 		$params = [$id];

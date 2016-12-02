@@ -19,7 +19,7 @@ class Deliveries {
 
 	public function renderList() {
 
-		$query = "SELECT modeOfDeliveryId, description FROM modeofdelivery";
+		$query = "SELECT modeOfDeliveryId, description FROM modeOfDelivery";
 
 		$statement = $this->db->prepare($query);
 		$result = $this->db->execute($statement);
@@ -146,7 +146,7 @@ class Deliveries {
 	}
 
 	private function insertModeOfDelivery($description) {
-		$tableName = "modeofdelivery";
+		$tableName = "modeOfDelivery";
 
 		$fieldsValues = array(
 			"description"	=> $description
@@ -156,7 +156,7 @@ class Deliveries {
 	}
 
 	private function updateModeOfDelivery($description) {
-		$tableName = "modeofdelivery";
+		$tableName = "modeOfDelivery";
 
 		$fieldsValues = array(
 			"description"	=> $description
@@ -168,7 +168,7 @@ class Deliveries {
 	}
 
 	private function deleteModeOfDelivery($id) {
-		$query = "DELETE FROM modeofdelivery WHERE modeOfDeliveryId = ?";
+		$query = "DELETE FROM modeOfDelivery WHERE modeOfDeliveryId = ?";
 
 		$statement = $this->db->prepare($query);
 		$params = [$id];
@@ -195,7 +195,7 @@ class Deliveries {
 	}
 
 	public function getModeOfDeliveryById($id) {
-		$query = "SELECT * FROM modeofdelivery WHERE modeOfDeliveryId = ?";
+		$query = "SELECT * FROM modeOfDelivery WHERE modeOfDeliveryId = ?";
 
 		$statement = $this->db->prepare($query);
 		$params = [$id];
