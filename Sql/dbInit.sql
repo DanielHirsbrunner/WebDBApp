@@ -5,10 +5,10 @@
  * Author Daniel Hirsbrunner
  * Date 2016.11.09
  */
-DROP DATABASE IF EXISTS moduleinfo;
-CREATE DATABASE moduleinfo /*!40100 DEFAULT CHARACTER SET utf8 */;
+DROP DATABASE IF EXISTS milanDanielCo;
+CREATE DATABASE milanDanielCo CHARACTER SET utf8 COLLATE utf8_general_ci;
 
-USE moduleinfo;
+USE milanDanielCo;
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (

@@ -91,11 +91,11 @@ BEGIN
 		INSERT INTO syllabusMqfSkill (syllabusId, mqfSkillId)
 		SELECT syl2, mqfSkillId FROM mqfSkill;
 		
-		INSERT INTO syllabusteachLearnActivity (syllabusId, teachLearnActivityId)
-		SELECT syl1, teachLearnActivityId FROM teachlearnactivity;
+		INSERT INTO syllabusTeachLearnActivity (syllabusId, teachLearnActivityId)
+		SELECT syl1, teachLearnActivityId FROM teachLearnActivity;
 		
-		INSERT INTO syllabusteachLearnActivity (syllabusId, teachLearnActivityId)
-		SELECT syl2, teachLearnActivityId FROM teachlearnactivity;
+		INSERT INTO syllabusTeachLearnActivity (syllabusId, teachLearnActivityId)
+		SELECT syl2, teachLearnActivityId FROM teachLearnActivity;
 		
 		INSERT INTO syllabusProgLearnOutcome(syllabusId, mlo, plo)
 			VALUES 
