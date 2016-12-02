@@ -74,28 +74,28 @@
 	
 	function getMqfSkillsStmt($syllabusId) {
 		$mqfSkillStmt  = 'SELECT s.mqfSkillId, s.description, ss.syllabusMqfSkillId ';
-		$mqfSkillStmt .= 'FROM mqfSkill s left join syllabusmqfSkill ss on s.mqfSkillId = ss.mqfSkillId and ss.syllabusId = ' . $syllabusId . ' ';
+		$mqfSkillStmt .= 'FROM mqfSkill s left join syllabusMqfSkill ss on s.mqfSkillId = ss.mqfSkillId and ss.syllabusId = ' . $syllabusId . ' ';
 		$mqfSkillStmt .= 'ORDER BY s.description';
 		return $mqfSkillStmt;
 	}
 	
 	function getTeachLearnActivityStmt($syllabusId) {
 		$teachlearnactivityStmt  = 'SELECT t.teachLearnActivityId, t.description, st.syllabusTeachLearnActivityId ';
-		$teachlearnactivityStmt .= 'FROM teachlearnactivity t left join syllabusteachlearnactivity st on t.teachLearnActivityId = st.teachLearnActivityId and st.syllabusId = ' . $syllabusId . ' ';
+		$teachlearnactivityStmt .= 'FROM teachLearnActivity t left join syllabusTeachLearnActivity st on t.teachLearnActivityId = st.teachLearnActivityId and st.syllabusId = ' . $syllabusId . ' ';
 		$teachlearnactivityStmt .= 'ORDER BY t.description';
 		return $teachlearnactivityStmt;
 	}
 	
 	function getAssessmentTypeStmt($syllabusId) {
-		$assessmentTypeStmt  = 'SELECT a.assessmentTypeId, a.description, sa.syllabusassessmenttypeId ';
-		$assessmentTypeStmt .= 'FROM assessmenttype a left join syllabusassessmenttype sa on a.assessmentTypeId = sa.assessmentTypeId and sa.syllabusId = ' . $syllabusId . ' ';
+		$assessmentTypeStmt  = 'SELECT a.assessmentTypeId, a.description, sa.syllabusAssessmentTypeId ';
+		$assessmentTypeStmt .= 'FROM assessmentType a left join syllabusAssessmentType sa on a.assessmentTypeId = sa.assessmentTypeId and sa.syllabusId = ' . $syllabusId . ' ';
 		$assessmentTypeStmt .= 'ORDER BY a.description';
 		return $assessmentTypeStmt;
 	}
 	
 	function getModeOfDeliveryStmt($syllabusId) {
 		$teachlearnactivityStmt  = 'SELECT t.modeOfDeliveryId, t.description, st.syllabusModeOfDeliveryId ';
-		$teachlearnactivityStmt .= 'FROM modeofdelivery t left join syllabusmodeofdelivery st on t.modeOfDeliveryId = st.modeOfDeliveryId and st.syllabusId = ' . $syllabusId . ' ';
+		$teachlearnactivityStmt .= 'FROM modeOfDelivery t left join syllabusModeOfDelivery st on t.modeOfDeliveryId = st.modeOfDeliveryId and st.syllabusId = ' . $syllabusId . ' ';
 		$teachlearnactivityStmt .= 'ORDER BY t.description';
 		return $teachlearnactivityStmt;
 	}
@@ -124,7 +124,7 @@
 	
 	function getModulesByUserStmt($userId) {
 		$moduleStmt  = 'SELECT mr.moduleId, m.code, m.name ';
-		$moduleStmt .= 'FROM moduleright mr join module m on mr.moduleId = m.moduleId ';
+		$moduleStmt .= 'FROM moduleRight mr join module m on mr.moduleId = m.moduleId ';
 		$moduleStmt .= 'WHERE mr.userId = ' . $userId . ' ';
 		$moduleStmt .= 'ORDER BY m.name ';
 		return $moduleStmt;

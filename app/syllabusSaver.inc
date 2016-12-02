@@ -166,16 +166,16 @@
 				
 				$isChecked = isset($_POST['chkassessmentType'. $assessmentTypeId]);
 				// User unchecked, delete entry
-				if (!$isChecked && $row['syllabusassessmenttypeId'] > 0) {
-					$db->ExecuteDeleteStmt('syllabusassessmenttype', 'syllabusassessmenttypeId = ' . $row['syllabusassessmenttypeId']);
+				if (!$isChecked && $row['syllabusAssessmentTypeId'] > 0) {
+					$db->ExecuteDeleteStmt('syllabusAssessmentType', 'syllabusAssessmentTypeId = ' . $row['syllabusAssessmentTypeId']);
 				// User checked, insert entry 
-				} else if ($isChecked && $row['syllabusassessmenttypeId'] == 0) {
+				} else if ($isChecked && $row['syllabusAssessmentTypeId'] == 0) {
 					// User checked, insert entry 
 					$fields_values = array(
 						'syllabusId' => $syllabusId,
 						'assessmentTypeId' => $assessmentTypeId
 					);
-					$res = $db->ExecuteInsertStmt('syllabusassessmenttype', $fields_values);
+					$res = $db->ExecuteInsertStmt('syllabusAssessmentType', $fields_values);
 				}
 			}
 		}

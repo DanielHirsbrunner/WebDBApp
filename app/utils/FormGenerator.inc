@@ -407,7 +407,7 @@ class FormGenerator
 			while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC)) {
 				$assessmentTypeId = $row['assessmentTypeId'];
 				$description = $row['description'];
-				$assessmentTypePart .= '<div class="checkbox"><label><input  type="checkbox" name="chkassessmentType'. $assessmentTypeId . '" ' . ($row['syllabusassessmenttypeId'] > 0 ? 'checked ' : '') . ' value = "' . $description . '" />' . htmlspecialchars($description) . '</label></div>';
+				$assessmentTypePart .= '<div class="checkbox"><label><input  type="checkbox" name="chkassessmentType'. $assessmentTypeId . '" ' . ($row['syllabusAssessmentTypeId'] > 0 ? 'checked ' : '') . ' value = "' . $description . '" />' . htmlspecialchars($description) . '</label></div>';
 			}
 			$assessmentTypePart .= '</ul>';
 		}
